@@ -17,7 +17,7 @@
     if (document.querySelector('link[data-ip-vision="2"]')) return;
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "assets/css/vision-2.css?v=20260811-0045";
+    link.href = "assets/css/vision-2.css?v=20260811-0050";
     link.dataset.ipVision = "2";
     document.head.appendChild(link);
   };
@@ -112,7 +112,7 @@
   const modernizeHeader = () => {
     const logo = document.querySelector("#header .logo-brand img");
     if (logo) {
-      logo.src = "assets/img/LOGO.png?v=20260811-0045";
+      logo.src = "assets/img/LOGO.png?v=20260811-0050";
       logo.alt = "Instant Professionals";
       logo.removeAttribute("style");
     }
@@ -170,72 +170,16 @@
     });
   };
 
-  const PHOTO_VERSION = "20260811-0045";
+  const PHOTO_VERSION = "20260811-0050";
   const team = [
-    {
-      name: "Ayush Pipalwa",
-      role: "Founder",
-      experience: "10+ Years",
-      photo: "assets/img/team/live/ayush-pipalwa.jpg",
-      bio: "Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting. He leads client strategy and complex regulatory engagements with a practical, business-first approach.",
-      expertise: ["Corporate Compliance", "Risk Advisory", "Business Consulting"],
-    },
-    {
-      name: "CA Mayank Jain",
-      role: "Founder",
-      experience: "Direct Tax Professional",
-      photo: "assets/img/team/live/mayank-jain.jpg",
-      bio: "Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",
-      expertise: ["Direct Tax", "Tax Advisory", "Assessments"],
-    },
-    {
-      name: "CA Renu Sharma",
-      role: "Indirect Tax & GST Advisor",
-      experience: "Senior Professional",
-      photo: "assets/img/team/live/renu-sharma.jpg",
-      bio: "Specialises in indirect taxation, GST advisory and tax litigation, supporting businesses with compliance, departmental proceedings, notices, assessments and dispute resolution.",
-      expertise: ["GST Advisory", "Indirect Tax", "Tax Litigation"],
-    },
-    {
-      name: "CA Navdha Puri",
-      role: "Audit & Assurance Advisor",
-      experience: "15+ Years",
-      photo: "assets/img/team/live/navdha-puri.jpg",
-      bio: "Experienced Chartered Accountant focused on statutory audit, internal audit and assurance, with emphasis on controls, reliable reporting and risk-based recommendations.",
-      expertise: ["Statutory Audit", "Internal Audit", "Risk & Controls"],
-    },
-    {
-      name: "CA Rohit Sharma",
-      role: "Audit & Assurance Advisor",
-      experience: "10+ Years",
-      photo: "assets/img/team/live/rohit-sharma.jpg",
-      bio: "Chartered Accountant specialising in audit and assurance, financial reporting, audit readiness and internal-control reviews for growing businesses.",
-      expertise: ["Audit & Assurance", "Financial Reporting", "Internal Controls"],
-    },
-    {
-      name: "CA Mayank Hoiyani",
-      role: "Chartered Accountant",
-      experience: "Professional Expert",
-      photo: "assets/img/team/live/mayank-hoiyani.jpg",
-      bio: "Advises clients on GST, income tax, statutory compliance, financial reporting and ongoing business support.",
-      expertise: ["GST", "Income Tax", "Financial Reporting"],
-    },
-    {
-      name: "CMA Surbhi Sharma",
-      role: "Cost & Management Accountant",
-      experience: "5+ Years",
-      photo: "assets/img/team/live/surbhi-sharma.png",
-      bio: "Cost and management accounting professional focused on budgeting, costing, MIS reporting, financial planning and operational efficiency.",
-      expertise: ["Costing", "Budgeting", "MIS & Analysis"],
-    },
-    {
-      name: "Nisha Pal",
-      role: "Manager",
-      experience: "Client Operations",
-      photo: "assets/img/team/live/nisha-pal.jpg",
-      bio: "Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",
-      expertise: ["Client Management", "Operations", "Compliance Coordination"],
-    }
+    {name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/live/ayush-pipalwa.jpg",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting. He leads client strategy and complex regulatory engagements with a practical, business-first approach.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
+    {name:"CA Mayank Jain",role:"Founder",experience:"Direct Tax Professional",photo:"assets/img/team/live/mayank-jain.jpg",bio:"Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",expertise:["Direct Tax","Tax Advisory","Assessments"]},
+    {name:"CA Renu Sharma",role:"Indirect Tax & GST Advisor",experience:"Senior Professional",photo:"assets/img/team/live/renu-sharma.jpg",bio:"Specialises in indirect taxation, GST advisory and tax litigation, supporting businesses with compliance, departmental proceedings, notices, assessments and dispute resolution.",expertise:["GST Advisory","Indirect Tax","Tax Litigation"]},
+    {name:"CA Navdha Puri",role:"Audit & Assurance Advisor",experience:"15+ Years",photo:"assets/img/team/live/navdha-puri.jpg",bio:"Experienced Chartered Accountant focused on statutory audit, internal audit and assurance, with emphasis on controls, reliable reporting and risk-based recommendations.",expertise:["Statutory Audit","Internal Audit","Risk & Controls"]},
+    {name:"CA Rohit Sharma",role:"Audit & Assurance Advisor",experience:"10+ Years",photo:"assets/img/team/live/rohit-sharma.jpg",bio:"Chartered Accountant specialising in audit and assurance, financial reporting, audit readiness and internal-control reviews for growing businesses.",expertise:["Audit & Assurance","Financial Reporting","Internal Controls"]},
+    {name:"CA Mayank Hoiyani",role:"Chartered Accountant",experience:"Professional Expert",photo:"assets/img/team/live/mayank-hoiyani.jpg",bio:"Advises clients on GST, income tax, statutory compliance, financial reporting and ongoing business support.",expertise:["GST","Income Tax","Financial Reporting"]},
+    {name:"CMA Surbhi Sharma",role:"Cost & Management Accountant",experience:"5+ Years",photo:"assets/img/team/live/surbhi-sharma.png",bio:"Cost and management accounting professional focused on budgeting, costing, MIS reporting, financial planning and operational efficiency.",expertise:["Costing","Budgeting","MIS & Analysis"]},
+    {name:"Nisha Pal",role:"Manager",experience:"Client Operations",photo:"assets/img/team/live/nisha-pal.jpg",bio:"Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",expertise:["Client Management","Operations","Compliance Coordination"]}
   ];
 
   const renderTeam = () => {
@@ -265,22 +209,7 @@
       </div>`;
   };
 
-  const runVision = () => {
-    modernizeHeader();
-    modernizeHome();
-    renderTeam();
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", runVision);
-  } else {
-    runVision();
-  }
-
-  window.addEventListener("load", () => {
-    if (typeof AOS !== "undefined") {
-      AOS.init({ duration: 800, easing: "ease-in-out", once: true, mirror: false });
-      AOS.refresh();
-    }
-  });
+  const runVision = () => { modernizeHeader(); modernizeHome(); renderTeam(); };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", runVision); else runVision();
+  window.addEventListener("load", () => { if (typeof AOS !== "undefined") { AOS.init({duration:800,easing:"ease-in-out",once:true,mirror:false}); AOS.refresh(); } });
 })();
