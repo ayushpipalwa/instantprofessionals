@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const PHOTO_VERSION = "20260810-1403";
+  const PHOTO_VERSION = "20260810-1536";
   const APPROVED_PHOTOS = {
     "Ayush Pipalwa": "assets/img/team/live/ayush-pipalwa.jpg",
     "Renu Sharma": "assets/img/team/live/renu-sharma.jpg",
@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="ip-nextgen-panel">
-          <div class="ip-panel-mark"><img src="assets/img/LOGO.png?v=20260810-1403" alt="Instant Professionals registered logo"></div>
+          <div class="ip-panel-mark"><img src="assets/img/LOGO.png?v=20260810-1536" alt="Instant Professionals registered logo"></div>
           <h2>Modern compliance. Practical advice.</h2>
           <p>Built for startups, growing businesses, established enterprises and individuals who value dependable execution and clear professional guidance.</p>
           <div class="ip-panel-services">
@@ -148,25 +148,36 @@
     image.classList.add("ip-approved-photo");
   };
 
-  const promoteMayankFounder = (section) => {
+  const applyFounderProfiles = (section) => {
     const cards = [...section.querySelectorAll(".ip-profile-card")];
     if (!cards.length) return;
-    const mayankCard = cards.find(card => {
+
+    const findCard = (name) => cards.find(card => {
       const heading = card.querySelector(".ip-profile-name");
-      return heading && cleanName(heading.textContent) === "Mayank Jain";
+      return heading && cleanName(heading.textContent) === name;
     });
-    if (!mayankCard) return;
 
-    const role = mayankCard.querySelector(".ip-profile-role");
-    if (role) role.textContent = "Co-Founder & Direct Tax Advisor";
+    const ayushCard = findCard("Ayush Pipalwa");
+    const mayankCard = findCard("Mayank Jain");
 
-    const bio = mayankCard.querySelector(".ip-profile-bio");
-    if (bio) bio.textContent = "Co-Founder of Instant Professionals and a direct tax professional advising individuals and businesses on income-tax compliance, tax planning, assessments and practical tax-efficient structuring.";
+    if (ayushCard) {
+      const role = ayushCard.querySelector(".ip-profile-role");
+      if (role) role.textContent = "Founder";
+      const bio = ayushCard.querySelector(".ip-profile-bio");
+      if (bio) bio.textContent = "Founder of Instant Professionals and a practising professional with over a decade of experience in corporate and secretarial compliance, risk advisory and business consulting. He works closely with businesses on governance, regulatory strategy and practical growth-oriented solutions.";
+    }
 
-    const grid = mayankCard.parentElement;
-    const firstCard = grid && grid.querySelector(".ip-profile-card");
-    if (grid && firstCard && firstCard !== mayankCard) {
-      grid.insertBefore(mayankCard, firstCard.nextSibling);
+    if (mayankCard) {
+      const role = mayankCard.querySelector(".ip-profile-role");
+      if (role) role.textContent = "Founder";
+      const bio = mayankCard.querySelector(".ip-profile-bio");
+      if (bio) bio.textContent = "Founder of Instant Professionals and a direct tax professional advising individuals and businesses on income-tax compliance, tax planning, assessments and practical tax-efficient structuring.";
+
+      const grid = mayankCard.parentElement;
+      const firstCard = grid && grid.querySelector(".ip-profile-card");
+      if (grid && firstCard && firstCard !== mayankCard) {
+        grid.insertBefore(mayankCard, firstCard.nextSibling);
+      }
     }
   };
 
@@ -178,7 +189,7 @@
     installPhotoStyles();
     section.querySelectorAll(".ip-profile-card").forEach(card => updateCard(card, ".ip-profile-name", ".ip-folder-team-photo"));
     section.querySelectorAll(".member").forEach(card => updateCard(card, ".member-info h4, h4", ".member-img"));
-    promoteMayankFounder(section);
+    applyFounderProfiles(section);
   };
 
   const start = () => {
