@@ -13,26 +13,16 @@
 
   const onscroll = (el, listener) => el.addEventListener("scroll", listener);
 
-  const hideTeamPhotos = () => {
-    if (!document.getElementById("ip-hide-team-photos")) {
-      const style = document.createElement("style");
-      style.id = "ip-hide-team-photos";
-      style.textContent = `
-        #team .member-img,
-        #team .ip-profile-photo,
-        #team img {
-          display: none !important;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    document
-      .querySelectorAll("#team .member-img, #team .ip-profile-photo, #team img")
-      .forEach((element) => element.remove());
+  const loadVisionStyles = () => {
+    if (document.querySelector('link[data-ip-vision="2"]')) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "assets/css/vision-2.css?v=20260811-0045";
+    link.dataset.ipVision = "2";
+    document.head.appendChild(link);
   };
 
-  hideTeamPhotos();
+  loadVisionStyles();
 
   const navbarlinks = select("#navbar .scrollto", true);
   const navbarlinksActive = () => {
@@ -64,7 +54,7 @@
   const header = select("#header");
   if (header) {
     const headerScrolled = () =>
-      header.classList.toggle("header-scrolled", window.scrollY > 100);
+      header.classList.toggle("header-scrolled", window.scrollY > 80);
     window.addEventListener("load", headerScrolled);
     onscroll(document, headerScrolled);
   }
@@ -99,14 +89,16 @@
     "click",
     ".scrollto",
     function (e) {
-      if (!select(this.hash)) return;
+      if (!this.hash || !select(this.hash)) return;
       e.preventDefault();
       const navbar = select("#navbar");
       if (navbar.classList.contains("navbar-mobile")) {
         navbar.classList.remove("navbar-mobile");
         const navbarToggle = select(".mobile-nav-toggle");
-        navbarToggle.classList.toggle("bi-list");
-        navbarToggle.classList.toggle("bi-x");
+        if (navbarToggle) {
+          navbarToggle.classList.toggle("bi-list");
+          navbarToggle.classList.toggle("bi-x");
+        }
       }
       scrollto(this.hash);
     },
@@ -114,92 +106,125 @@
   );
 
   window.addEventListener("load", () => {
-    if (window.location.hash && select(window.location.hash)) {
-      scrollto(window.location.hash);
-    }
+    if (window.location.hash && select(window.location.hash)) scrollto(window.location.hash);
   });
 
-  window.addEventListener("load", () => {
-    const portfolioContainer = select(".portfolio-container");
-    if (portfolioContainer && typeof Isotope !== "undefined") {
-      const portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: ".portfolio-item",
-      });
-      const portfolioFilters = select("#portfolio-flters li", true);
-      on(
-        "click",
-        "#portfolio-flters li",
-        function (e) {
-          e.preventDefault();
-          portfolioFilters.forEach((el) => el.classList.remove("filter-active"));
-          this.classList.add("filter-active");
-          portfolioIsotope.arrange({ filter: this.getAttribute("data-filter") });
-        },
-        true
-      );
+  const modernizeHeader = () => {
+    const logo = document.querySelector("#header .logo-brand img");
+    if (logo) {
+      logo.src = "assets/img/LOGO.png?v=20260811-0045";
+      logo.alt = "Instant Professionals";
+      logo.removeAttribute("style");
     }
-  });
+  };
 
-  if (typeof GLightbox !== "undefined") {
-    GLightbox({ selector: ".portfolio-lightbox" });
-  }
+  const modernizeHome = () => {
+    const carousel = document.getElementById("carouselExampleCaptions");
+    if (!carousel || carousel.dataset.ipModernized) return;
+    carousel.dataset.ipModernized = "1";
+    const hero = document.createElement("section");
+    hero.className = "ip-home-hero";
+    hero.innerHTML = `
+      <div class="container ip-grid">
+        <div data-aos="fade-up">
+          <div class="ip-eyebrow">A new generation compliance partner</div>
+          <h1>Compliance that keeps your <span>business moving.</span></h1>
+          <p class="lead">Instant Professionals brings corporate compliance, taxation, accounting, intellectual property and business advisory under one coordinated professional platform — practical, responsive and built around business outcomes.</p>
+          <div class="ip-actions">
+            <a class="ip-btn ip-btn-primary" href="#services">Explore Services</a>
+            <a class="ip-btn ip-btn-secondary" href="#team">Meet Our Professionals</a>
+          </div>
+          <div class="ip-trust">
+            <span><i class="bi bi-check-circle-fill"></i>Founded in 2018</span>
+            <span><i class="bi bi-check-circle-fill"></i>Pan-India support</span>
+            <span><i class="bi bi-check-circle-fill"></i>Multi-disciplinary expertise</span>
+          </div>
+        </div>
+        <aside class="ip-hero-panel" data-aos="fade-left">
+          <div class="label">One coordinated platform</div>
+          <h2>From incorporation to ongoing compliance and strategic advisory.</h2>
+          <div class="ip-capability">
+            <span>Corporate & Secretarial</span><span>GST & Direct Tax</span>
+            <span>Audit & Accounting</span><span>IPR & Legal Support</span>
+            <span>Registrations & Licences</span><span>Business Advisory</span>
+          </div>
+        </aside>
+      </div>`;
+    carousel.replaceWith(hero);
 
-  if (typeof Swiper !== "undefined") {
-    new Swiper(".portfolio-details-slider", {
-      speed: 400,
-      loop: true,
-      autoplay: { delay: 5000, disableOnInteraction: false },
-      pagination: { el: ".swiper-pagination", type: "bullets", clickable: true },
+    const about = document.querySelector("#about .content .col-lg-12");
+    if (about) {
+      about.innerHTML = `
+        <p>Instant Professionals is a multidisciplinary professional-services platform helping businesses manage regulatory obligations with greater clarity, speed and accountability. Since 2018, we have supported entrepreneurs, start-ups, MSMEs and established businesses across corporate compliance, taxation, accounting, registrations, intellectual property and business advisory.</p>
+        <p>Our model combines specialised professionals with coordinated execution. Instead of navigating multiple service providers, clients receive practical support through a single professional relationship — from routine filings and registrations to complex advisory, risk management and business-critical compliance.</p>`;
+    }
+
+    document.querySelectorAll("#services .title a").forEach((el) => {
+      const fixes = {
+        "LIGITATION": "TAX LITIGATION & REPRESENTATION",
+        "TAX": "DIRECT TAX & COMPLIANCE",
+        "GOODS AND SERVICES TAX": "GST ADVISORY & COMPLIANCE"
+      };
+      const key = el.textContent.trim().toUpperCase();
+      if (fixes[key]) el.textContent = fixes[key];
     });
-  }
+  };
 
+  const PHOTO_VERSION = "20260811-0045";
   const team = [
     {
       name: "Ayush Pipalwa",
-      role: "Founder & Principal Advisor",
+      role: "Founder",
       experience: "10+ Years",
-      bio: "Practising professional and founder of Instant Professionals with over a decade of experience in corporate and secretarial compliance, risk advisory and business consulting. He works closely with businesses on governance, regulatory strategy and practical growth-oriented solutions.",
+      photo: "assets/img/team/live/ayush-pipalwa.jpg",
+      bio: "Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting. He leads client strategy and complex regulatory engagements with a practical, business-first approach.",
       expertise: ["Corporate Compliance", "Risk Advisory", "Business Consulting"],
+    },
+    {
+      name: "CA Mayank Jain",
+      role: "Founder",
+      experience: "Direct Tax Professional",
+      photo: "assets/img/team/live/mayank-jain.jpg",
+      bio: "Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",
+      expertise: ["Direct Tax", "Tax Advisory", "Assessments"],
     },
     {
       name: "CA Renu Sharma",
       role: "Indirect Tax & GST Advisor",
       experience: "Senior Professional",
-      bio: "Specialises in indirect taxation, GST advisory and tax litigation, helping businesses manage complex compliance matters, departmental proceedings, notices, assessments and dispute resolution.",
+      photo: "assets/img/team/live/renu-sharma.jpg",
+      bio: "Specialises in indirect taxation, GST advisory and tax litigation, supporting businesses with compliance, departmental proceedings, notices, assessments and dispute resolution.",
       expertise: ["GST Advisory", "Indirect Tax", "Tax Litigation"],
     },
     {
       name: "CA Navdha Puri",
       role: "Audit & Assurance Advisor",
       experience: "15+ Years",
-      bio: "Experienced Chartered Accountant focused on statutory audits, internal audits and assurance engagements, with an emphasis on strong controls, accurate reporting and practical risk-based recommendations.",
+      photo: "assets/img/team/live/navdha-puri.jpg",
+      bio: "Experienced Chartered Accountant focused on statutory audit, internal audit and assurance, with emphasis on controls, reliable reporting and risk-based recommendations.",
       expertise: ["Statutory Audit", "Internal Audit", "Risk & Controls"],
     },
     {
       name: "CA Rohit Sharma",
       role: "Audit & Assurance Advisor",
       experience: "10+ Years",
-      bio: "Chartered Accountant specialising in auditing and assurance, supporting organisations with reliable financial reporting, audit readiness, internal controls and compliance-focused reviews.",
+      photo: "assets/img/team/live/rohit-sharma.jpg",
+      bio: "Chartered Accountant specialising in audit and assurance, financial reporting, audit readiness and internal-control reviews for growing businesses.",
       expertise: ["Audit & Assurance", "Financial Reporting", "Internal Controls"],
-    },
-    {
-      name: "CA Mayank Jain",
-      role: "Direct Tax Advisor",
-      experience: "Tax Professional",
-      bio: "Direct tax professional advising individuals and businesses on income-tax compliance, tax planning, assessments and practical tax-efficient structuring.",
-      expertise: ["Direct Tax", "Tax Advisory", "Income-tax Compliance"],
     },
     {
       name: "CA Mayank Hoiyani",
       role: "Chartered Accountant",
       experience: "Professional Expert",
-      bio: "Advises clients on GST, income tax, statutory compliance, financial reporting and business support.",
+      photo: "assets/img/team/live/mayank-hoiyani.jpg",
+      bio: "Advises clients on GST, income tax, statutory compliance, financial reporting and ongoing business support.",
       expertise: ["GST", "Income Tax", "Financial Reporting"],
     },
     {
       name: "CMA Surbhi Sharma",
       role: "Cost & Management Accountant",
       experience: "5+ Years",
+      photo: "assets/img/team/live/surbhi-sharma.png",
       bio: "Cost and management accounting professional focused on budgeting, costing, MIS reporting, financial planning and operational efficiency.",
       expertise: ["Costing", "Budgeting", "MIS & Analysis"],
     },
@@ -207,102 +232,54 @@
       name: "Nisha Pal",
       role: "Manager",
       experience: "Client Operations",
-      bio: "Manages client engagements, compliance coordination and timely delivery of professional assignments.",
+      photo: "assets/img/team/live/nisha-pal.jpg",
+      bio: "Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",
       expertise: ["Client Management", "Operations", "Compliance Coordination"],
-    },
-    {
-      name: "Yash Sharma",
-      role: "Accounts Executive",
-      experience: "Accounts & Compliance",
-      bio: "Supports bookkeeping, GST reconciliations, financial records and routine statutory compliance assignments.",
-      expertise: ["Bookkeeping", "GST Reconciliation", "Documentation"],
-    },
-    {
-      name: "Vishal",
-      role: "Accounts Executive",
-      experience: "Accounts & Compliance",
-      bio: "Assists with accounting operations, financial documentation, GST support and compliance processes.",
-      expertise: ["Accounting Support", "GST", "Compliance"],
-    },
-    {
-      name: "Aaradhya",
-      role: "Accounts Executive",
-      experience: "Accounts & Compliance",
-      bio: "Supports accurate financial record-keeping, accounting documentation and day-to-day compliance execution.",
-      expertise: ["Record Keeping", "Accounts Support", "Compliance"],
-    },
+    }
   ];
 
   const renderTeam = () => {
     const section = document.getElementById("team");
     if (!section) return;
-
-    if (!document.getElementById("ip-team-refresh-styles")) {
-      const style = document.createElement("style");
-      style.id = "ip-team-refresh-styles";
-      style.textContent = `
-        #team.ip-team-section{background:linear-gradient(180deg,#f8fafc 0%,#fff 100%);padding:88px 0}
-        #team .ip-team-eyebrow{font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#bb7a16;margin-bottom:10px}
-        #team .ip-team-title{font-family:Poppins,sans-serif;font-size:42px;line-height:1.15;font-weight:800;color:#0d2747;margin:0 0 14px}
-        #team .ip-team-subtitle{max-width:850px;color:#5c6675;font-size:17px;line-height:1.7;margin:0 auto 44px}
-        #team .ip-team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-        #team .ip-profile-card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 12px 36px rgba(13,39,71,.08);transition:transform .25s ease,box-shadow .25s ease;height:100%}
-        #team .ip-profile-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(13,39,71,.14)}
-        #team .ip-profile-body{padding:26px}
-        #team .ip-profile-name{font-family:Poppins,sans-serif;font-size:22px;font-weight:800;color:#0d2747;margin:0 0 5px}
-        #team .ip-profile-role{font-size:15px;font-weight:700;color:#b87917;margin-bottom:12px}
-        #team .ip-experience{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:#eef5fb;color:#1b4f7a;font-size:12px;font-weight:800;margin-bottom:16px}
-        #team .ip-profile-bio{font-size:14px;line-height:1.7;color:#5c6675;margin-bottom:17px}
-        #team .ip-tags{display:flex;flex-wrap:wrap;gap:7px}
-        #team .ip-tag{font-size:11px;font-weight:700;color:#0d2747;background:#f4f7fa;border:1px solid #e2e8f0;border-radius:7px;padding:6px 8px}
-        @media(max-width:991px){#team .ip-team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#team .ip-team-title{font-size:36px}}
-        @media(max-width:575px){#team.ip-team-section{padding:64px 0}#team .ip-team-grid{grid-template-columns:1fr}#team .ip-team-title{font-size:30px}}
-      `;
-      document.head.appendChild(style);
-    }
-
     section.className = "team ip-team-section";
     section.innerHTML = `
       <div class="container">
         <div class="text-center" data-aos="fade-up">
-          <div class="ip-team-eyebrow">Our Team / Experts</div>
-          <h2 class="ip-team-title">Meet Our Professionals</h2>
-          <p class="ip-team-subtitle">Trusted advisors delivering excellence in taxation, accounting, corporate compliance and business advisory. Our multidisciplinary team combines experience, technical expertise and a client-first approach.</p>
+          <div class="ip-team-eyebrow">Our Professionals</div>
+          <h2 class="ip-team-title">Expertise that works together.</h2>
+          <p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p>
         </div>
         <div class="ip-team-grid">
-          ${team
-            .map(
-              (member, index) => `
-                <article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 300)}">
-                  <div class="ip-profile-body">
-                    <h3 class="ip-profile-name">${member.name}</h3>
-                    <div class="ip-profile-role">${member.role}</div>
-                    <div class="ip-experience"><i class="bi bi-award"></i>${member.experience}</div>
-                    <p class="ip-profile-bio">${member.bio}</p>
-                    <div class="ip-tags">${member.expertise
-                      .map((item) => `<span class="ip-tag">${item}</span>`)
-                      .join("")}</div>
-                  </div>
-                </article>
-              `
-            )
-            .join("")}
+          ${team.map((member, index) => `
+            <article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(index * 45, 270)}">
+              <img class="ip-profile-photo" src="${member.photo}?v=${PHOTO_VERSION}" alt="${member.name}" loading="lazy" />
+              <div class="ip-profile-body">
+                <h3 class="ip-profile-name">${member.name}</h3>
+                <div class="ip-profile-role">${member.role}</div>
+                <div class="ip-experience"><i class="bi bi-award"></i>${member.experience}</div>
+                <p class="ip-profile-bio">${member.bio}</p>
+                <div class="ip-tags">${member.expertise.map((item) => `<span class="ip-tag">${item}</span>`).join("")}</div>
+              </div>
+            </article>`).join("")}
         </div>
       </div>`;
+  };
 
-    hideTeamPhotos();
+  const runVision = () => {
+    modernizeHeader();
+    modernizeHome();
+    renderTeam();
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", renderTeam);
+    document.addEventListener("DOMContentLoaded", runVision);
   } else {
-    renderTeam();
+    runVision();
   }
 
   window.addEventListener("load", () => {
-    hideTeamPhotos();
     if (typeof AOS !== "undefined") {
-      AOS.init({ duration: 850, easing: "ease-in-out", once: true, mirror: false });
+      AOS.init({ duration: 800, easing: "ease-in-out", once: true, mirror: false });
       AOS.refresh();
     }
   });
