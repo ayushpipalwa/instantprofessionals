@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260811-0218";
+const VERSION="20260811-0225";
 
 function loadVisionStyles(){if(document.querySelector('link[data-ip-vision="2"]'))return;const l=document.createElement("link");l.rel="stylesheet";l.href=`assets/css/vision-2.css?v=${VERSION}`;l.dataset.ipVision="2";document.head.appendChild(l)}
 loadVisionStyles();
@@ -25,49 +25,45 @@ function modernizeHome(){
   if(!c||c.dataset.ipModernized)return;
   c.dataset.ipModernized="1";
   const hero=document.createElement("section");
-  hero.className="ip-home-hero ip-signature-home";
-  hero.setAttribute("aria-label","Instant Professionals — new generation compliance partner");
+  hero.className="ip-home-hero ip-os-home";
+  hero.setAttribute("aria-label","Instant Professionals — compliance operating system");
   hero.innerHTML=`
-    <div class="ip-orbit ip-orbit-one" aria-hidden="true"></div>
-    <div class="ip-orbit ip-orbit-two" aria-hidden="true"></div>
-    <div class="container ip-home-shell">
-      <div class="ip-home-copy" data-aos="fade-up">
-        <div class="ip-home-code"><span>IP / 2018</span><b>COMPLIANCE • TAX • ADVISORY</b></div>
-        <h1>Professional judgement.<br><span>Coordinated execution.</span></h1>
-        <p class="ip-home-lead">Instant Professionals is a new-generation compliance partner for businesses that need more than filing support. We connect corporate compliance, taxation, audit, registrations, intellectual property and advisory into one accountable professional relationship.</p>
-        <div class="ip-home-actions">
-          <a class="ip-home-btn ip-home-btn-primary" href="#services">Explore our capabilities <i class="bi bi-arrow-up-right"></i></a>
-          <a class="ip-home-btn ip-home-btn-ghost" href="#team">Meet the professionals</a>
+    <div class="ip-os-grid-bg" aria-hidden="true"></div>
+    <div class="container ip-os-shell">
+      <div class="ip-os-copy" data-aos="fade-up">
+        <div class="ip-os-index"><span>IP</span><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+        <h1>Compliance,<br><em>engineered around</em><br>your business.</h1>
+        <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory — structured around how your business actually operates.</p>
+        <div class="ip-os-actions">
+          <a class="ip-os-btn ip-os-btn-primary" href="#services">Explore services <i class="bi bi-arrow-right"></i></a>
+          <a class="ip-os-btn ip-os-btn-ghost" href="#team">Meet our professionals</a>
         </div>
-        <div class="ip-home-proof" aria-label="Key strengths">
-          <div><strong>01</strong><span>One coordinated<br>professional team</span></div>
-          <div><strong>02</strong><span>Business-first<br>regulatory advice</span></div>
-          <div><strong>03</strong><span>Timely, accountable<br>execution</span></div>
+        <div class="ip-os-credibility">
+          <div><strong>2018</strong><span>Built on professional practice</span></div>
+          <div><strong>360°</strong><span>Compliance and advisory coverage</span></div>
+          <div><strong>1</strong><span>Coordinated professional relationship</span></div>
         </div>
       </div>
 
-      <aside class="ip-command-card" data-aos="fade-left" aria-label="Compliance command grid">
-        <div class="ip-command-head">
-          <div>
-            <small>IP COMPLIANCE COMMAND</small>
-            <h2>From obligation<br>to outcome.</h2>
-          </div>
-          <div class="ip-command-mark">IP</div>
+      <aside class="ip-os-system" data-aos="fade-left" aria-label="Business compliance lifecycle">
+        <div class="ip-os-system-top">
+          <div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div>
+          <b>01—05</b>
         </div>
-        <div class="ip-command-flow">
-          <div class="ip-flow-row"><span class="ip-flow-no">01</span><div><b>STRUCTURE</b><small>Registration • Corporate • Secretarial</small></div><i class="bi bi-arrow-right"></i></div>
-          <div class="ip-flow-row"><span class="ip-flow-no">02</span><div><b>COMPLY</b><small>GST • Income Tax • Returns • Licences</small></div><i class="bi bi-arrow-right"></i></div>
-          <div class="ip-flow-row"><span class="ip-flow-no">03</span><div><b>ASSURE</b><small>Audit • Accounting • Controls • Reporting</small></div><i class="bi bi-arrow-right"></i></div>
-          <div class="ip-flow-row"><span class="ip-flow-no">04</span><div><b>PROTECT</b><small>Trademark • IPR • Documentation</small></div><i class="bi bi-arrow-right"></i></div>
-          <div class="ip-flow-row"><span class="ip-flow-no">05</span><div><b>GROW</b><small>Advisory • Risk • Business Support</small></div><i class="bi bi-arrow-up-right"></i></div>
+        <div class="ip-os-core">
+          <div class="ip-os-center"><span>IP</span><small>COORDINATED<br>OVERSIGHT</small></div>
+          <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
+          <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
+          <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>
+          <div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR & documentation</small></div></div>
+          <div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory & business support</small></div></div>
         </div>
-        <div class="ip-command-foot"><span>Solutions</span><span>Compliance</span><span>Growth</span></div>
+        <div class="ip-os-system-foot"><span>Clarity</span><span>Control</span><span>Continuity</span></div>
       </aside>
     </div>
-    <div class="container ip-home-signature" aria-label="Instant Professionals promise">
-      <span>NEW-GENERATION COMPLIANCE PARTNER</span>
-      <p>Clarity in advice. Discipline in execution. Continuity in support.</p>
-      <div class="ip-signature-line"></div>
+    <div class="container ip-os-bottom">
+      <span>INSTANT PROFESSIONALS</span>
+      <p>Professional judgement <i></i> Practical execution <i></i> Long-term support</p>
     </div>`;
   c.replaceWith(hero);
 }
