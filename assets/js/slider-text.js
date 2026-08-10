@@ -2,7 +2,8 @@
 (function () {
   "use strict";
 
-  const PHOTO_VERSION = "20260810-1536";
+  const PHOTO_VERSION = "20260811-0032";
+  const LOGO_PATH = "assets/img/instant-professionals-logo-2026.png?v=20260811-0032";
   const APPROVED_PHOTOS = {
     "Ayush Pipalwa": "assets/img/team/live/ayush-pipalwa.jpg",
     "Renu Sharma": "assets/img/team/live/renu-sharma.jpg",
@@ -28,7 +29,7 @@
       #header{height:82px;background:rgba(255,255,255,.97)!important;border-bottom:1px solid rgba(7,27,63,.08);box-shadow:0 8px 26px rgba(7,27,63,.08)!important;backdrop-filter:blur(12px)}
       #header.header-scrolled{background:rgba(255,255,255,.98)!important}
       #header .logo-brand{margin-top:0;display:flex;align-items:center}
-      #header .logo-brand img{width:68px!important;height:68px!important;max-height:68px!important;object-fit:contain;border-radius:50%;background:#fff}
+      #header .logo-brand img{width:68px!important;height:68px!important;max-height:68px!important;object-fit:contain;border-radius:12px;background:#fff}
       .navbar a,.navbar a:focus{font-family:"Poppins",sans-serif;font-size:13px;font-weight:600;color:var(--ip-navy)!important;border-radius:9px}
       .navbar a:hover,.navbar .active,.navbar .active:focus,.navbar li:hover>a{background:rgba(85,184,79,.11)!important;color:var(--ip-green-dark)!important}
       .navbar .dropdown ul{border:1px solid var(--ip-border);border-radius:16px;box-shadow:0 20px 52px rgba(7,27,63,.14)}
@@ -50,6 +51,14 @@
       @media(max-width:991px){#header{height:74px}#header .logo-brand img{width:60px!important;height:60px!important}.navbar-mobile a{color:var(--ip-navy)!important}.navbar-mobile a:hover,.navbar-mobile .active,.navbar-mobile li:hover>a{color:var(--ip-green-dark)!important}}
     `;
     document.head.appendChild(style);
+  };
+
+  const installLogo = () => {
+    document.querySelectorAll('img[src*="LOGO.png"], img[alt*="Instant Professionals"]').forEach((img) => {
+      img.src = LOGO_PATH;
+      img.removeAttribute("srcset");
+    });
+    document.querySelectorAll('link[rel="icon"]').forEach((link) => { link.href = LOGO_PATH; });
   };
 
   const installHomeHero = () => {
@@ -76,7 +85,7 @@
           </div>
         </div>
         <div class="ip-nextgen-panel">
-          <div class="ip-panel-mark"><img src="assets/img/LOGO.png?v=20260810-1536" alt="Instant Professionals registered logo"></div>
+          <div class="ip-panel-mark"><img src="${LOGO_PATH}" alt="Instant Professionals registered logo"></div>
           <h2>Modern compliance. Practical advice.</h2>
           <p>Built for startups, growing businesses, established enterprises and individuals who value dependable execution and clear professional guidance.</p>
           <div class="ip-panel-services">
@@ -100,7 +109,7 @@
         .ip-action-secondary{border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.05);color:#fff!important}.ip-action-secondary:hover{background:#fff;color:#071b3f!important}
         .ip-nextgen-proof{display:flex;flex-wrap:wrap;gap:20px;color:rgba(255,255,255,.76);font-size:13px;font-weight:700}.ip-nextgen-proof span{display:inline-flex;align-items:center;gap:7px}.ip-nextgen-proof i{color:#79d570;font-size:16px}
         .ip-nextgen-panel{background:rgba(255,255,255,.97);color:#172b3d;border-radius:25px;padding:30px;box-shadow:0 30px 72px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.7)}
-        .ip-panel-mark{width:104px;height:104px;margin-bottom:20px}.ip-panel-mark img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+        .ip-panel-mark{width:104px;height:104px;margin-bottom:20px}.ip-panel-mark img{width:100%;height:100%;object-fit:contain;border-radius:12px}
         .ip-nextgen-panel h2{font-size:26px;font-weight:800;color:#071b3f;margin-bottom:12px}.ip-nextgen-panel>p{color:#647482;line-height:1.7;margin-bottom:20px}
         .ip-panel-services{display:flex;flex-wrap:wrap;gap:8px}.ip-panel-services span{padding:8px 10px;border-radius:8px;border:1px solid #dfe8e2;background:#f5f8f6;color:#21425d;font-size:11px;font-weight:800}
         @media(max-width:991px){.ip-nextgen-hero{padding:132px 0 70px;min-height:auto}.ip-nextgen-shell{grid-template-columns:1fr;gap:40px}.ip-nextgen-copy h1{font-size:49px}.ip-nextgen-panel{max-width:720px}}
@@ -194,7 +203,9 @@
 
   const start = () => {
     installBrandStyles();
+    installLogo();
     installHomeHero();
+    installLogo();
     const floating = document.getElementById("slider-text");
     if (floating) floating.textContent = "Your new-generation compliance partner — professional expertise, practical execution.";
     syncTeam();
