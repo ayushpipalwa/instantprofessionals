@@ -17,7 +17,7 @@
     if (document.querySelector('link[data-ip-vision="2"]')) return;
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "assets/css/vision-2.css?v=20260811-0050";
+    link.href = "assets/css/vision-2.css?v=20260811-0055";
     link.dataset.ipVision = "2";
     document.head.appendChild(link);
   };
@@ -112,7 +112,7 @@
   const modernizeHeader = () => {
     const logo = document.querySelector("#header .logo-brand img");
     if (logo) {
-      logo.src = "assets/img/LOGO.png?v=20260811-0050";
+      logo.src = "assets/img/LOGO.png?v=20260811-0055";
       logo.alt = "Instant Professionals";
       logo.removeAttribute("style");
     }
@@ -170,7 +170,7 @@
     });
   };
 
-  const PHOTO_VERSION = "20260811-0050";
+  const PHOTO_VERSION = "20260811-0055";
   const team = [
     {name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/live/ayush-pipalwa.jpg",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting. He leads client strategy and complex regulatory engagements with a practical, business-first approach.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
     {name:"CA Mayank Jain",role:"Founder",experience:"Direct Tax Professional",photo:"assets/img/team/live/mayank-jain.jpg",bio:"Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",expertise:["Direct Tax","Tax Advisory","Assessments"]},
@@ -179,7 +179,10 @@
     {name:"CA Rohit Sharma",role:"Audit & Assurance Advisor",experience:"10+ Years",photo:"assets/img/team/live/rohit-sharma.jpg",bio:"Chartered Accountant specialising in audit and assurance, financial reporting, audit readiness and internal-control reviews for growing businesses.",expertise:["Audit & Assurance","Financial Reporting","Internal Controls"]},
     {name:"CA Mayank Hoiyani",role:"Chartered Accountant",experience:"Professional Expert",photo:"assets/img/team/live/mayank-hoiyani.jpg",bio:"Advises clients on GST, income tax, statutory compliance, financial reporting and ongoing business support.",expertise:["GST","Income Tax","Financial Reporting"]},
     {name:"CMA Surbhi Sharma",role:"Cost & Management Accountant",experience:"5+ Years",photo:"assets/img/team/live/surbhi-sharma.png",bio:"Cost and management accounting professional focused on budgeting, costing, MIS reporting, financial planning and operational efficiency.",expertise:["Costing","Budgeting","MIS & Analysis"]},
-    {name:"Nisha Pal",role:"Manager",experience:"Client Operations",photo:"assets/img/team/live/nisha-pal.jpg",bio:"Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",expertise:["Client Management","Operations","Compliance Coordination"]}
+    {name:"Nisha Pal",role:"Manager",experience:"Client Operations",photo:"assets/img/team/live/nisha-pal.jpg",bio:"Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",expertise:["Client Management","Operations","Compliance Coordination"]},
+    {name:"Yash Sharma",role:"Accounts Executive",experience:"Accounts & Compliance",initials:"YS",bio:"Supports bookkeeping, GST reconciliations, financial records and routine statutory compliance assignments.",expertise:["Bookkeeping","GST Reconciliation","Documentation"]},
+    {name:"Vishal",role:"Accounts Executive",experience:"Accounts & Compliance",initials:"V",bio:"Supports accounting operations, financial documentation, GST assistance and recurring compliance processes.",expertise:["Accounting Support","GST","Compliance"]},
+    {name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",initials:"A",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]}
   ];
 
   const renderTeam = () => {
@@ -196,7 +199,9 @@
         <div class="ip-team-grid">
           ${team.map((member, index) => `
             <article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(index * 45, 270)}">
-              <img class="ip-profile-photo" src="${member.photo}?v=${PHOTO_VERSION}" alt="${member.name}" loading="lazy" />
+              ${member.photo
+                ? `<img class="ip-profile-photo" src="${member.photo}?v=${PHOTO_VERSION}" alt="${member.name}" loading="lazy" />`
+                : `<div class="ip-profile-photo" role="img" aria-label="${member.name}" style="display:flex!important;align-items:center;justify-content:center;background:linear-gradient(145deg,#0b2341,#245f9b);color:#fff;font-family:Poppins,sans-serif;font-size:64px;font-weight:800;letter-spacing:-.04em">${member.initials}</div>`}
               <div class="ip-profile-body">
                 <h3 class="ip-profile-name">${member.name}</h3>
                 <div class="ip-profile-role">${member.role}</div>
