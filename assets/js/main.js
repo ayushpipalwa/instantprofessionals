@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260811-0152";
+const VERSION="20260811-0218";
 
 function loadVisionStyles(){if(document.querySelector('link[data-ip-vision="2"]'))return;const l=document.createElement("link");l.rel="stylesheet";l.href=`assets/css/vision-2.css?v=${VERSION}`;l.dataset.ipVision="2";document.head.appendChild(l)}
 loadVisionStyles();
@@ -19,7 +19,58 @@ on("click",".scrollto",function(e){if(!this.hash||!$(this.hash))return;e.prevent
 window.addEventListener("load",()=>{if(location.hash&&$(location.hash))scrollto(location.hash)});
 
 function modernizeHeader(){const logo=$("#header .logo-brand img");if(logo){logo.src=`assets/img/LOGO.png?v=${VERSION}`;logo.alt="Instant Professionals";logo.removeAttribute("style")}}
-function modernizeHome(){const c=$("#carouselExampleCaptions");if(!c||c.dataset.ipModernized)return;c.dataset.ipModernized="1";const hero=document.createElement("section");hero.className="ip-home-hero";hero.innerHTML=`<div class="container ip-grid"><div data-aos="fade-up"><div class="ip-eyebrow">A new generation compliance partner</div><h1>Compliance that keeps your <span>business moving.</span></h1><p class="lead">Instant Professionals brings corporate compliance, taxation, accounting, intellectual property and business advisory under one coordinated professional platform — practical, responsive and built around business outcomes.</p><div class="ip-actions"><a class="ip-btn ip-btn-primary" href="#services">Explore Services</a><a class="ip-btn ip-btn-secondary" href="#team">Meet Our Professionals</a></div><div class="ip-trust"><span><i class="bi bi-check-circle-fill"></i>Founded in 2018</span><span><i class="bi bi-check-circle-fill"></i>Pan-India support</span><span><i class="bi bi-check-circle-fill"></i>Multi-disciplinary expertise</span></div></div><aside class="ip-hero-panel" data-aos="fade-left"><div class="label">One coordinated platform</div><h2>From incorporation to ongoing compliance and strategic advisory.</h2><div class="ip-capability"><span>Corporate & Secretarial</span><span>GST & Direct Tax</span><span>Audit & Accounting</span><span>IPR & Legal Support</span><span>Registrations & Licences</span><span>Business Advisory</span></div></aside></div>`;c.replaceWith(hero);const about=$("#about .content .col-lg-12");if(about)about.innerHTML=`<p>Instant Professionals is a multidisciplinary professional-services platform helping businesses manage regulatory obligations with greater clarity, speed and accountability. Since 2018, we have supported entrepreneurs, start-ups, MSMEs and established businesses across corporate compliance, taxation, accounting, registrations, intellectual property and business advisory.</p><p>Our model combines specialised professionals with coordinated execution. Instead of navigating multiple service providers, clients receive practical support through a single professional relationship — from routine filings and registrations to complex advisory, risk management and business-critical compliance.</p>`;const fixes={"LIGITATION":"TAX LITIGATION & REPRESENTATION","TAX":"DIRECT TAX & COMPLIANCE","GOODS AND SERVICES TAX":"GST ADVISORY & COMPLIANCE"};$("#services .title a",true).forEach(e=>{const k=e.textContent.trim().toUpperCase();if(fixes[k])e.textContent=fixes[k]})}
+
+function modernizeHome(){
+  const c=$("#carouselExampleCaptions");
+  if(!c||c.dataset.ipModernized)return;
+  c.dataset.ipModernized="1";
+  const hero=document.createElement("section");
+  hero.className="ip-home-hero ip-signature-home";
+  hero.setAttribute("aria-label","Instant Professionals — new generation compliance partner");
+  hero.innerHTML=`
+    <div class="ip-orbit ip-orbit-one" aria-hidden="true"></div>
+    <div class="ip-orbit ip-orbit-two" aria-hidden="true"></div>
+    <div class="container ip-home-shell">
+      <div class="ip-home-copy" data-aos="fade-up">
+        <div class="ip-home-code"><span>IP / 2018</span><b>COMPLIANCE • TAX • ADVISORY</b></div>
+        <h1>Professional judgement.<br><span>Coordinated execution.</span></h1>
+        <p class="ip-home-lead">Instant Professionals is a new-generation compliance partner for businesses that need more than filing support. We connect corporate compliance, taxation, audit, registrations, intellectual property and advisory into one accountable professional relationship.</p>
+        <div class="ip-home-actions">
+          <a class="ip-home-btn ip-home-btn-primary" href="#services">Explore our capabilities <i class="bi bi-arrow-up-right"></i></a>
+          <a class="ip-home-btn ip-home-btn-ghost" href="#team">Meet the professionals</a>
+        </div>
+        <div class="ip-home-proof" aria-label="Key strengths">
+          <div><strong>01</strong><span>One coordinated<br>professional team</span></div>
+          <div><strong>02</strong><span>Business-first<br>regulatory advice</span></div>
+          <div><strong>03</strong><span>Timely, accountable<br>execution</span></div>
+        </div>
+      </div>
+
+      <aside class="ip-command-card" data-aos="fade-left" aria-label="Compliance command grid">
+        <div class="ip-command-head">
+          <div>
+            <small>IP COMPLIANCE COMMAND</small>
+            <h2>From obligation<br>to outcome.</h2>
+          </div>
+          <div class="ip-command-mark">IP</div>
+        </div>
+        <div class="ip-command-flow">
+          <div class="ip-flow-row"><span class="ip-flow-no">01</span><div><b>STRUCTURE</b><small>Registration • Corporate • Secretarial</small></div><i class="bi bi-arrow-right"></i></div>
+          <div class="ip-flow-row"><span class="ip-flow-no">02</span><div><b>COMPLY</b><small>GST • Income Tax • Returns • Licences</small></div><i class="bi bi-arrow-right"></i></div>
+          <div class="ip-flow-row"><span class="ip-flow-no">03</span><div><b>ASSURE</b><small>Audit • Accounting • Controls • Reporting</small></div><i class="bi bi-arrow-right"></i></div>
+          <div class="ip-flow-row"><span class="ip-flow-no">04</span><div><b>PROTECT</b><small>Trademark • IPR • Documentation</small></div><i class="bi bi-arrow-right"></i></div>
+          <div class="ip-flow-row"><span class="ip-flow-no">05</span><div><b>GROW</b><small>Advisory • Risk • Business Support</small></div><i class="bi bi-arrow-up-right"></i></div>
+        </div>
+        <div class="ip-command-foot"><span>Solutions</span><span>Compliance</span><span>Growth</span></div>
+      </aside>
+    </div>
+    <div class="container ip-home-signature" aria-label="Instant Professionals promise">
+      <span>NEW-GENERATION COMPLIANCE PARTNER</span>
+      <p>Clarity in advice. Discipline in execution. Continuity in support.</p>
+      <div class="ip-signature-line"></div>
+    </div>`;
+  c.replaceWith(hero);
+}
 
 const team=[
 {name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/live/ayush-pipalwa.jpg",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
