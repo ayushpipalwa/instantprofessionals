@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260811-1006";
+const VERSION="20260811-1020";
 
 function loadVisionStyles(){if(document.querySelector('link[data-ip-vision="2"]'))return;const l=document.createElement("link");l.rel="stylesheet";l.href=`assets/css/vision-2.css?v=${VERSION}`;l.dataset.ipVision="2";document.head.appendChild(l)}
 loadVisionStyles();
@@ -98,6 +98,25 @@ function modernizeServices(){
   </div>`;
 }
 
+const SERVICE_RATE_MULTIPLIER=2.5;
+function updateServiceRates(){
+  document.querySelectorAll(".card-header h1, .card-header h2, .card-header h3, .card-header h4").forEach(el=>{
+    if(el.dataset.ipRateAdjusted==="1")return;
+    const text=el.textContent.trim();
+    const match=text.match(/(₹|Rs\.?|INR)\s*([\d,]+(?:\.\d+)?)(\s*\/-)?/i);
+    if(!match)return;
+    const oldRate=Number(match[2].replace(/,/g,""));
+    if(!Number.isFinite(oldRate)||oldRate<=0)return;
+    const revisedRate=Math.round(oldRate*SERVICE_RATE_MULTIPLIER);
+    const formatted=new Intl.NumberFormat("en-IN",{maximumFractionDigits:0}).format(revisedRate);
+    const suffix=match[3]||"";
+    el.textContent=text.replace(match[0],`₹ ${formatted}${suffix}`);
+    el.dataset.ipRateAdjusted="1";
+    el.setAttribute("data-original-rate",String(oldRate));
+    el.setAttribute("data-rate-multiplier",String(SERVICE_RATE_MULTIPLIER));
+  });
+}
+
 const team=[
 {name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/live/ayush-pipalwa.jpg",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
 {name:"CA Mayank Jain",role:"Founder",experience:"Direct Tax Professional",photo:"assets/img/team/live/mayank-jain.jpg",bio:"Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",expertise:["Direct Tax","Tax Advisory","Assessments"]},
@@ -117,7 +136,7 @@ const team=[
 ];
 
 function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" alt="${m.name}" loading="lazy">`:`<div class="ip-profile-photo" role="img" aria-label="${m.name}" style="display:flex!important;align-items:center;justify-content:center;background:linear-gradient(145deg,#0b2341,#245f9b);color:#fff;font-family:Poppins,sans-serif;font-size:64px;font-weight:800">${m.initials}</div>`}<div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><div class="ip-experience"><i class="bi bi-award"></i>${m.experience}</div><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
-function run(){modernizeHeader();modernizeHome();modernizeServices();renderTeam()}
+function run(){modernizeHeader();modernizeHome();modernizeServices();updateServiceRates();renderTeam()}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
-window.addEventListener("load",()=>{if(typeof AOS!=="undefined"){AOS.init({duration:800,easing:"ease-in-out",once:true,mirror:false});AOS.refresh()}});
+window.addEventListener("load",()=>{updateServiceRates();if(typeof AOS!=="undefined"){AOS.init({duration:800,easing:"ease-in-out",once:true,mirror:false});AOS.refresh()}});
 })();
