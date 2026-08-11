@@ -53,8 +53,12 @@ function refreshTDS(){
 
 function reduceQuotedPrices(){
   const pricePattern=/(₹|Rs\.?|INR)\s*([\d,]+(?:\.\d+)?)(\s*\/-)?/gi;
-  const selectors='h1,h2,h3,h4,h5,h6,p,span,strong,b,small';
-  document.querySelectorAll(selectors).forEach(el=>{
+  const quoteSelectors=[
+    'body > .container.my-5.mt-5.py-5 h1','body > .container.my-5.mt-5.py-5 h2','body > .container.my-5.mt-5.py-5 h3','body > .container.my-5.mt-5.py-5 h4','body > .container.my-5.mt-5.py-5 p','body > .container.my-5.mt-5.py-5 span','body > .container.my-5.mt-5.py-5 strong',
+    '.card-header h1','.card-header h2','.card-header h3','.card-header h4','.card-header h5','.card-header p','.card-header span','.card-header strong',
+    '.pricing h1','.pricing h2','.pricing h3','.pricing h4','.pricing p','.pricing span','.pricing strong'
+  ].join(',');
+  document.querySelectorAll(quoteSelectors).forEach(el=>{
     if(el.dataset.ipPrice30==='1'||el.children.length)return;
     const original=el.textContent||'';
     if(!/(₹|Rs\.?|INR)\s*[\d,]+/i.test(original))return;
