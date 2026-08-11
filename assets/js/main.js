@@ -2,10 +2,27 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260811-1020";
+const VERSION="20260811-1034";
 
-function loadVisionStyles(){if(document.querySelector('link[data-ip-vision="2"]'))return;const l=document.createElement("link");l.rel="stylesheet";l.href=`assets/css/vision-2.css?v=${VERSION}`;l.dataset.ipVision="2";document.head.appendChild(l)}
+function loadVisionStyles(){
+  if(!document.querySelector('link[data-ip-vision="2"]')){
+    const l=document.createElement("link");
+    l.rel="stylesheet";
+    l.href=`assets/css/vision-2.css?v=${VERSION}`;
+    l.dataset.ipVision="2";
+    document.head.appendChild(l);
+  }
+}
+function loadCurrentLaw(){
+  if(document.querySelector('script[data-ip-current-law="1"]'))return;
+  const s=document.createElement("script");
+  s.src=`assets/js/current-law.js?v=${VERSION}`;
+  s.dataset.ipCurrentLaw="1";
+  s.defer=true;
+  document.head.appendChild(s);
+}
 loadVisionStyles();
+loadCurrentLaw();
 
 const navlinks=$("#navbar .scrollto",true);
 function setActiveNav(){const p=window.scrollY+200;navlinks.forEach(l=>{if(!l.hash)return;const s=$(l.hash);if(!s)return;l.classList.toggle("active",p>=s.offsetTop&&p<=s.offsetTop+s.offsetHeight)})}
@@ -18,7 +35,7 @@ on("click",".navbar .dropdown > a",function(e){const n=$("#navbar");if(n&&n.clas
 on("click",".scrollto",function(e){if(!this.hash||!$(this.hash))return;e.preventDefault();const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){n.classList.remove("navbar-mobile");const b=$(".mobile-nav-toggle");if(b){b.classList.toggle("bi-list");b.classList.toggle("bi-x")}}scrollto(this.hash)},true);
 window.addEventListener("load",()=>{if(location.hash&&$(location.hash))scrollto(location.hash)});
 
-function modernizeHeader(){const logo=$("#header .logo-brand img");if(logo){logo.src=`assets/img/LOGO.png?v=${VERSION}`;logo.alt="Instant Professionals";logo.removeAttribute("style")}}
+function modernizeHeader(){const logo=$("#header .logo-brand img");if(logo){logo.src=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;logo.alt="Instant Professionals";logo.removeAttribute("style")}}
 
 function modernizeHome(){
   const c=$("#carouselExampleCaptions");
@@ -44,7 +61,6 @@ function modernizeHome(){
           <div><strong>1</strong><span>Coordinated professional relationship</span></div>
         </div>
       </div>
-
       <aside class="ip-os-system" data-aos="fade-left" aria-label="Business compliance lifecycle">
         <div class="ip-os-system-top">
           <div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div>
