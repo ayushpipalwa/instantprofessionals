@@ -1,0 +1,68 @@
+/* Instant Professionals — restrained motion & interaction polish */
+:root{--ip-ease:cubic-bezier(.2,.8,.2,1);--ip-ease-soft:cubic-bezier(.22,.61,.36,1);--ip-fast:220ms;--ip-med:420ms;--ip-slow:680ms}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden}
+
+/* AOS: smoother, shorter, more professional reveals */
+[data-aos]{transition-duration:var(--ip-slow)!important;transition-timing-function:var(--ip-ease)!important;will-change:transform,opacity}
+[data-aos="fade-up"]{transform:translate3d(0,18px,0)}
+[data-aos="fade-left"]{transform:translate3d(18px,0,0)}
+[data-aos="fade-right"]{transform:translate3d(-18px,0,0)}
+[data-aos].aos-animate{transform:translate3d(0,0,0)}
+
+/* Header + navigation */
+#header{transition:background-color var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease),border-color var(--ip-med) var(--ip-ease)!important}
+.navbar a,.navbar a:focus{transition:color var(--ip-fast) var(--ip-ease),background-color var(--ip-fast) var(--ip-ease),transform var(--ip-fast) var(--ip-ease)!important}
+.navbar .dropdown ul{transform-origin:top center;transition:opacity var(--ip-fast) var(--ip-ease),transform var(--ip-fast) var(--ip-ease)!important}
+.navbar .dropdown:hover>ul{transform:translateY(2px)}
+
+/* Buttons */
+.ip-os-btn,.ip-service-primary,.form-style .btn.card-style,.roll .btn.card-style,.btn.card-style{transition:transform var(--ip-fast) var(--ip-ease),box-shadow var(--ip-fast) var(--ip-ease),background-color var(--ip-fast) var(--ip-ease),border-color var(--ip-fast) var(--ip-ease)!important}
+.ip-os-btn:hover,.ip-service-primary:hover,.form-style .btn.card-style:hover,.roll .btn.card-style:hover,.btn.card-style:hover{transform:translateY(-2px)}
+.ip-os-btn:active,.ip-service-primary:active,.form-style .btn.card-style:active,.roll .btn.card-style:active,.btn.card-style:active{transform:translateY(0) scale(.985)}
+
+/* Homepage hero */
+.ip-os-system{transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease)}
+.ip-os-system:hover{transform:translateY(-4px);box-shadow:0 40px 86px rgba(11,35,65,.30)}
+.ip-os-center{transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease)}
+.ip-os-system:hover .ip-os-center{transform:scale(1.025)}
+.ip-os-track{transition:background-color var(--ip-med) var(--ip-ease),border-color var(--ip-med) var(--ip-ease),transform var(--ip-med) var(--ip-ease)}
+.ip-os-track:hover{background:rgba(255,255,255,.085);border-color:rgba(141,207,149,.34)}
+.ip-os-grid-bg{animation:ipGridDrift 18s linear infinite alternate}
+@keyframes ipGridDrift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-10px,-8px,0)}}
+
+/* Homepage service directory */
+.ip-service-card{transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease),border-color var(--ip-med) var(--ip-ease)!important}
+.ip-service-card:before{transition:height var(--ip-med) var(--ip-ease)!important}
+.ip-service-card:hover{transform:translateY(-5px)!important}
+.ip-service-top>i{transition:transform var(--ip-med) var(--ip-ease),background-color var(--ip-med) var(--ip-ease)}
+.ip-service-card:hover .ip-service-top>i{transform:translateY(-2px) rotate(-2deg)}
+.ip-service-links a{transition:color var(--ip-fast) var(--ip-ease),padding-left var(--ip-fast) var(--ip-ease)!important}
+.ip-service-links a i{transition:transform var(--ip-fast) var(--ip-ease)!important}
+
+/* Team */
+.ip-profile-card{transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease),border-color var(--ip-med) var(--ip-ease)!important}
+.ip-profile-card:hover{transform:translateY(-5px)!important;border-color:#d7e2ea}
+.ip-profile-photo{transition:transform 900ms var(--ip-ease),filter var(--ip-med) var(--ip-ease)!important}
+.ip-profile-card:hover>.ip-profile-photo{transform:scale(1.015);filter:saturate(1.02) contrast(1.01)}
+.ip-tag{transition:background-color var(--ip-fast) var(--ip-ease),border-color var(--ip-fast) var(--ip-ease),transform var(--ip-fast) var(--ip-ease)}
+.ip-profile-card:hover .ip-tag{border-color:#d7e4dc}
+
+/* Legacy service pages modernized by shared CSS */
+body:has(> .container.my-5.mt-5.py-5) .card{transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease),border-color var(--ip-med) var(--ip-ease)!important}
+body:has(> .container.my-5.mt-5.py-5)> .container.py-5:has(>h1.text-center) .card:hover{transform:translateY(-4px)!important}
+body:has(> .container.my-5.mt-5.py-5) .container-one .card:hover,body:has(> .container.my-5.mt-5.py-5) .container-two .card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(7,29,61,.09)!important}
+body:has(> .container.my-5.mt-5.py-5) .form-control{transition:border-color var(--ip-fast) var(--ip-ease),box-shadow var(--ip-fast) var(--ip-ease),background-color var(--ip-fast) var(--ip-ease)!important}
+body:has(> .container.my-5.mt-5.py-5) .form-control:focus{border-color:rgba(47,143,78,.55)!important;box-shadow:0 0 0 4px rgba(47,143,78,.09)!important;background:#fff}
+body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 img{transition:transform 900ms var(--ip-ease),filter var(--ip-med) var(--ip-ease)!important}
+body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 img:hover{transform:translateY(-3px)}
+
+/* Footer and links */
+#footer a{transition:color var(--ip-fast) var(--ip-ease),opacity var(--ip-fast) var(--ip-ease)}
+#footer a:hover{opacity:.82}
+
+/* Keyboard focus */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(47,143,78,.28)!important;outline-offset:3px!important}
+
+@media (max-width:991px){.ip-os-system:hover,.ip-service-card:hover,.ip-profile-card:hover{transform:none!important}.ip-profile-card:hover>.ip-profile-photo{transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}[data-aos]{transform:none!important;opacity:1!important}.ip-os-grid-bg{animation:none!important}}
