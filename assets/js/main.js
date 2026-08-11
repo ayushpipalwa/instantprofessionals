@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260811-0225";
+const VERSION="20260811-1006";
 
 function loadVisionStyles(){if(document.querySelector('link[data-ip-vision="2"]'))return;const l=document.createElement("link");l.rel="stylesheet";l.href=`assets/css/vision-2.css?v=${VERSION}`;l.dataset.ipVision="2";document.head.appendChild(l)}
 loadVisionStyles();
@@ -68,6 +68,36 @@ function modernizeHome(){
   c.replaceWith(hero);
 }
 
+function modernizeServices(){
+  const section=$("#services");
+  if(!section||section.dataset.ipServiceHub)return;
+  section.dataset.ipServiceHub="1";
+  section.className="services ip-service-hub";
+  const services=[
+    {no:"01",icon:"bi-building-check",title:"Business & Tax Registrations",desc:"Set up the registrations your business needs to start, trade and remain compliant.",primary:"GST Registration.html",links:[["GST Registration","GST Registration.html"],["MSME Registration","MSME Registration.html"],["IEC Registration","iesregistration.html"]]},
+    {no:"02",icon:"bi-receipt",title:"GST & Indirect Tax",desc:"Recurring GST compliance, returns and special filings supported by practical indirect-tax guidance.",primary:"GSTreturns.html",links:[["GST Returns","GSTreturns.html"],["GST LUT","GST-LUT-LETTEROFundertaking.html"],["GST Cancellation","gst-cancellation.html"]]},
+    {no:"03",icon:"bi-calculator",title:"Income Tax & TDS",desc:"Return filing and tax compliance for individuals, professionals and businesses throughout the year.",primary:"incometaxreturns.html",links:[["Income Tax Returns","incometaxreturns.html"],["TDS Returns","tdsreturns.html"],["TDS Revision","tdsreturnrevision.html"]]},
+    {no:"04",icon:"bi-diagram-3",title:"Corporate & Secretarial",desc:"Structured statutory support for companies and LLPs—from recurring filings to governance changes.",primary:"companyannualfilling.html",links:[["Company Annual Filing","companyannualfilling.html"],["LLP Annual Filing","llpannualfilling.html"],["Add a Director","addadirector.html"]]},
+    {no:"05",icon:"bi-shield-check",title:"Trademark & Intellectual Property",desc:"Protect the identity and intellectual assets behind your business with coordinated IPR support.",primary:"Trademark-registration.html",links:[["Trademark Registration","Trademark-registration.html"],["Copyright Application","Copyright-application.html"],["Trademark Objections","trademark-objections.html"]]},
+    {no:"06",icon:"bi-people",title:"Workforce Compliance",desc:"Registration and recurring labour-law filings to keep employee compliance organised and current.",primary:"epf registration.html",links:[["EPF Registration","epf registration.html"],["PF Returns","pfreturns.html"],["ESI Returns","Esi returns.html"]]}
+  ];
+  section.innerHTML=`<div class="container">
+    <div class="ip-service-head" data-aos="fade-up">
+      <div><span class="ip-service-kicker">SERVICES / 360° COVERAGE</span><h2>One relationship.<br><em>Multiple professional capabilities.</em></h2></div>
+      <p>Choose a service area to go directly to the relevant page. Each category connects to the existing specialised pages across the Instant Professionals multipage website.</p>
+    </div>
+    <div class="ip-service-grid">
+      ${services.map((s,i)=>`<article class="ip-service-card" data-aos="fade-up" data-aos-delay="${Math.min(i*65,260)}">
+        <div class="ip-service-top"><span>${s.no}</span><i class="bi ${s.icon}"></i></div>
+        <h3>${s.title}</h3><p>${s.desc}</p>
+        <div class="ip-service-links">${s.links.map(l=>`<a href="${l[1]}">${l[0]} <i class="bi bi-arrow-up-right"></i></a>`).join("")}</div>
+        <a class="ip-service-primary" href="${s.primary}"><span>Explore service</span><i class="bi bi-arrow-right"></i></a>
+      </article>`).join("")}
+    </div>
+    <div class="ip-service-foot" data-aos="fade-up"><span>Need something else?</span><p>Use the Registration, Returns, Compliances and Trademark & other IPR menus above to access the complete service directory.</p><a href="#contact">Talk to our team <i class="bi bi-arrow-right"></i></a></div>
+  </div>`;
+}
+
 const team=[
 {name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/live/ayush-pipalwa.jpg",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
 {name:"CA Mayank Jain",role:"Founder",experience:"Direct Tax Professional",photo:"assets/img/team/live/mayank-jain.jpg",bio:"Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",expertise:["Direct Tax","Tax Advisory","Assessments"]},
@@ -87,7 +117,7 @@ const team=[
 ];
 
 function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" alt="${m.name}" loading="lazy">`:`<div class="ip-profile-photo" role="img" aria-label="${m.name}" style="display:flex!important;align-items:center;justify-content:center;background:linear-gradient(145deg,#0b2341,#245f9b);color:#fff;font-family:Poppins,sans-serif;font-size:64px;font-weight:800">${m.initials}</div>`}<div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><div class="ip-experience"><i class="bi bi-award"></i>${m.experience}</div><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
-function run(){modernizeHeader();modernizeHome();renderTeam()}
+function run(){modernizeHeader();modernizeHome();modernizeServices();renderTeam()}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
 window.addEventListener("load",()=>{if(typeof AOS!=="undefined"){AOS.init({duration:800,easing:"ease-in-out",once:true,mirror:false});AOS.refresh()}});
 })();
