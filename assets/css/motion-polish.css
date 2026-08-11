@@ -52,10 +52,25 @@ body{overflow-x:hidden}
 body:has(> .container.my-5.mt-5.py-5) .card{transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease),border-color var(--ip-med) var(--ip-ease)!important}
 body:has(> .container.my-5.mt-5.py-5)> .container.py-5:has(>h1.text-center) .card:hover{transform:translateY(-4px)!important}
 body:has(> .container.my-5.mt-5.py-5) .container-one .card:hover,body:has(> .container.my-5.mt-5.py-5) .container-two .card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(7,29,61,.09)!important}
-body:has(> .container.my-5.mt-5.py-5) .form-control{transition:border-color var(--ip-fast) var(--ip-ease),box-shadow var(--ip-fast) var(--ip-ease),background-color var(--ip-fast) var(--ip-ease)!important}
-body:has(> .container.my-5.mt-5.py-5) .form-control:focus{border-color:rgba(47,143,78,.55)!important;box-shadow:0 0 0 4px rgba(47,143,78,.09)!important;background:#fff}
+body:has(> .container.my-5.mt-5.py-5) .form-control{transition:border-color var(--ip-fast) var(--ip-ease),box-shadow var(--ip-fast) var(--ip-ease),background-color var(--ip-fast) var(--ip-ease),transform var(--ip-fast) var(--ip-ease)!important}
+body:has(> .container.my-5.mt-5.py-5) .form-control:focus{border-color:rgba(47,143,78,.55)!important;box-shadow:0 0 0 4px rgba(47,143,78,.09)!important;background:#fff;transform:translateY(-1px)}
 body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 img{transition:transform 900ms var(--ip-ease),filter var(--ip-med) var(--ip-ease)!important}
 body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 img:hover{transform:translateY(-3px)}
+
+/* Service-page hero: restrained entrance, quote emphasis and form confidence */
+body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 .row>.col-md-4:first-child{animation:ipServiceCopyIn .7s var(--ip-ease) both}
+body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 .row>.col-md-4:nth-child(2) img{animation:ipServiceFigureIn .9s var(--ip-ease) .08s both,ipServiceFloat 5.5s ease-in-out 1s infinite}
+body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 .form-style,body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 form{animation:ipServiceFormIn .75s var(--ip-ease) .12s both;transition:transform var(--ip-med) var(--ip-ease),box-shadow var(--ip-med) var(--ip-ease)}
+body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 .form-style:hover,body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 form:hover{transform:translateY(-3px);box-shadow:0 28px 64px rgba(7,29,61,.14)}
+body:has(> .container.my-5.mt-5.py-5) .ip-price-quote{animation:ipQuoteReveal .55s var(--ip-ease) .22s both}
+body:has(> .container.my-5.mt-5.py-5) .btn.card-style{position:relative;overflow:hidden}
+body:has(> .container.my-5.mt-5.py-5) .btn.card-style:after{content:"";position:absolute;inset:0 auto 0 -55%;width:42%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);transform:skewX(-18deg);transition:left .55s var(--ip-ease)}
+body:has(> .container.my-5.mt-5.py-5) .btn.card-style:hover:after{left:120%}
+@keyframes ipServiceCopyIn{from{opacity:0;transform:translate3d(-18px,8px,0)}to{opacity:1;transform:none}}
+@keyframes ipServiceFigureIn{from{opacity:0;transform:translate3d(0,18px,0) scale(.97)}to{opacity:1;transform:none}}
+@keyframes ipServiceFormIn{from{opacity:0;transform:translate3d(18px,8px,0)}to{opacity:1;transform:none}}
+@keyframes ipQuoteReveal{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes ipServiceFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
 /* Footer and links */
 #footer a{transition:color var(--ip-fast) var(--ip-ease),opacity var(--ip-fast) var(--ip-ease)}
@@ -64,5 +79,5 @@ body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 img:hover{trans
 /* Keyboard focus */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(47,143,78,.28)!important;outline-offset:3px!important}
 
-@media (max-width:991px){.ip-os-system:hover,.ip-service-card:hover,.ip-profile-card:hover{transform:none!important}.ip-profile-card:hover>.ip-profile-photo{transform:none}}
+@media (max-width:991px){.ip-os-system:hover,.ip-service-card:hover,.ip-profile-card:hover{transform:none!important}.ip-profile-card:hover>.ip-profile-photo{transform:none}body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 .form-style:hover,body:has(> .container.my-5.mt-5.py-5)> .container.my-5.mt-5.py-5 form:hover{transform:none}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}[data-aos]{transform:none!important;opacity:1!important}.ip-os-grid-bg{animation:none!important}}
