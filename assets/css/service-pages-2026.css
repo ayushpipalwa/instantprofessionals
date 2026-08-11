@@ -1,0 +1,254 @@
+/* Instant Professionals — Service Page System 2026
+   Applies only when body.ip-service-page is set by assets/js/main.js. */
+
+body.ip-service-page {
+  --ip-navy:#071d3d;
+  --ip-navy-2:#0d2d56;
+  --ip-green:#2f8f4e;
+  --ip-green-soft:#eaf6ed;
+  --ip-gold:#bd8b2e;
+  --ip-ink:#10233f;
+  --ip-muted:#64748b;
+  --ip-line:#dbe5df;
+  --ip-surface:#f5f8f6;
+  --ip-white:#fff;
+  background:#fff;
+  color:var(--ip-ink);
+}
+
+body.ip-service-page #header {
+  background:rgba(255,255,255,.97)!important;
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(7,29,61,.08);
+}
+
+body.ip-service-page .ip-service-page-hero {
+  position:relative;
+  overflow:hidden;
+  max-width:none!important;
+  padding-top:132px!important;
+  padding-bottom:72px!important;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  background:
+    radial-gradient(circle at 82% 16%,rgba(47,143,78,.16),transparent 28%),
+    linear-gradient(135deg,#f8fbf9 0%,#eef5f1 52%,#f8fafc 100%);
+  border-bottom:1px solid var(--ip-line);
+}
+body.ip-service-page .ip-service-page-hero:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.45;
+  background-image:linear-gradient(rgba(7,29,61,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(7,29,61,.035) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+body.ip-service-page .ip-service-page-hero > .row {
+  position:relative;
+  z-index:1;
+  max-width:1320px;
+  margin:0 auto;
+  align-items:center;
+  min-height:410px;
+}
+body.ip-service-page .ip-service-page-hero .col-md-4.my-5.py-5 {padding:24px 28px!important;margin:0!important;}
+body.ip-service-page .ip-service-eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:18px;
+  color:var(--ip-green);
+  font:700 12px/1.2 Poppins,sans-serif;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+body.ip-service-page .ip-service-eyebrow:before {content:"";width:28px;height:2px;background:var(--ip-gold);}
+body.ip-service-page .ip-service-page-hero .text-style {
+  color:var(--ip-navy)!important;
+  font:800 clamp(35px,4vw,58px)/1.04 Poppins,sans-serif!important;
+  letter-spacing:-.035em;
+  margin:0 0 18px!important;
+  text-transform:none!important;
+}
+body.ip-service-page .ip-service-page-hero hr {display:none;}
+body.ip-service-page .ip-service-page-hero .ip-service-intro {
+  color:#52657b;
+  font-size:17px;
+  line-height:1.8;
+  max-width:570px;
+  margin-bottom:22px;
+}
+body.ip-service-page .ip-service-assurance {
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:22px;
+}
+body.ip-service-page .ip-service-assurance span {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 11px;
+  border:1px solid #cfdcd3;
+  border-radius:999px;
+  background:rgba(255,255,255,.75);
+  color:#34516a;
+  font:600 11px/1.2 Poppins,sans-serif;
+}
+body.ip-service-page .ip-service-assurance i {color:var(--ip-green);}
+body.ip-service-page .ip-service-page-hero img {max-height:330px;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(7,29,61,.12));}
+
+body.ip-service-page .ip-service-page-hero .form-style {padding:16px 24px!important;}
+body.ip-service-page .ip-service-page-hero .form-style .card {
+  border:1px solid rgba(7,29,61,.09)!important;
+  border-radius:20px!important;
+  overflow:hidden;
+  box-shadow:0 24px 64px rgba(7,29,61,.12)!important;
+  margin:0!important;
+  background:#fff;
+}
+body.ip-service-page .ip-service-page-hero .form-style .card-header {
+  padding:22px 22px 16px!important;
+  background:var(--ip-navy)!important;
+  border:0!important;
+}
+body.ip-service-page .ip-service-page-hero .form-style .card-title {color:#fff!important;margin-bottom:6px!important;}
+body.ip-service-page .ip-service-page-hero .form-style h4.card-title {font:700 20px/1.25 Poppins,sans-serif!important;}
+body.ip-service-page .ip-service-page-hero .form-style p.card-title {font-size:12px!important;opacity:.82;}
+body.ip-service-page .ip-service-page-hero .form-style .card-body {padding:22px!important;}
+body.ip-service-page .ip-service-page-hero .form-control {
+  min-height:46px;
+  border:1px solid #d9e2e8!important;
+  border-radius:10px!important;
+  box-shadow:none!important;
+  font-size:14px;
+}
+body.ip-service-page .ip-service-page-hero textarea.form-control {min-height:82px;}
+body.ip-service-page .ip-service-page-hero .btn.card-style {
+  width:100%;
+  min-height:46px;
+  border-radius:10px!important;
+  background:var(--ip-green)!important;
+  border-color:var(--ip-green)!important;
+  color:#fff!important;
+  font:700 13px/1 Poppins,sans-serif;
+}
+
+body.ip-service-page .container-one,
+body.ip-service-page .container-two {background:var(--ip-surface)!important;border-top:1px solid var(--ip-line);border-bottom:1px solid var(--ip-line);}
+body.ip-service-page .container-one > .container,
+body.ip-service-page .container-two > .container,
+body.ip-service-page body > .container:not(.ip-service-page-hero) {max-width:1180px;}
+
+body.ip-service-page .ip-service-content-section {padding-top:74px!important;padding-bottom:74px!important;}
+body.ip-service-page .ip-service-content-section > h1,
+body.ip-service-page .ip-service-content-section > .container > h1,
+body.ip-service-page .container-one h1,
+body.ip-service-page .container-two h1 {
+  color:var(--ip-navy)!important;
+  font:800 clamp(28px,3vw,40px)/1.15 Poppins,sans-serif!important;
+  letter-spacing:-.025em;
+}
+body.ip-service-page .container-one h5,
+body.ip-service-page .container-two h5,
+body.ip-service-page .ip-service-content-section > h5 {color:var(--ip-green)!important;font-weight:600;}
+body.ip-service-page .container-one p,
+body.ip-service-page .container-two p,
+body.ip-service-page .ip-service-content-section p {color:#52657b;line-height:1.82;font-size:15px;}
+body.ip-service-page .container-one ul,
+body.ip-service-page .container-two ul,
+body.ip-service-page .ip-service-content-section ul {color:#52657b;line-height:1.75;}
+body.ip-service-page .container-one strong,
+body.ip-service-page .container-two strong {color:var(--ip-ink);}
+
+body.ip-service-page .ip-pricing-section {
+  max-width:1180px!important;
+  padding-top:74px!important;
+  padding-bottom:82px!important;
+}
+body.ip-service-page .ip-pricing-section > h1 {
+  color:var(--ip-navy)!important;
+  font:800 clamp(30px,3vw,42px)/1.12 Poppins,sans-serif!important;
+  letter-spacing:-.03em;
+}
+body.ip-service-page .ip-pricing-section > h5 {color:var(--ip-green);margin-top:10px;}
+body.ip-service-page .ip-pricing-section > hr {width:54px;height:3px;border:0;opacity:1;background:var(--ip-gold);margin:18px auto;}
+body.ip-service-page .ip-pricing-section .card {
+  height:calc(100% - 48px);
+  border:1px solid #dce6df!important;
+  border-radius:18px!important;
+  overflow:hidden;
+  box-shadow:0 16px 42px rgba(7,29,61,.08)!important;
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+}
+body.ip-service-page .ip-pricing-section .card:hover {transform:translateY(-5px);box-shadow:0 24px 52px rgba(7,29,61,.13)!important;border-color:#b9d6c1!important;}
+body.ip-service-page .ip-pricing-section .card-header.card-style {
+  min-height:154px;
+  padding:25px 22px!important;
+  background:linear-gradient(135deg,var(--ip-navy),var(--ip-navy-2))!important;
+  border:0!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+body.ip-service-page .ip-pricing-section .card-header h4 {color:#8ee49d!important;font:700 12px/1.2 Poppins,sans-serif!important;letter-spacing:.12em;text-transform:uppercase;}
+body.ip-service-page .ip-pricing-section .card-header h1,
+body.ip-service-page .ip-pricing-section .card-header h2,
+body.ip-service-page .ip-pricing-section .card-header h3 {color:#fff!important;font:800 34px/1.1 Poppins,sans-serif!important;letter-spacing:-.03em;}
+body.ip-service-page .ip-pricing-section .card-header h6 {color:rgba(255,255,255,.72)!important;font-size:11px;}
+body.ip-service-page .ip-pricing-section .card-body {padding:26px!important;display:flex;flex-direction:column;}
+body.ip-service-page .ip-pricing-section .card-body ul {padding-left:20px;color:#52657b;line-height:1.7;flex-grow:1;}
+body.ip-service-page .ip-pricing-section .card-body li::marker {color:var(--ip-green);}
+body.ip-service-page .ip-pricing-section .btn.card-style {
+  border:0!important;
+  border-radius:10px!important;
+  background:var(--ip-green)!important;
+  color:#fff!important;
+  padding:12px 20px!important;
+  font:700 12px/1 Poppins,sans-serif;
+  min-width:145px;
+}
+body.ip-service-page .ip-pricing-note {margin:12px auto 0;max-width:760px;text-align:center;color:#718096;font-size:12px;}
+
+body.ip-service-page .container-one .card,
+body.ip-service-page .container-two .card {
+  border:1px solid #dce6df!important;
+  border-radius:16px!important;
+  box-shadow:0 10px 30px rgba(7,29,61,.06)!important;
+  overflow:hidden;
+}
+body.ip-service-page .container-one .card-header,
+body.ip-service-page .container-two .card-header {background:#fff!important;border-bottom:1px solid #e4ece7!important;}
+body.ip-service-page .container-one .card-header h4,
+body.ip-service-page .container-two .card-header h4 {color:var(--ip-navy)!important;}
+
+body.ip-service-page .ip-service-end-cta {
+  margin:0;
+  padding:56px 20px;
+  background:linear-gradient(120deg,var(--ip-navy),#0d315b);
+  color:#fff;
+}
+body.ip-service-page .ip-service-end-cta .ip-service-end-inner {max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+body.ip-service-page .ip-service-end-cta small {display:block;color:#8ee49d;font:700 11px/1.2 Poppins,sans-serif;letter-spacing:.13em;text-transform:uppercase;margin-bottom:9px;}
+body.ip-service-page .ip-service-end-cta h2 {margin:0 0 8px;color:#fff;font:800 clamp(25px,3vw,36px)/1.15 Poppins,sans-serif;letter-spacing:-.025em;}
+body.ip-service-page .ip-service-end-cta p {margin:0;color:rgba(255,255,255,.72);max-width:700px;}
+body.ip-service-page .ip-service-end-cta a {display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:13px 18px;border-radius:10px;background:#fff;color:var(--ip-navy);font:700 12px/1 Poppins,sans-serif;text-decoration:none;}
+
+@media(max-width:991px){
+ body.ip-service-page .ip-service-page-hero > .row {min-height:0;}
+ body.ip-service-page .ip-service-page-hero {padding-top:110px!important;padding-bottom:48px!important;}
+ body.ip-service-page .ip-service-page-hero .col-md-4 {width:100%;text-align:center;}
+ body.ip-service-page .ip-service-page-hero .ip-service-intro {margin-left:auto;margin-right:auto;}
+ body.ip-service-page .ip-service-assurance {justify-content:center;}
+ body.ip-service-page .ip-service-page-hero img {max-height:230px;margin:18px auto;}
+ body.ip-service-page .ip-service-page-hero .form-style {max-width:620px;margin:0 auto;}
+ body.ip-service-page .ip-service-end-cta .ip-service-end-inner {flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:575px){
+ body.ip-service-page .ip-service-page-hero {padding-top:92px!important;}
+ body.ip-service-page .ip-service-page-hero .col-md-4.my-5.py-5 {padding:20px 16px!important;}
+ body.ip-service-page .ip-service-page-hero .form-style {padding:10px 16px!important;}
+ body.ip-service-page .ip-pricing-section {padding-left:16px!important;padding-right:16px!important;}
+ body.ip-service-page .ip-service-content-section {padding-left:16px!important;padding-right:16px!important;}
+}
