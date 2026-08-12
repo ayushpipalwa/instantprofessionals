@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260812-0935";
+const VERSION="20260812-0940";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
@@ -157,7 +157,7 @@ const team=[
 {name:"Nisha Pal",role:"Manager",experience:"Client Operations",photo:"assets/img/team/live/nisha-pal.jpg",bio:"Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",expertise:["Client Management","Operations","Compliance Coordination"]},
 {name:"Yash Sharma",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/YASH-SHARMA.jpg",bio:"Supports bookkeeping, GST reconciliations, financial records and routine statutory compliance assignments.",expertise:["Bookkeeping","GST Reconciliation","Documentation"]},
 {name:"Vishal",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/VISHAL.jpg",bio:"Supports accounting operations, financial documentation, GST assistance and recurring compliance processes.",expertise:["Accounting Support","GST","Compliance"]},
-{name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",initials:"A",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
+{name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/aaradhya.jpg",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
 {name:"Prashant",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/PRASHANT.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Sachin",role:"Team Professional",experience:"Professional Support",initials:"S",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Ashutosh",role:"Team Professional",experience:"Professional Support",initials:"AS",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
