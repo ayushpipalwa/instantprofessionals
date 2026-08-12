@@ -2,7 +2,8 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260811-1034";
+const VERSION="20260812-0935";
+const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
   if(!document.querySelector('link[data-ip-vision="2"]')){
@@ -35,7 +36,19 @@ on("click",".navbar .dropdown > a",function(e){const n=$("#navbar");if(n&&n.clas
 on("click",".scrollto",function(e){if(!this.hash||!$(this.hash))return;e.preventDefault();const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){n.classList.remove("navbar-mobile");const b=$(".mobile-nav-toggle");if(b){b.classList.toggle("bi-list");b.classList.toggle("bi-x")}}scrollto(this.hash)},true);
 window.addEventListener("load",()=>{if(location.hash&&$(location.hash))scrollto(location.hash)});
 
-function modernizeHeader(){const logo=$("#header .logo-brand img");if(logo){logo.src=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;logo.alt="Instant Professionals";logo.removeAttribute("style")}}
+function modernizeHeader(){
+  const logo=$("#header .logo-brand img");
+  if(logo){
+    logo.src=BRAND_LOGO;
+    logo.alt="Instant Professionals registered logo";
+    logo.removeAttribute("style");
+    logo.removeAttribute("srcset");
+    logo.style.width="68px";
+    logo.style.height="68px";
+    logo.style.objectFit="contain";
+    logo.style.display="block";
+  }
+}
 
 function modernizeHome(){
   const c=$("#carouselExampleCaptions");
@@ -48,7 +61,7 @@ function modernizeHome(){
     <div class="ip-os-grid-bg" aria-hidden="true"></div>
     <div class="container ip-os-shell">
       <div class="ip-os-copy" data-aos="fade-up">
-        <div class="ip-os-index"><span>IP</span><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+        <div class="ip-os-index"><img src="${BRAND_LOGO}" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
         <h1>Compliance,<br><em>engineered around</em><br>your business.</h1>
         <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory — structured around how your business actually operates.</p>
         <div class="ip-os-actions">
@@ -67,7 +80,7 @@ function modernizeHome(){
           <b>01—05</b>
         </div>
         <div class="ip-os-core">
-          <div class="ip-os-center"><span>IP</span><small>COORDINATED<br>OVERSIGHT</small></div>
+          <div class="ip-os-center"><img src="${BRAND_LOGO}" alt="Instant Professionals registered logo"><small>COORDINATED<br>OVERSIGHT</small></div>
           <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
           <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
           <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>
@@ -151,8 +164,10 @@ const team=[
 {name:"Parth",role:"Team Professional",experience:"Professional Support",initials:"P",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]}
 ];
 
-function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" alt="${m.name}" loading="lazy">`:`<div class="ip-profile-photo" role="img" aria-label="${m.name}" style="display:flex!important;align-items:center;justify-content:center;background:linear-gradient(145deg,#0b2341,#245f9b);color:#fff;font-family:Poppins,sans-serif;font-size:64px;font-weight:800">${m.initials}</div>`}<div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><div class="ip-experience"><i class="bi bi-award"></i>${m.experience}</div><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
-function run(){modernizeHeader();modernizeHome();modernizeServices();updateServiceRates();renderTeam()}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run);else run();
-window.addEventListener("load",()=>{updateServiceRates();if(typeof AOS!=="undefined"){AOS.init({duration:800,easing:"ease-in-out",once:true,mirror:false});AOS.refresh()}});
+function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" alt="${m.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:""}<div class="ip-profile-placeholder" style="${m.photo?"display:none":"display:grid"}">${m.initials||m.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><span class="ip-experience">${m.experience}</span><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
+
+function modernizeContact(){const s=$("#contact");if(!s)return;s.classList.add("ip-contact-modern");const t=s.querySelector(".section-title");if(t){const p=t.querySelector("p");if(p)p.textContent="Talk to a professional"}}
+
+function boot(){modernizeHeader();modernizeHome();modernizeServices();updateServiceRates();renderTeam();modernizeContact();if(window.AOS)AOS.init({duration:650,easing:"ease-out-cubic",once:true,mirror:false});}
+window.addEventListener("load",boot);
 })();
