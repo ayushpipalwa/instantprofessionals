@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260812-0940";
+const VERSION="20260817-1245";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
@@ -166,8 +166,19 @@ const team=[
 
 function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" alt="${m.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:""}<div class="ip-profile-placeholder" style="${m.photo?"display:none":"display:grid"}">${m.initials||m.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><span class="ip-experience">${m.experience}</span><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
 
+function modernizeSocialPresence(){
+  const main=$("#main");
+  if(!main||document.getElementById("social-presence"))return;
+  const section=document.createElement("section");
+  section.id="social-presence";
+  section.className="ip-social-presence";
+  section.innerHTML=`<div class="container"><div class="ip-social-shell" data-aos="fade-up"><div class="ip-social-copy"><span class="ip-social-kicker">SOCIAL / COMMUNITY</span><h2>Stay connected with<br><em>Instant Professionals.</em></h2><p>Follow our updates on compliance, taxation, registrations, business advisory and important professional developments — without the clutter of an outdated embedded social feed.</p><div class="ip-social-actions"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener" class="ip-social-btn ip-social-btn-primary"><i class="bi bi-facebook"></i> Follow on Facebook</a><a href="#contact" class="ip-social-btn ip-social-btn-secondary"><i class="bi bi-chat-dots"></i> Talk to our team</a></div></div><div class="ip-social-card"><div class="ip-social-brand"><img src="${BRAND_LOGO}" alt="Instant Professionals"><div><strong>Instant Professionals</strong><span>Professional updates • Compliance • Tax • Advisory</span></div></div><div class="ip-social-feature"><span class="ip-social-pill">LATEST FROM OUR NETWORK</span><h3>Professional insights, timely updates and practical guidance.</h3><p>We are simplifying the website experience by replacing the dated embedded Facebook window with a clean, responsive social presence panel.</p></div><div class="ip-social-links"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Facebook</span><b>Follow</b></a><a href="#contact"><i class="bi bi-whatsapp"></i><span>WhatsApp</span><b>Connect</b></a><a href="#services"><i class="bi bi-grid"></i><span>Services</span><b>Explore</b></a></div></div></div></div>`;
+  const contact=$("#contact");
+  if(contact)main.insertBefore(section,contact);else main.appendChild(section);
+}
+
 function modernizeContact(){const s=$("#contact");if(!s)return;s.classList.add("ip-contact-modern");const t=s.querySelector(".section-title");if(t){const p=t.querySelector("p");if(p)p.textContent="Talk to a professional"}}
 
-function boot(){modernizeHeader();modernizeHome();modernizeServices();updateServiceRates();renderTeam();modernizeContact();if(window.AOS)AOS.init({duration:650,easing:"ease-out-cubic",once:true,mirror:false});}
+function boot(){modernizeHeader();modernizeHome();modernizeServices();updateServiceRates();renderTeam();modernizeSocialPresence();modernizeContact();if(window.AOS)AOS.init({duration:650,easing:"ease-out-cubic",once:true,mirror:false});}
 window.addEventListener("load",boot);
 })();
