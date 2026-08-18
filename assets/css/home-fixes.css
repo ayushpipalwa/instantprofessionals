@@ -1,0 +1,213 @@
+/* Homepage accessibility and conversion-flow repairs. */
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 0.4rem;
+  background: #071d3d;
+  color: #fff;
+  font-weight: 700;
+  transform: translateY(-180%);
+  transition: transform 0.18s ease;
+}
+
+.skip-link:focus {
+  color: #fff;
+  transform: translateY(0);
+}
+
+:focus-visible {
+  outline: 3px solid #ffbf47;
+  outline-offset: 3px;
+}
+
+.ip-home-contact-card {
+  height: 100%;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #071d3d, #12315d);
+  color: #fff;
+  box-shadow: 0 18px 45px rgba(7, 29, 61, 0.18);
+}
+
+.ip-home-contact-card > span {
+  color: #ffd17a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.ip-home-contact-card h3,
+.ip-home-contact-card a {
+  color: #fff;
+}
+
+.ip-home-contact-card ul {
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ip-home-contact-card li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  margin: 0.85rem 0;
+}
+
+.ip-home-contact-note,
+.ip-home-privacy {
+  font-size: 0.9rem;
+  opacity: 0.88;
+}
+
+.ip-home-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #152536;
+  font-weight: 700;
+  text-align: left;
+}
+
+.ip-home-form select,
+.ip-home-form textarea {
+  min-height: 44px;
+}
+
+.ip-home-consent {
+  display: grid !important;
+  grid-template-columns: 1.1rem 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+  font-weight: 400 !important;
+}
+
+.ip-home-consent input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.16rem;
+}
+
+.ip-form-status {
+  min-height: 1.5rem;
+  margin: 0.8rem 0 0;
+  color: #176b35;
+  font-weight: 700;
+  text-align: center;
+}
+
+.whatsapp-float,
+.ip-whatsapp {
+  background: #12652f !important;
+  color: #fff !important;
+}
+
+#footer.ip-home-footer {
+  padding: 3.5rem 0 0;
+  background: #071d3d;
+  color: #dce7f5;
+}
+
+.ip-home-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.ip-home-footer h2 {
+  margin: 0 0 1rem;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.ip-home-footer p {
+  color: #dce7f5;
+}
+
+.ip-home-footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ip-home-footer li {
+  margin: 0.6rem 0;
+}
+
+.ip-home-footer a {
+  color: #fff;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.ip-home-footer a:hover {
+  color: #ffd17a;
+}
+
+.ip-home-footer-brand {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.ip-home-footer-brand img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.ip-home-footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ip-home-footer-bottom {
+  margin-top: 2.25rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  color: #dce7f5;
+  font-size: 0.9rem;
+}
+
+.ip-profile-role,
+.ip-team-eyebrow,
+.ip-social-kicker,
+.ip-service-kicker {
+  color: #8a5b12 !important;
+}
+
+@media (max-width: 991px) {
+  .ip-home-contact-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .ip-home-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .ip-profile-card > .ip-profile-photo,
+  .ip-profile-card > .ip-profile-placeholder {
+    height: 300px;
+    min-height: 300px;
+  }
+
+  .ip-home-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}
