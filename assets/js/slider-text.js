@@ -2,13 +2,13 @@
 (function () {
   "use strict";
 
-  const PHOTO_VERSION = "20260811-0032";
+  const PHOTO_VERSION = "20260818-1208";
   const LOGO_PATH = "assets/img/instant-professionals-logo-2026.png?v=20260811-0032";
   const APPROVED_PHOTOS = {
     "Ayush Pipalwa": "assets/img/team/live/ayush-pipalwa.jpg",
     "Renu Sharma": "assets/img/team/live/renu-sharma.jpg",
     "Navdha Puri": "assets/img/team/live/navdha-puri.jpg",
-    "Rohit Sharma": "assets/img/team/live/rohit-sharma.jpg",
+    "Rohit Sharma": "assets/img/team/live/ROHIT-SHARMA.jpg",
     "Mayank Jain": "assets/img/team/live/mayank-jain.jpg",
     "Mayank Hoiyani": "assets/img/team/live/mayank-hoiyani.jpg",
     "Surbhi Sharma": "assets/img/team/live/surbhi-sharma.png",
