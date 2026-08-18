@@ -23,7 +23,7 @@ function loadCurrentLaw(){
   document.head.appendChild(s);
 }
 loadVisionStyles();
-loadCurrentLaw();
+// Current-law content is now generated statically on service pages.
 
 const navlinks=$("#navbar .scrollto",true);
 function setActiveNav(){const p=window.scrollY+200;navlinks.forEach(l=>{if(!l.hash)return;const s=$(l.hash);if(!s)return;l.classList.toggle("active",p>=s.offsetTop&&p<=s.offsetTop+s.offsetHeight)})}
@@ -103,12 +103,12 @@ function modernizeServices(){
   section.dataset.ipServiceHub="1";
   section.className="services ip-service-hub";
   const services=[
-    {no:"01",icon:"bi-building-check",title:"Business & Tax Registrations",desc:"Set up the registrations your business needs to start, trade and remain compliant.",primary:"GST Registration.html",links:[["GST Registration","GST Registration.html"],["MSME Registration","MSME Registration.html"],["IEC Registration","iesregistration.html"]]},
-    {no:"02",icon:"bi-receipt",title:"GST & Indirect Tax",desc:"Recurring GST compliance, returns and special filings supported by practical indirect-tax guidance.",primary:"GSTreturns.html",links:[["GST Returns","GSTreturns.html"],["GST LUT","GST-LUT-LETTEROFundertaking.html"],["GST Cancellation","gst-cancellation.html"]]},
-    {no:"03",icon:"bi-calculator",title:"Income Tax & TDS",desc:"Return filing and tax compliance for individuals, professionals and businesses throughout the year.",primary:"incometaxreturns.html",links:[["Income Tax Returns","incometaxreturns.html"],["TDS Returns","tdsreturns.html"],["TDS Revision","tdsreturnrevision.html"]]},
-    {no:"04",icon:"bi-diagram-3",title:"Corporate & Secretarial",desc:"Structured statutory support for companies and LLPs—from recurring filings to governance changes.",primary:"companyannualfilling.html",links:[["Company Annual Filing","companyannualfilling.html"],["LLP Annual Filing","llpannualfilling.html"],["Add a Director","addadirector.html"]]},
-    {no:"05",icon:"bi-shield-check",title:"Trademark & Intellectual Property",desc:"Protect the identity and intellectual assets behind your business with coordinated IPR support.",primary:"Trademark-registration.html",links:[["Trademark Registration","Trademark-registration.html"],["Copyright Application","Copyright-application.html"],["Trademark Objections","trademark-objections.html"]]},
-    {no:"06",icon:"bi-people",title:"Workforce Compliance",desc:"Registration and recurring labour-law filings to keep employee compliance organised and current.",primary:"epf registration.html",links:[["EPF Registration","epf registration.html"],["PF Returns","pfreturns.html"],["ESI Returns","Esi returns.html"]]}
+    {no:"01",icon:"bi-building-check",title:"Business & Tax Registrations",desc:"Set up the registrations your business needs to start, trade and remain compliant.",primary:"gst-registration.html",links:[["GST Registration","gst-registration.html"],["MSME Registration","udyam-registration.html"],["IEC Registration","iec-registration.html"]]},
+    {no:"02",icon:"bi-receipt",title:"GST & Indirect Tax",desc:"Recurring GST compliance, returns and special filings supported by practical indirect-tax guidance.",primary:"gst-returns.html",links:[["GST Returns","gst-returns.html"],["GST LUT","gst-lut.html"],["GST Cancellation","gst-cancellation.html"]]},
+    {no:"03",icon:"bi-calculator",title:"Income Tax & TDS",desc:"Return filing and tax compliance for individuals, professionals and businesses throughout the year.",primary:"income-tax-return-filing.html",links:[["Income Tax Returns","income-tax-return-filing.html"],["TDS Returns","tds-returns.html"],["TDS Revision","tds-return-revision.html"]]},
+    {no:"04",icon:"bi-diagram-3",title:"Corporate & Secretarial",desc:"Structured statutory support for companies and LLPs—from recurring filings to governance changes.",primary:"company-annual-filing.html",links:[["Company Annual Filing","company-annual-filing.html"],["LLP Annual Filing","llp-annual-filing.html"],["Add a Director","add-a-director.html"]]},
+    {no:"05",icon:"bi-shield-check",title:"Trademark & Intellectual Property",desc:"Protect the identity and intellectual assets behind your business with coordinated IPR support.",primary:"trademark-registration.html",links:[["Trademark Registration","trademark-registration.html"],["Copyright Application","copyright-application.html"],["Trademark Objections","trademark-objection-reply.html"]]},
+    {no:"06",icon:"bi-people",title:"Workforce Compliance",desc:"Registration and recurring labour-law filings to keep employee compliance organised and current.",primary:"epf-registration.html",links:[["EPF Registration","epf-registration.html"],["PF Returns","pf-returns.html"],["ESI Returns","esi-returns.html"]]}
   ];
   section.innerHTML=`<div class="container">
     <div class="ip-service-head" data-aos="fade-up">
@@ -127,7 +127,7 @@ function modernizeServices(){
   </div>`;
 }
 
-const SERVICE_RATE_MULTIPLIER=2.5;
+const SERVICE_RATE_MULTIPLIER=1;
 function updateServiceRates(){
   document.querySelectorAll(".card-header h1, .card-header h2, .card-header h3, .card-header h4").forEach(el=>{
     if(el.dataset.ipRateAdjusted==="1")return;
@@ -159,7 +159,7 @@ const team=[
 {name:"Vishal",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/VISHAL.jpg",bio:"Supports accounting operations, financial documentation, GST assistance and recurring compliance processes.",expertise:["Accounting Support","GST","Compliance"]},
 {name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/aaradhya.jpg",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
 {name:"Prashant",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/PRASHANT.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Sachin",role:"Team Professional",experience:"Professional Support",initials:"S",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Sachin",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/sachin.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Ashutosh",role:"Team Professional",experience:"Professional Support",initials:"AS",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Parth",role:"Team Professional",experience:"Professional Support",initials:"P",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]}
 ];
@@ -172,7 +172,7 @@ function modernizeSocialPresence(){
   const section=document.createElement("section");
   section.id="social-presence";
   section.className="ip-social-presence";
-  section.innerHTML=`<div class="container"><div class="ip-social-shell" data-aos="fade-up"><div class="ip-social-copy"><span class="ip-social-kicker">SOCIAL / COMMUNITY</span><h2>Stay connected with<br><em>Instant Professionals.</em></h2><p>Follow our updates on compliance, taxation, registrations, business advisory and important professional developments — without the clutter of an outdated embedded social feed.</p><div class="ip-social-actions"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener" class="ip-social-btn ip-social-btn-primary"><i class="bi bi-facebook"></i> Follow on Facebook</a><a href="#contact" class="ip-social-btn ip-social-btn-secondary"><i class="bi bi-chat-dots"></i> Talk to our team</a></div></div><div class="ip-social-card"><div class="ip-social-brand"><img src="${BRAND_LOGO}" alt="Instant Professionals"><div><strong>Instant Professionals</strong><span>Professional updates • Compliance • Tax • Advisory</span></div></div><div class="ip-social-feature"><span class="ip-social-pill">LATEST FROM OUR NETWORK</span><h3>Professional insights, timely updates and practical guidance.</h3><p>We are simplifying the website experience by replacing the dated embedded Facebook window with a clean, responsive social presence panel.</p></div><div class="ip-social-links"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Facebook</span><b>Follow</b></a><a href="#contact"><i class="bi bi-whatsapp"></i><span>WhatsApp</span><b>Connect</b></a><a href="#services"><i class="bi bi-grid"></i><span>Services</span><b>Explore</b></a></div></div></div></div>`;
+  section.innerHTML=`<div class="container"><div class="ip-social-shell" data-aos="fade-up"><div class="ip-social-copy"><span class="ip-social-kicker">SOCIAL / COMMUNITY</span><h2>Stay connected with<br><em>Instant Professionals.</em></h2><p>Follow our updates on compliance, taxation, registrations, business advisory and important professional developments — without the clutter of an outdated embedded social feed.</p><div class="ip-social-actions"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener" class="ip-social-btn ip-social-btn-primary"><i class="bi bi-facebook"></i> Follow on Facebook</a><a href="#contact" class="ip-social-btn ip-social-btn-secondary"><i class="bi bi-chat-dots"></i> Talk to our team</a></div></div><div class="ip-social-card"><div class="ip-social-brand"><img src="${BRAND_LOGO}" alt="Instant Professionals"><div><strong>Instant Professionals</strong><span>Professional updates • Compliance • Tax • Advisory</span></div></div><div class="ip-social-feature"><span class="ip-social-pill">LATEST FROM OUR NETWORK</span><h3>Professional insights, timely updates and practical guidance.</h3><p>We are simplifying the website experience by replacing the dated embedded Facebook window with a clean, responsive social presence panel.</p></div><div class="ip-social-links"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Facebook</span><b>Follow</b></a><a href="https://wa.me/918209785294" target="_blank" rel="noopener"><i class="bi bi-whatsapp" aria-hidden="true"></i><span>WhatsApp</span><b>Connect</b></a><a href="#services"><i class="bi bi-grid"></i><span>Services</span><b>Explore</b></a></div></div></div></div>`;
   const contact=$("#contact");
   if(contact)main.insertBefore(section,contact);else main.appendChild(section);
 }
