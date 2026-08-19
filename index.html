@@ -41,7 +41,7 @@
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
-    <link href="assets/css/home-fixes.css?v=20260819-contact" rel="stylesheet" />
+    <link href="assets/css/home-fixes.css?v=20260819-sheet" rel="stylesheet" />
   </head>
 
   <body>
@@ -804,33 +804,18 @@
               <div class="ip-form-heading">
                 <span class="ip-card-kicker">Confidential enquiry</span>
                 <h3>Get a clear next step</h3>
-                <p>Share a few details and continue securely in WhatsApp. Fields marked <span aria-hidden="true">*</span><span class="visually-hidden">with an asterisk</span> are required.</p>
+                <p>Submit securely on the website or continue in WhatsApp. Fields marked <span aria-hidden="true">*</span><span class="visually-hidden">with an asterisk</span> are required.</p>
               </div>
 
-              <form class="ip-enquiry-form ip-home-form" data-service="General website enquiry" aria-describedby="home-form-help home-form-status">
+              <form class="ip-enquiry-form ip-home-form" data-service="General website enquiry" data-sheet-endpoint="" aria-describedby="contact-method-help home-form-help home-form-status">
                 <input type="hidden" name="service" value="General website enquiry">
+                <div class="ip-honeypot" aria-hidden="true"><label for="home-website">Leave this field blank</label><input id="home-website" type="text" name="website" tabindex="-1" autocomplete="off"></div>
                 <div class="ip-form-grid">
                   <div class="form-group">
                     <label for="home-name">Your name <span aria-hidden="true">*</span></label>
                     <div class="ip-input-wrap">
                       <i class="bi bi-person" aria-hidden="true"></i>
                       <input id="home-name" type="text" name="name" class="form-control" autocomplete="name" placeholder="e.g. Ayush Sharma" required aria-required="true">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="home-phone">Mobile number <span aria-hidden="true">*</span></label>
-                    <div class="ip-input-wrap">
-                      <i class="bi bi-phone" aria-hidden="true"></i>
-                      <input id="home-phone" type="tel" name="phone" class="form-control" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" required aria-required="true">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="home-email">Email address <span class="ip-optional">(optional)</span></label>
-                    <div class="ip-input-wrap">
-                      <i class="bi bi-envelope" aria-hidden="true"></i>
-                      <input id="home-email" type="email" name="email" class="form-control" autocomplete="email" placeholder="you@company.com">
                     </div>
                   </div>
 
@@ -851,7 +836,39 @@
                       <i class="bi bi-chevron-down ip-select-chevron" aria-hidden="true"></i>
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label for="home-email">Email address <span class="ip-optional">(optional if mobile is provided)</span></label>
+                    <div class="ip-input-wrap">
+                      <i class="bi bi-envelope" aria-hidden="true"></i>
+                      <input id="home-email" type="email" name="email" class="form-control" autocomplete="email" placeholder="you@company.com" aria-describedby="contact-method-help">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="home-phone">Mobile / WhatsApp <span class="ip-optional">(optional if email is provided)</span></label>
+                    <div class="ip-input-wrap">
+                      <i class="bi bi-phone" aria-hidden="true"></i>
+                      <input id="home-phone" type="tel" name="phone" class="form-control" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" aria-describedby="contact-method-help">
+                    </div>
+                  </div>
+
+                  <div class="form-group ip-form-full">
+                    <label for="home-preferred-contact">Preferred contact method <span class="ip-optional">(optional)</span></label>
+                    <div class="ip-input-wrap ip-select-wrap">
+                      <i class="bi bi-chat-square-dots" aria-hidden="true"></i>
+                      <select id="home-preferred-contact" name="preferredContact" class="form-control">
+                        <option value="No preference">No preference</option>
+                        <option value="Email">Email</option>
+                        <option value="Phone">Phone</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                      </select>
+                      <i class="bi bi-chevron-down ip-select-chevron" aria-hidden="true"></i>
+                    </div>
+                  </div>
                 </div>
+
+                <p id="contact-method-help" class="ip-field-help">For online submission, provide at least an email address or mobile number. Your message may be left blank.</p>
 
                 <div class="form-group ip-message-group">
                   <label for="home-message">What do you need help with? <span class="ip-optional">(optional)</span></label>
@@ -863,14 +880,21 @@
                   <span>I agree to be contacted about this enquiry and have read the <a href="privacy-policy.html">Privacy Policy</a>.</span>
                 </label>
 
-                <button type="submit" class="ip-whatsapp-submit">
-                  <i class="bi bi-whatsapp" aria-hidden="true"></i>
-                  <span>Continue on WhatsApp</span>
-                  <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                </button>
+                <div class="ip-form-actions">
+                  <button type="submit" class="ip-sheet-submit">
+                    <i class="bi bi-send-check" aria-hidden="true"></i>
+                    <span>Submit enquiry</span>
+                    <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="ip-whatsapp-submit" data-whatsapp-submit>
+                    <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                    <span>Continue on WhatsApp</span>
+                    <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+                  </button>
+                </div>
 
                 <p id="home-form-status" class="ip-form-status" role="status" aria-live="polite"></p>
-                <p id="home-form-help" class="ip-home-privacy"><i class="bi bi-shield-check" aria-hidden="true"></i> Nothing is sent until you review and confirm the message in WhatsApp.</p>
+                <p id="home-form-help" class="ip-home-privacy"><i class="bi bi-shield-check" aria-hidden="true"></i> Online enquiries are recorded securely. WhatsApp opens a message for your review before sending.</p>
               </form>
             </div>
           </div>
@@ -989,7 +1013,7 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="assets/js/main.js?v=20260818-1203"></script>
-    <script src="assets/js/enquiry.js" defer></script>
+    <script src="assets/js/enquiry.js?v=20260819-sheet" defer></script>
     <script src="assets/js/slider-text.js?v=20260818-1208"></script>
   </body>
 </html>
