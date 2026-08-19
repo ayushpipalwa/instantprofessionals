@@ -1,0 +1,97 @@
+/* Shared service-package presentation — Instant Professionals, August 2026 */
+#pricing .ip-section-head { max-width: 820px; }
+#pricing .ip-price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+#pricing .ip-price-grid-1 {
+  grid-template-columns: minmax(0, 520px);
+  justify-content: center;
+}
+#pricing .ip-price-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#pricing .ip-price-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ip-line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(7, 29, 61, .08);
+}
+#pricing .ip-price-head {
+  padding: 24px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--ip-navy), var(--ip-navy-2));
+}
+#pricing .ip-price-head span {
+  color: #b9edc3;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+#pricing .ip-price-head strong {
+  display: block;
+  margin-top: 8px;
+  font-size: clamp(28px, 4vw, 34px);
+  line-height: 1.15;
+}
+#pricing .ip-price-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 24px;
+}
+#pricing .ip-price-features {
+  display: grid;
+  flex: 1;
+  gap: 11px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+#pricing .ip-price-features li {
+  position: relative;
+  padding-left: 25px;
+  color: var(--ip-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+#pricing .ip-price-features li::before {
+  content: "\2713";
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--ip-green);
+  font-weight: 900;
+}
+#pricing .ip-package-button {
+  width: 100%;
+  min-height: 46px;
+}
+#pricing .ip-price-note {
+  max-width: 940px;
+  margin: 20px auto 0;
+  color: var(--ip-muted);
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  #pricing .ip-price-grid,
+  #pricing .ip-price-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 640px) {
+  #pricing .ip-price-grid,
+  #pricing .ip-price-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  #pricing .ip-price-head,
+  #pricing .ip-price-body { padding: 20px; }
+}
