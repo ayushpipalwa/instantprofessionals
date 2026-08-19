@@ -669,23 +669,26 @@
   justify-content: center;
   min-height: 3.15rem;
   padding: 0.75rem 1.25rem;
+  border: 1px solid #55bd7c;
   border-radius: 0.7rem;
-  background: #fff;
-  color: #0c5030 !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+  background: #176b3a !important;
+  color: #fff !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
   font-size: 0.84rem;
   font-weight: 800;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .ip-footer-cta > a:hover {
-  background: #f2fff6;
-  color: #0c5030 !important;
+  border-color: #79d69b;
+  background: #11532d !important;
+  color: #fff !important;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
   transform: translateY(-2px);
 }
 
 .ip-footer-cta > a:focus-visible {
-  color: #0c5030 !important;
+  color: #fff !important;
   outline: 3px solid #ffd88c;
   outline-offset: 3px;
 }
