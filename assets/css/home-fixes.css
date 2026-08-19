@@ -467,37 +467,91 @@
   text-underline-offset: 0.15em;
 }
 
+.ip-form-full {
+  grid-column: 1 / -1;
+}
+
+.ip-field-help {
+  margin: 0.7rem 0 0;
+  color: #607487;
+  font-size: 0.73rem;
+  line-height: 1.5;
+}
+
+.ip-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+.ip-form-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.ip-sheet-submit,
 .ip-whatsapp-submit {
   display: grid !important;
-  grid-template-columns: 1.5rem 1fr 1.5rem;
-  gap: 0.75rem;
+  grid-template-columns: 1.35rem 1fr 1.35rem;
+  gap: 0.65rem;
   align-items: center;
   justify-content: center;
   width: 100%;
   min-height: 3.4rem;
-  padding: 0.75rem 1.2rem !important;
-  border: 0 !important;
+  padding: 0.75rem 1rem !important;
   border-radius: 0.75rem !important;
-  background: linear-gradient(135deg, #176b3a, #218549) !important;
-  color: #fff !important;
-  box-shadow: 0 12px 28px rgba(23, 107, 58, 0.22);
-  font-size: 0.91rem;
+  font-size: 0.84rem;
   font-weight: 750;
   letter-spacing: 0.01em;
-  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
 }
 
-.ip-whatsapp-submit:hover {
-  background: linear-gradient(135deg, #125b31, #176f3a) !important;
+.ip-sheet-submit {
+  border: 1px solid #071d3d !important;
+  background: linear-gradient(135deg, #071d3d, #123b6b) !important;
   color: #fff !important;
-  box-shadow: 0 16px 32px rgba(23, 107, 58, 0.28);
+  box-shadow: 0 12px 28px rgba(7, 29, 61, 0.2);
+}
+
+.ip-sheet-submit:hover {
+  border-color: #0b294f !important;
+  background: linear-gradient(135deg, #0b294f, #174a80) !important;
+  color: #fff !important;
+  box-shadow: 0 16px 32px rgba(7, 29, 61, 0.26);
   transform: translateY(-2px);
 }
 
-.ip-whatsapp-submit i:first-child {
-  font-size: 1.15rem;
+.ip-whatsapp-submit {
+  border: 1px solid #218549 !important;
+  background: #fff !important;
+  color: #176b3a !important;
+  box-shadow: 0 10px 24px rgba(23, 107, 58, 0.1);
 }
 
+.ip-whatsapp-submit:hover {
+  border-color: #176b3a !important;
+  background: #f0faf3 !important;
+  color: #125b31 !important;
+  box-shadow: 0 14px 28px rgba(23, 107, 58, 0.16);
+  transform: translateY(-2px);
+}
+
+.ip-sheet-submit:disabled,
+.ip-whatsapp-submit:disabled {
+  cursor: wait;
+  opacity: 0.66;
+  transform: none;
+}
+
+.ip-sheet-submit i:first-child,
+.ip-whatsapp-submit i:first-child {
+  font-size: 1.05rem;
+}
+
+.ip-sheet-submit i:last-child,
 .ip-whatsapp-submit i:last-child {
   justify-self: end;
 }
@@ -509,6 +563,18 @@
   font-size: 0.78rem;
   font-weight: 700;
   text-align: center;
+}
+
+.ip-form-status[data-state="error"] {
+  color: #a23b33;
+}
+
+.ip-form-status[data-state="success"] {
+  color: #176b35;
+}
+
+.ip-form-status[data-state="progress"] {
+  color: #425a70;
 }
 
 .ip-home-privacy {
@@ -908,6 +974,11 @@
     font-size: 0.8rem;
   }
 
+  .ip-form-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ip-sheet-submit,
   .ip-whatsapp-submit {
     min-height: 3.35rem;
   }
@@ -945,6 +1016,7 @@
 @media (prefers-reduced-motion: reduce) {
   .skip-link,
   .ip-contact-channels a,
+  .ip-sheet-submit,
   .ip-whatsapp-submit,
   .ip-footer-cta > a,
   .ip-home-footer a {
