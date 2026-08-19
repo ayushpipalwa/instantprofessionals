@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260818-1203";
+const VERSION="20260820-current-team-2";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
@@ -179,6 +179,16 @@ function modernizeSocialPresence(){
 
 function modernizeContact(){const s=$("#contact");if(!s)return;s.classList.add("ip-contact-modern");const t=s.querySelector(".section-title");if(t){const p=t.querySelector("p");if(p)p.textContent="Talk to a professional"}}
 
-function boot(){modernizeHeader();modernizeHome();modernizeServices();updateServiceRates();renderTeam();modernizeSocialPresence();modernizeContact();if(window.AOS)AOS.init({duration:650,easing:"ease-out-cubic",once:true,mirror:false});}
-window.addEventListener("load",boot);
+function runSafely(label,fn){try{fn()}catch(error){console.error("[Instant Professionals] "+label+" failed",error)}}
+function boot(){
+  [["header",modernizeHeader],["homepage",modernizeHome],["services",modernizeServices],["rates",updateServiceRates],["team",renderTeam],["social",modernizeSocialPresence],["contact",modernizeContact]]
+    .forEach(([label,fn])=>runSafely(label,fn));
+  if(window.AOS)AOS.init({duration:650,easing:"ease-out-cubic",once:true,mirror:false});
+}
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",()=>runSafely("team",renderTeam),{once:true});
+  window.addEventListener("load",boot,{once:true});
+}else{
+  boot();
+}
 })();
