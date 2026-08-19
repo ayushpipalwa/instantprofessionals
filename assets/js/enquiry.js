@@ -48,6 +48,11 @@
   }
 
   function bindNavigation() {
+    document.querySelectorAll('.ip-nav a[href="index.html#services"]').forEach(function (link) {
+      link.setAttribute("href", "services.html");
+      link.textContent = "All services";
+    });
+
     const button = document.querySelector(".ip-nav-toggle");
     const navigation = document.getElementById("site-nav");
     if (!button || !navigation) return;
@@ -222,6 +227,12 @@
     document.querySelectorAll(".ip-enquiry-form").forEach(function (form) {
       form.addEventListener("submit", function (event) {
         event.preventDefault();
+        const endpoint = form.getAttribute("data-sheet-endpoint") || "";
+        const hasSeparateWhatsAppAction = Boolean(form.querySelector("[data-whatsapp-submit]"));
+        if (!isValidSheetEndpoint(endpoint) && !hasSeparateWhatsAppAction) {
+          continueOnWhatsApp(form);
+          return;
+        }
         submitOnline(form);
       });
 
