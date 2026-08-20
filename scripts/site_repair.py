@@ -361,7 +361,7 @@ def update_homepage() -> None:
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <link href="assets/css/home-fixes.css?v=20260820-circle-gold-4" rel="stylesheet" />"""
+    <link href="assets/css/home-fixes.css?v=20260820-green-navy-5" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
     if 'class="skip-link"' not in text:
@@ -475,8 +475,8 @@ def update_homepage() -> None:
     text = text.replace("complex tax casesr", "complex tax cases")
     text = text.replace("Monthly/ Quarterly Compliances", "Monthly and quarterly compliance")
     text = re.sub(r'\s*<!--.*?-->', '', text, flags=re.S)
-    text = text.replace('    <link href="assets/css/home-fixes.css?v=20260820-circle-gold-4" rel="stylesheet" />\n', '')
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260820-circle-gold-4" rel="stylesheet" />', 1)
+    text = text.replace('    <link href="assets/css/home-fixes.css?v=20260820-green-navy-5" rel="stylesheet" />\n', '')
+    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260820-green-navy-5" rel="stylesheet" />', 1)
     if 'assets/js/enquiry.js' not in text:
         text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
     path.write_text(text, encoding="utf-8")
