@@ -1233,3 +1233,13 @@ img, svg, video, iframe { max-width: 100%; }
 @media (hover: none) {
   .services .icon-box:hover, .features .icon-box:hover, .pricing .box:hover, .member:hover, .ip-profile-card:hover { transform: none; }
 }
+
+/* Lifecycle number badge contrast — 2026-08-20 */
+.ip-os-system .ip-os-track i {
+  color: #071b3f !important;
+  background: #f4c95d !important;
+  border: 1px solid #ffe6a6 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18) !important;
+  text-shadow: none !important;
+  font-weight: 900 !important;
+}
