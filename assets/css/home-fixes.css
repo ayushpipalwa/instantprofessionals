@@ -1237,8 +1237,8 @@ img, svg, video, iframe { max-width: 100%; }
 /* Lifecycle number badge contrast — 2026-08-20 */
 .ip-os-system .ip-os-track i {
   color: #071b3f !important;
-  background: #f4c95d !important;
-  border: 1px solid #ffe6a6 !important;
+  background: #9adea1 !important;
+  border: 1px solid #c9f0cd !important;
   box-shadow: 0 4px 12px rgba(0,0,0,.18) !important;
   text-shadow: none !important;
   font-weight: 900 !important;
