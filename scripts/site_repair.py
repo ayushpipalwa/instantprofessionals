@@ -273,7 +273,7 @@ def service_page(old: str) -> str:
         "gst-registration-amendment.html": "Instant GST Amendment",
         "income-tax-return-filing.html": "Instant Income Tax Return Filing",
     }.get(clean, f"Instant {title}")
-    description = f"Get {title.lower()} support from Instant Professionals across India. Professional review, clear scope, transparent pricing and coordinated assistance."[:158]
+    description = f"Instant Professionals provides {title} support across India with clear scope, transparent pricing and coordinated assistance."
     cards = "".join(
         f'<article class="ip-info-card"><i class="bi {icon}" aria-hidden="true"></i><h3>{heading}</h3><p>{html.escape(point)}</p></article>'
         for icon, heading, point in zip(
