@@ -1233,3 +1233,176 @@ img, svg, video, iframe { max-width: 100%; }
 @media (hover: none) {
   .services .icon-box:hover, .features .icon-box:hover, .pricing .box:hover, .member:hover, .ip-profile-card:hover { transform: none; }
 }
+
+/* Mobile lifecycle clarity — 2026-08-20 */
+@media (max-width: 767px) {
+  .ip-os-system {
+    padding: 18px 14px 14px;
+    border-radius: 18px;
+  }
+  .ip-os-system::before,
+  .ip-os-system::after,
+  .ip-os-core::before,
+  .ip-os-core::after {
+    display: none !important;
+    content: none !important;
+  }
+  .ip-os-system-top {
+    align-items: flex-start;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,.14);
+  }
+  .ip-os-system-top span {
+    font-size: 12px;
+    line-height: 1.35;
+    letter-spacing: .11em;
+  }
+  .ip-os-system-top small {
+    margin-top: 5px;
+    color: #c5d2e2;
+    font-size: 11px;
+    line-height: 1.45;
+    letter-spacing: .04em;
+  }
+  .ip-os-system-top > b {
+    flex: 0 0 auto;
+    padding-top: 1px;
+    color: #ffd36b;
+    font-size: 13px;
+    letter-spacing: .08em;
+  }
+  .ip-os-core {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 14px 0 !important;
+    gap: 10px !important;
+    transform: none !important;
+  }
+  .ip-os-center {
+    position: static !important;
+    inset: auto !important;
+    display: grid !important;
+    grid-template-columns: 58px minmax(0,1fr) !important;
+    grid-column: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 74px !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    gap: 12px !important;
+    border: 1px solid rgba(142,212,149,.4) !important;
+    border-radius: 12px !important;
+    background: rgba(142,212,149,.09) !important;
+    transform: none !important;
+    text-align: left !important;
+  }
+  .ip-os-center::before,
+  .ip-os-center::after {
+    display: none !important;
+    content: none !important;
+  }
+  .ip-os-center img {
+    width: 58px !important;
+    height: 58px !important;
+    padding: 3px;
+    border-radius: 10px;
+    background: #fff;
+  }
+  .ip-os-center small {
+    color: #f1f6fb;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.45;
+    letter-spacing: .08em;
+  }
+  .ip-os-track,
+  .ip-os-track-1,
+  .ip-os-track-2,
+  .ip-os-track-3,
+  .ip-os-track-4,
+  .ip-os-track-5 {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    display: grid !important;
+    grid-template-columns: 42px minmax(0,1fr) !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 72px !important;
+    margin: 0 !important;
+    padding: 11px 12px !important;
+    align-items: center !important;
+    gap: 12px !important;
+    border: 1px solid rgba(255,255,255,.15) !important;
+    border-radius: 12px !important;
+    background: rgba(255,255,255,.07) !important;
+    transform: none !important;
+    text-align: left !important;
+  }
+  .ip-os-track i {
+    display: grid !important;
+    width: 42px !important;
+    height: 42px !important;
+    place-items: center;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    color: #071b3f !important;
+    background: #9adea1 !important;
+    font-size: 12px !important;
+    font-style: normal;
+    font-weight: 900 !important;
+  }
+  .ip-os-track b {
+    display: block !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .045em !important;
+  }
+  .ip-os-track small {
+    display: block !important;
+    margin-top: 3px !important;
+    color: #d2ddeb !important;
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+  .ip-os-system-foot {
+    display: grid !important;
+    grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+    gap: 7px !important;
+    padding-top: 12px !important;
+  }
+  .ip-os-system-foot span {
+    display: grid;
+    min-height: 38px;
+    place-items: center;
+    padding: 5px 3px;
+    border-radius: 8px;
+    color: #cbd7e6 !important;
+    background: rgba(255,255,255,.07);
+    font-size: 10px !important;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: .06em;
+    text-align: center;
+  }
+  .ip-os-system-foot span:nth-child(2) {
+    color: #9adea1 !important;
+  }
+}
+@media (max-width: 390px) {
+  .ip-os-system { padding-inline: 11px; }
+  .ip-os-track { grid-template-columns: 38px minmax(0,1fr) !important; min-height: 68px !important; padding: 9px 10px !important; gap: 10px !important; }
+  .ip-os-track i { width: 38px !important; height: 38px !important; }
+  .ip-os-track b { font-size: 13px !important; }
+  .ip-os-track small { font-size: 11.5px !important; }
+}
