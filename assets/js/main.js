@@ -80,7 +80,7 @@ function modernizeHome(){
           <b>01—05</b>
         </div>
         <div class="ip-os-core">
-          <div class="ip-os-center"><img src="assets/img/logo1.png" alt="Instant Professionals registered logo" width="451" height="123" decoding="async"><small>COORDINATED<br>OVERSIGHT</small></div>
+          <div class="ip-os-center"><img src="assets/img/logo.jpg" alt="Instant Professionals registered logo" width="6250" height="6250" decoding="async"><small>COORDINATED<br>OVERSIGHT</small></div>
           <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
           <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
           <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>
