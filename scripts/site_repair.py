@@ -361,7 +361,7 @@ def update_homepage() -> None:
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <link href="assets/css/home-fixes.css?v=20260820-green-navy-5" rel="stylesheet" />"""
+    <link href="assets/css/home-fixes.css?v=20260820-lifecycle-hd-6" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
     if 'class="skip-link"' not in text:
@@ -379,7 +379,7 @@ def update_homepage() -> None:
         </div>
         <aside class="ip-os-system" data-aos="fade-left" aria-label="Business compliance lifecycle">
           <div class="ip-os-system-top"><div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div><b>01—05</b></div>
-          <div class="ip-os-core"><div class="ip-os-center"><img src="assets/img/instant-professionals-logo-2026.png" alt=""><small>COORDINATED<br>OVERSIGHT</small></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
+          <div class="ip-os-core"><div class="ip-os-center"><img src="assets/img/logo1.png" alt="Instant Professionals registered logo" width="451" height="123" decoding="async"><small>COORDINATED<br>OVERSIGHT</small></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
           <div class="ip-os-system-foot"><span>Clarity</span><span>Control</span><span>Continuity</span></div>
         </aside>
       </div>
@@ -475,8 +475,8 @@ def update_homepage() -> None:
     text = text.replace("complex tax casesr", "complex tax cases")
     text = text.replace("Monthly/ Quarterly Compliances", "Monthly and quarterly compliance")
     text = re.sub(r'\s*<!--.*?-->', '', text, flags=re.S)
-    text = text.replace('    <link href="assets/css/home-fixes.css?v=20260820-green-navy-5" rel="stylesheet" />\n', '')
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260820-green-navy-5" rel="stylesheet" />', 1)
+    text = text.replace('    <link href="assets/css/home-fixes.css?v=20260820-lifecycle-hd-6" rel="stylesheet" />\n', '')
+    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260820-lifecycle-hd-6" rel="stylesheet" />', 1)
     if 'assets/js/enquiry.js' not in text:
         text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
     path.write_text(text, encoding="utf-8")
