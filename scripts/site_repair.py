@@ -182,7 +182,7 @@ def header_markup() -> str:
     <button class="ip-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><i class="bi bi-list" aria-hidden="true"></i><span>Menu</span></button>
     <nav id="site-nav" class="ip-nav" aria-label="Primary navigation">
       <a href="index.html">Home</a>
-      <a href="index.html#services">Services</a>
+      <a href="services.html">Services</a>
       <details><summary>Registrations</summary><div class="ip-nav-menu">
         <a href="{route('GST Registration.html')}">GST Registration</a><a href="{route('MSME Registration.html')}">Udyam Registration</a>
         <a href="{route('iesregistration.html')}">IEC Registration</a><a href="{route('epf registration.html')}">EPF Registration</a>
@@ -264,7 +264,16 @@ def service_page(old: str) -> str:
     category = CATEGORY[category_key]
     prices = final_prices(old)
     canonical = f"{SITE}/{clean}"
-    description = f"{summary} Professional support across India."
+    seo_name = {
+        "international-trademark-registration.html": "Instant International Trademark",
+        "digital-signature-certificate.html": "Instant Digital Signature (DSC)",
+        "director-resignation-removal.html": "Instant Director Resignation",
+        "share-transfer-transmission.html": "Instant Share Transfer",
+        "increase-authorised-capital.html": "Instant Authorised Capital Increase",
+        "gst-registration-amendment.html": "Instant GST Amendment",
+        "income-tax-return-filing.html": "Instant Income Tax Return Filing",
+    }.get(clean, f"Instant {title}")
+    description = f"Get {title.lower()} support from Instant Professionals across India. Professional review, clear scope, transparent pricing and coordinated assistance."[:158]
     cards = "".join(
         f'<article class="ip-info-card"><i class="bi {icon}" aria-hidden="true"></i><h3>{heading}</h3><p>{html.escape(point)}</p></article>'
         for icon, heading, point in zip(
@@ -276,32 +285,47 @@ def service_page(old: str) -> str:
     documents = "".join(f"<li>{html.escape(item)}</li>" for item in category["documents"])
     source_name, source_url = category["source"]
     structured = json.dumps({
-        "@context": "https://schema.org", "@type": "Service", "name": title,
-        "description": description, "url": canonical,
-        "provider": {"@type": "Organization", "name": "Instant Professionals", "url": SITE + "/"},
-        "areaServed": "India",
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Service", "@id": canonical + "#service",
+                "name": f"{title} by Instant Professionals", "alternateName": seo_name,
+                "serviceType": title, "description": description, "url": canonical,
+                "provider": {"@id": SITE + "/#organization"},
+                "areaServed": {"@type": "Country", "name": "India"},
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+                    {"@type": "ListItem", "position": 2, "name": "Services", "item": SITE + "/services.html"},
+                    {"@type": "ListItem", "position": 3, "name": title, "item": canonical},
+                ],
+            },
+        ],
     }, ensure_ascii=False)
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{html.escape(title)} | Instant Professionals</title>
+  <title>{html.escape(seo_name)} | Instant Professionals</title>
   <meta name="description" content="{html.escape(description)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="{canonical}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="Instant Professionals">
-  <meta property="og:title" content="{html.escape(title)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png">
-  <meta name="twitter:card" content="summary"><meta name="theme-color" content="#071d3d">
+  <meta property="og:title" content="{html.escape(seo_name)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
+  <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="{html.escape(seo_name)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="theme-color" content="#071d3d">
   <link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css">
-  <script type="application/ld+json">{structured}</script>
+  <script type="application/ld+json" data-ip-seo-schema>{structured}</script>
 </head>
 <body>
 {header_markup()}
 <main id="main-content">
-  <section class="ip-hero"><div class="ip-container ip-hero-grid"><div><span class="ip-eyebrow">{category['label']}</span><h1>{html.escape(title)}</h1><p class="ip-lead">{html.escape(summary)}</p><div class="ip-trust"><span><i class="bi bi-person-check" aria-hidden="true"></i> Professional review</span><span><i class="bi bi-shield-check" aria-hidden="true"></i> Scope confirmed first</span><span><i class="bi bi-chat-square-text" aria-hidden="true"></i> Coordinated support</span></div></div>{form_markup(title, prices)}</div></section>
+  <nav class="ip-breadcrumb ip-container" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="services.html">Services</a><span aria-hidden="true">›</span><span aria-current="page">{html.escape(title)}</span></nav>
+  <section class="ip-hero"><div class="ip-container ip-hero-grid"><div><span class="ip-eyebrow">INSTANT PROFESSIONALS • {category['label']}</span><h1>{html.escape(title)}</h1><p class="ip-lead">{html.escape(summary)}<span class="ip-seo-context">Instant Professionals supports this service across India with professional review and a confirmed scope.</span></p><div class="ip-trust"><span><i class="bi bi-person-check" aria-hidden="true"></i> Professional review</span><span><i class="bi bi-shield-check" aria-hidden="true"></i> Scope confirmed first</span><span><i class="bi bi-chat-square-text" aria-hidden="true"></i> Coordinated support</span></div></div>{form_markup(title, prices)}</div></section>
   <section class="ip-section"><div class="ip-container"><div class="ip-section-head"><span class="ip-eyebrow">HOW WE HELP</span><h2>A clear, review-led process</h2><p>Applicability, forms, portal requirements and statutory timelines can change. We confirm the current position from your facts before filing or advising.</p></div><div class="ip-card-grid">{cards}</div></div></section>
   <section class="ip-section ip-section-alt"><div class="ip-container"><div class="ip-section-head"><span class="ip-eyebrow">DOCUMENT CHECKLIST</span><h2>Information generally required</h2><p>The final checklist depends on the applicant, transaction and current portal requirements.</p></div><ul class="ip-list">{documents}</ul><div class="ip-source-note">Authoritative portal: <a href="{source_url}" target="_blank" rel="noopener">{html.escape(source_name)}</a>. The portal and applicable law prevail over general website information.</div></div></section>
 {pricing_markup(prices).lstrip()}
@@ -327,12 +351,12 @@ def update_homepage() -> None:
     path = ROOT / "index.html"
     text = path.read_text(encoding="utf-8")
     text = text.replace('<html lang="en">', '<html lang="en-IN">', 1)
-    text = re.sub(r'<title>.*?</title>', '<title>Instant Professionals | Compliance, Tax and Business Advisory</title>', text, count=1, flags=re.S)
+    text = re.sub(r'<title>.*?</title>', '<title>Instant Professionals | GST, Trademark & Compliance Services</title>', text, count=1, flags=re.S)
     metadata = f"""
     <link rel="canonical" href="{SITE}/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Instant Professionals" />
-    <meta property="og:title" content="Instant Professionals | Compliance, Tax and Business Advisory" />
+    <meta property="og:title" content="Instant Professionals | GST, Trademark & Compliance Services" />
     <meta property="og:description" content="Tax, corporate compliance, intellectual property and business advisory services across India." />
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
@@ -507,9 +531,18 @@ def write_policies() -> None:
 
 def write_technical_files() -> None:
     clean_routes = sorted({data[0] for data in CATALOG.values()})
-    pages = ["", *clean_routes, "privacy-policy.html", "terms.html", "refund-policy.html"]
+    specialist = ["cma-project-report.html", "accounting-bookkeeping.html", "virtual-cfo.html", "tax-notice-response.html"]
+    pages = ["", "services.html", *specialist, *clean_routes, "privacy-policy.html", "terms.html", "refund-policy.html"]
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    sitemap.extend(f"  <url><loc>{SITE}/{page}</loc></url>" for page in pages)
+    for page in pages:
+        changefreq, priority = ("monthly", "0.8")
+        if page == "":
+            changefreq, priority = ("weekly", "1.0")
+        elif page == "services.html":
+            changefreq, priority = ("weekly", "0.9")
+        elif page in {"privacy-policy.html", "terms.html", "refund-policy.html"}:
+            changefreq, priority = ("yearly", "0.3")
+        sitemap.append(f"  <url><loc>{SITE}/{page}</loc><lastmod>2026-08-20</lastmod><changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>")
     sitemap.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")

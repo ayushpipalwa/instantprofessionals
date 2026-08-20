@@ -181,3 +181,23 @@ button, input, select, textarea { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Search context and breadcrumb navigation */
+.ip-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 18px;
+  color: var(--ip-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ip-breadcrumb a { color: var(--ip-green-dark); font-weight: 700; text-decoration: none; }
+.ip-breadcrumb a:hover,
+.ip-breadcrumb a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.ip-breadcrumb [aria-current="page"] { color: var(--ip-navy); font-weight: 700; }
+.ip-seo-context { display: block; margin-top: 10px; color: inherit; font-size: .92em; }
+@media (max-width: 620px) {
+  .ip-breadcrumb { padding-top: 14px; font-size: 13px; }
+}
