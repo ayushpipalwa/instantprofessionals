@@ -1385,7 +1385,7 @@ img, svg, video, iframe { max-width: 100%; }
   box-shadow: 0 9px 22px rgba(0, 0, 0, .24);
   image-rendering: auto;
   object-fit: cover !important;
-  object-position: left center !important;
+  object-position: center !important;
 }
 .ip-os-center small {
   display: block;
