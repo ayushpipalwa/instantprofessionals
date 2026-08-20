@@ -260,3 +260,65 @@ button, input, select, textarea { font: inherit; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
+/* Mobile usability hardening — 2026-08-20 */
+html { max-width: 100%; overflow-x: clip; scroll-padding-top: 82px; }
+body { max-width: 100%; overflow-x: hidden; }
+img, svg, video, iframe { max-width: 100%; height: auto; }
+.ip-header, .ip-hero, .ip-section, .ip-footer, .ip-end-cta { max-width: 100%; overflow-x: clip; }
+.ip-header-inner, .ip-hero-grid, .ip-card-grid, .ip-price-grid, .ip-footer-grid, .ip-form-grid, .ip-form-actions, .ip-service-links { min-width: 0; }
+.ip-field, .ip-card-grid > *, .ip-price-grid > *, .ip-footer-grid > * { min-width: 0; }
+.ip-source-note, .ip-policy, .ip-footer, .ip-lead { overflow-wrap: anywhere; }
+table { max-width: 100%; }
+.ip-faq summary, .ip-nav a, .ip-nav summary { min-height: 44px; display: flex; align-items: center; }
+@media (max-width: 767px) {
+  .ip-container { width: min(100% - 28px,1160px); }
+  .ip-header-inner { min-height: 68px; }
+  .ip-brand img { width: 50px; height: 50px; }
+  .ip-nav-toggle { min-width: 48px; min-height: 48px; justify-content: center; }
+  .ip-nav { inset: 68px 0 auto; width: 100%; max-height: calc(100dvh - 68px); padding: 12px 14px max(24px,env(safe-area-inset-bottom)); overscroll-behavior: contain; box-shadow: 0 18px 40px rgba(7,29,61,.14); }
+  .ip-nav > a, .ip-nav summary { width: 100%; min-height: 48px; font-size: 15px; }
+  .ip-nav-menu a { min-height: 44px; padding-left: 18px; }
+  .ip-hero { padding: 38px 0 42px; }
+  .ip-hero-grid { gap: 26px; }
+  .ip-hero h1 { font-size: clamp(2.1rem,10vw,3rem); line-height: 1.06; letter-spacing: -.04em; }
+  .ip-lead { margin-bottom: 22px; font-size: 16px; line-height: 1.65; }
+  .ip-actions { display: grid; grid-template-columns: 1fr; }
+  .ip-button, .ip-submit, .ip-primary-button, .ip-package-button { width: 100%; min-height: 50px; }
+  .ip-decision-head, .ip-feature-panel, .ip-feature-body, .ip-contact-copy, .ip-form-card, .ip-service-group { padding: 20px; }
+  .ip-decision-list a { grid-template-columns: 40px minmax(0,1fr) auto; min-height: 60px; padding: 12px 10px; }
+  .ip-section { padding: 48px 0; }
+  .ip-section-head h2 { font-size: clamp(1.85rem,8vw,2.5rem); }
+  .ip-card-grid, .ip-price-grid, .ip-list, .ip-footer-grid, .ip-form-grid, .ip-form-actions, .ip-service-links, .ip-lane-grid, .ip-scenario-grid, .ip-steps, .ip-deliverables, .ip-proof-grid { grid-template-columns: 1fr; }
+  .ip-lane { min-height: 0; padding: 20px; }
+  .ip-service-group-head { grid-template-columns: 44px minmax(0,1fr); gap: 12px; }
+  .ip-service-links a { min-height: 50px; font-size: 14px; overflow-wrap: anywhere; }
+  .ip-field input, .ip-field select, .ip-field textarea, .ip-search input, button { font-size: 16px; }
+  .ip-field input, .ip-field select { min-height: 50px; }
+  .ip-field textarea { min-height: 120px; }
+  .ip-consent { grid-template-columns: 24px minmax(0,1fr); font-size: 13px; }
+  .ip-consent input { width: 20px; height: 20px; margin-top: 1px; }
+  .ip-price-card { border-radius: 14px; }
+  .ip-price-head { padding: 20px; }
+  .ip-price-body { padding: 20px; }
+  .ip-faq details { padding: 12px 14px; }
+  .ip-faq summary { padding: 4px 0; line-height: 1.45; }
+  .ip-end-inner { align-items: stretch; gap: 18px; }
+  .ip-end-inner .ip-primary-button { white-space: normal; text-align: center; }
+  .ip-footer { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .ip-whatsapp { right: max(12px,env(safe-area-inset-right)); bottom: max(12px,env(safe-area-inset-bottom)); width: 54px; height: 54px; padding: 0; }
+  .ip-breadcrumb { width: min(100% - 28px,1160px); gap: 6px; overflow-wrap: anywhere; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  a, button, summary, select, input[type="checkbox"] { touch-action: manipulation; }
+}
+@media (max-width: 390px) {
+  .ip-container, .ip-breadcrumb { width: min(100% - 22px,1160px); }
+  .ip-hero h1 { font-size: 2.05rem; }
+  .ip-form-card, .ip-service-group, .ip-feature-panel, .ip-feature-body { padding: 17px; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .ip-nav { max-height: calc(100dvh - 60px); inset-block-start: 60px; }
+  .ip-header-inner { min-height: 60px; }
+}
+@media (hover: none) {
+  .ip-card:hover, .ip-price-card:hover, .ip-lane:hover { transform: none; }
+}

@@ -308,7 +308,7 @@ def service_page(old: str) -> str:
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>{html.escape(seo_name)} | Instant Professionals</title>
   <meta name="description" content="{html.escape(description)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -318,7 +318,7 @@ def service_page(old: str) -> str:
   <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary"><meta name="twitter:title" content="{html.escape(seo_name)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="theme-color" content="#071d3d">
   <link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css">
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1">
   <script type="application/ld+json" data-ip-seo-schema>{structured}</script>
 </head>
 <body>
@@ -338,13 +338,13 @@ def service_page(old: str) -> str:
 
 def redirect_page(clean: str, title: str) -> str:
     target = html.escape(clean, quote=True)
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Redirecting to {html.escape(title)} | Instant Professionals</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{SITE}/{target}"><meta http-equiv="refresh" content="0; url={target}"><script>window.location.replace({json.dumps(clean)});</script></head><body><main><h1>{html.escape(title)}</h1><p>This service has moved to a cleaner address. <a href="{target}">Continue to {html.escape(title)}</a>.</p></main></body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Redirecting to {html.escape(title)} | Instant Professionals</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{SITE}/{target}"><meta http-equiv="refresh" content="0; url={target}"><script>window.location.replace({json.dumps(clean)});</script></head><body><main><h1>{html.escape(title)}</h1><p>This service has moved to a cleaner address. <a href="{target}">Continue to {html.escape(title)}</a>.</p></main></body></html>"""
 
 
 def policy_page(filename: str, title: str, sections: list[tuple[str, str]]) -> str:
     body = "".join(f"<h2>{html.escape(heading)}</h2><p>{text}</p>" for heading, text in sections)
     canonical = f"{SITE}/{filename}"
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}"><link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 18 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}"><link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 18 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
 
 
 def update_homepage() -> None:
@@ -361,7 +361,7 @@ def update_homepage() -> None:
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <link href="assets/css/home-fixes.css" rel="stylesheet" />"""
+    <link href="assets/css/home-fixes.css?v=20260820-mobile-1" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
     if 'class="skip-link"' not in text:
@@ -475,8 +475,8 @@ def update_homepage() -> None:
     text = text.replace("complex tax casesr", "complex tax cases")
     text = text.replace("Monthly/ Quarterly Compliances", "Monthly and quarterly compliance")
     text = re.sub(r'\s*<!--.*?-->', '', text, flags=re.S)
-    text = text.replace('    <link href="assets/css/home-fixes.css" rel="stylesheet" />\n', '')
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css" rel="stylesheet" />', 1)
+    text = text.replace('    <link href="assets/css/home-fixes.css?v=20260820-mobile-1" rel="stylesheet" />\n', '')
+    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260820-mobile-1" rel="stylesheet" />', 1)
     if 'assets/js/enquiry.js' not in text:
         text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
     path.write_text(text, encoding="utf-8")
@@ -546,7 +546,7 @@ def write_technical_files() -> None:
     sitemap.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
-    (ROOT / "404.html").write_text(f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Instant Professionals</title><meta name="robots" content="noindex"><link rel="stylesheet" href="assets/css/service-page-v3.css"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">404</span><h1>Page not found</h1><p>The address may have changed during our website quality upgrade.</p><p><a class="ip-primary-button" href="index.html#services">Browse services</a></p></main>{footer_markup()}</body></html>""", encoding="utf-8")
+    (ROOT / "404.html").write_text(f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Page not found | Instant Professionals</title><meta name="robots" content="noindex"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">404</span><h1>Page not found</h1><p>The address may have changed during our website quality upgrade.</p><p><a class="ip-primary-button" href="index.html#services">Browse services</a></p></main>{footer_markup()}</body></html>""", encoding="utf-8")
     for obsolete in ("form.html", "inner-page.html", "pdflist.html", "portfolio-details.html"):
         (ROOT / obsolete).write_text(redirect_page("index.html", "Instant Professionals"), encoding="utf-8")
 
