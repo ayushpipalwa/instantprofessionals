@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260820-current-team-2";
+const VERSION="20260821-ashutosh-photo-1";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
@@ -160,7 +160,7 @@ const team=[
 {name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/aaradhya.jpg",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
 {name:"Prashant",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/PRASHANT.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Sachin",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/sachin.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Ashutosh",role:"Team Professional",experience:"Professional Support",initials:"AS",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Ashutosh",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/ashutosh.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Parth",role:"Team Professional",experience:"Professional Support",initials:"P",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]}
 ];
 
