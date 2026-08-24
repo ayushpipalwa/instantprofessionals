@@ -19,6 +19,15 @@ SITE = "https://instantprofessionals.in"
 PHONE_DISPLAY = "+91 82097 85294"
 PHONE_LINK = "+918209785294"
 EMAIL = "info@instantprofessionals.in"
+GA_MEASUREMENT_ID = "G-TG0272S260"
+GOOGLE_TAG = f"""<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GA_MEASUREMENT_ID}');
+</script>"""
 PRICE_FACTOR = 0.70
 
 
@@ -217,7 +226,7 @@ def footer_markup() -> str:
   </div>
 </footer>
 <a class="ip-whatsapp" href="https://wa.me/918209785294?text=Hello%2C%20I%20would%20like%20to%20speak%20with%20Instant%20Professionals." target="_blank" rel="noopener" aria-label="Contact Instant Professionals on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
-<script src="assets/js/enquiry.js" defer></script>"""
+<script src="assets/js/enquiry.js?v=20260824-analytics-1" defer></script>"""
 
 
 def form_markup(title: str, prices: list[int]) -> str:
@@ -308,6 +317,7 @@ def service_page(old: str) -> str:
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
+  {GOOGLE_TAG}
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>{html.escape(seo_name)} | Instant Professionals</title>
   <meta name="description" content="{html.escape(description)}">
@@ -338,18 +348,20 @@ def service_page(old: str) -> str:
 
 def redirect_page(clean: str, title: str) -> str:
     target = html.escape(clean, quote=True)
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Redirecting to {html.escape(title)} | Instant Professionals</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{SITE}/{target}"><meta http-equiv="refresh" content="0; url={target}"><script>window.location.replace({json.dumps(clean)});</script></head><body><main><h1>{html.escape(title)}</h1><p>This service has moved to a cleaner address. <a href="{target}">Continue to {html.escape(title)}</a>.</p></main></body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8">{GOOGLE_TAG}<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Redirecting to {html.escape(title)} | Instant Professionals</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{SITE}/{target}"><meta http-equiv="refresh" content="0; url={target}"><script>window.location.replace({json.dumps(clean)});</script></head><body><main><h1>{html.escape(title)}</h1><p>This service has moved to a cleaner address. <a href="{target}">Continue to {html.escape(title)}</a>.</p></main></body></html>"""
 
 
 def policy_page(filename: str, title: str, sections: list[tuple[str, str]]) -> str:
     body = "".join(f"<h2>{html.escape(heading)}</h2><p>{text}</p>" for heading, text in sections)
     canonical = f"{SITE}/{filename}"
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}"><link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 18 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}"><link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 24 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
 
 
 def update_homepage() -> None:
     path = ROOT / "index.html"
     text = path.read_text(encoding="utf-8")
+    if GA_MEASUREMENT_ID not in text:
+        text = text.replace("  <head>", "  <head>\n    " + GOOGLE_TAG.replace("\n", "\n    "), 1)
     text = text.replace('<html lang="en">', '<html lang="en-IN">', 1)
     text = re.sub(r'<title>.*?</title>', '<title>Instant Professionals | GST, Trademark & Compliance Services</title>', text, count=1, flags=re.S)
     metadata = f"""
@@ -508,6 +520,7 @@ def write_policies() -> None:
         "privacy-policy.html": ("Privacy Policy", [
             ("Information we collect", "We collect information that you voluntarily provide, such as your name, phone number, email address, service requirement and supporting documents shared during an engagement."),
             ("How information is used", "Information is used to respond to enquiries, provide professional services, meet legal or regulatory obligations, maintain engagement records and improve service delivery."),
+            ("Website analytics", "We use Google Analytics to understand website traffic, page usage, device and browser categories, approximate location and interactions such as enquiries, WhatsApp clicks, calls, emails and package selections. We do not intentionally send names, email addresses, phone numbers, messages or uploaded documents to Google Analytics. Analytics information is used to measure and improve website performance and service journeys."),
             ("WhatsApp enquiries", "Website enquiry forms prepare a WhatsApp message for your review. Nothing is transmitted through the website form until you choose to send that message in WhatsApp."),
             ("Sharing and retention", "Information is shared only with authorised team members, professional advisers, service providers or authorities where necessary for the engagement or required by law. Records are retained for the period reasonably required for those purposes."),
             ("Your choices", f"To request access, correction or deletion, subject to professional and legal retention duties, contact <a href=\"mailto:{EMAIL}\">{EMAIL}</a>."),

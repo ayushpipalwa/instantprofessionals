@@ -3,6 +3,68 @@
 
   const WHATSAPP_NUMBER = "918209785294";
 
+  const GA_MEASUREMENT_ID = "G-TG0272S260";
+
+  function loadGoogleAnalytics() {
+    if (window.__ipGoogleAnalyticsId === GA_MEASUREMENT_ID) return;
+
+    const existingTag = document.querySelector(
+      'script[src*="googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID + '"]'
+    );
+    if (existingTag && typeof window.gtag === "function") {
+      window.__ipGoogleAnalyticsId = GA_MEASUREMENT_ID;
+      return;
+    }
+
+    window.__ipGoogleAnalyticsId = GA_MEASUREMENT_ID;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_MEASUREMENT_ID);
+
+    if (!existingTag) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GA_MEASUREMENT_ID);
+      document.head.appendChild(script);
+    }
+  }
+
+  function trackAnalyticsEvent(name, parameters) {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, parameters || {});
+  }
+
+  function analyticsService(values) {
+    return String((values && (values.package || values.service)) || "General enquiry").slice(0, 100);
+  }
+
+  function bindAnalyticsLinks() {
+    document.addEventListener("click", function (event) {
+      const link = event.target.closest("a[href]");
+      if (!link) return;
+      const href = String(link.getAttribute("href") || "");
+
+      if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
+        trackAnalyticsEvent("whatsapp_click", {
+          link_url: link.href,
+          page_location: window.location.href
+        });
+      } else if (/^tel:/i.test(href)) {
+        trackAnalyticsEvent("phone_click", {
+          page_location: window.location.href
+        });
+      } else if (/^mailto:/i.test(href)) {
+        trackAnalyticsEvent("email_click", {
+          page_location: window.location.href
+        });
+      }
+    });
+  }
+
+
   function buildWhatsAppMessage(values) {
     const fields = [
       "Hello, I would like assistance from Instant Professionals.",
@@ -39,6 +101,8 @@
   if (typeof module !== "undefined" && module.exports) module.exports = enquiryApi;
   if (typeof window !== "undefined") window.InstantProfessionalsEnquiry = enquiryApi;
   if (typeof document === "undefined") return;
+
+  loadGoogleAnalytics();
 
   const SERVICE_FAQS = {
     "appointment-of-auditor.html": [
@@ -456,6 +520,11 @@
         body: buildSheetPayload(values),
         keepalive: true
       });
+      trackAnalyticsEvent("generate_lead", {
+        lead_method: "website_form",
+        service_name: analyticsService(values),
+        page_location: window.location.href
+      });
       form.reset();
       clearConditionalValidity(form);
       setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
@@ -475,7 +544,18 @@
       return;
     }
 
-    const url = buildWhatsAppUrl(formValues(form));
+    const values = formValues(form);
+    const url = buildWhatsAppUrl(values);
+    trackAnalyticsEvent("whatsapp_click", {
+      link_url: url,
+      service_name: analyticsService(values),
+      page_location: window.location.href
+    });
+    trackAnalyticsEvent("generate_lead", {
+      lead_method: "whatsapp",
+      service_name: analyticsService(values),
+      page_location: window.location.href
+    });
     setStatus(form, "Opening WhatsApp with your enquiry…", "progress");
     const popup = window.open(url, "_blank", "noopener,noreferrer");
     if (!popup) window.location.href = url;
@@ -515,6 +595,11 @@
   function bindPackageButtons() {
     document.querySelectorAll(".ip-package-button").forEach(function (button) {
       button.addEventListener("click", function () {
+        trackAnalyticsEvent("select_content", {
+          content_type: "service_package",
+          item_id: String(button.getAttribute("data-package") || "Package enquiry").slice(0, 100),
+          page_location: window.location.href
+        });
         selectPackage(button);
       });
     });
@@ -632,6 +717,7 @@
   }
 
   function initialise() {
+    bindAnalyticsLinks();
     bindNavigation();
     bindForms();
     bindPackageButtons();
