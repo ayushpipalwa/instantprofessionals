@@ -491,12 +491,17 @@ def update_homepage() -> None:
     text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260820-lifecycle-hd-7" rel="stylesheet" />', 1)
     if 'assets/js/enquiry.js' not in text:
         text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
+    text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260826-sparsh-1", text)
     path.write_text(text, encoding="utf-8")
 
 
 def update_shared_files() -> None:
     main = ROOT / "assets/js/main.js"
     text = main.read_text(encoding="utf-8")
+    text = re.sub(r'const VERSION="[^"]+";', 'const VERSION="20260826-sparsh-1";', text, count=1)
+    if 'name:"Sparsh"' not in text:
+        sparsh_member = '{name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/live/sparsh.jpg",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}'
+        text = text.replace("\n];\n\nfunction renderTeam", ",\n" + sparsh_member + "\n];\n\nfunction renderTeam", 1)
     text = text.replace("loadCurrentLaw();", "// Current-law content is now generated statically on service pages.")
     text = text.replace("const SERVICE_RATE_MULTIPLIER=2.5;", "const SERVICE_RATE_MULTIPLIER=1;")
     text = text.replace('photo:"assets/img/team/live/sachin.jpg"', 'photo:"assets/img/team/live/sachin.jpg"')
