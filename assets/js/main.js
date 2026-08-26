@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260826-sparsh-1";
+const VERSION="20260826-team-role-cleanup-1";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
@@ -158,10 +158,9 @@ const team=[
 {name:"Yash Sharma",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/YASH-SHARMA.jpg",bio:"Supports bookkeeping, GST reconciliations, financial records and routine statutory compliance assignments.",expertise:["Bookkeeping","GST Reconciliation","Documentation"]},
 {name:"Vishal",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/VISHAL.jpg",bio:"Supports accounting operations, financial documentation, GST assistance and recurring compliance processes.",expertise:["Accounting Support","GST","Compliance"]},
 {name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/aaradhya.jpg",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
-{name:"Prashant",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/PRASHANT.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Sachin",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/sachin.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Ashutosh",role:"Team Professional",experience:"Professional Support",photo:"assets/img/team/live/ashutosh.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Parth",role:"Team Professional",experience:"Professional Support",initials:"P",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Prashant",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/live/PRASHANT.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Sachin",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/live/sachin.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Ashutosh",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/live/ashutosh.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
 {name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/live/sparsh.jpg",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}
 ];
 
