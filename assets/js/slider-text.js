@@ -55,6 +55,7 @@
 
   const installLogo = () => {
     document.querySelectorAll('img[src*="LOGO.png"], img[alt*="Instant Professionals"]').forEach((img) => {
+      if (img.closest(".ip-os-logo-mark")) return;
       img.src = LOGO_PATH;
       img.removeAttribute("srcset");
     });
