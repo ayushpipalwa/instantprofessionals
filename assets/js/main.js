@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260827-lifecycle-dashboard-1";
+const VERSION="20260827-lifecycle-dashboard-2";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
@@ -80,7 +80,7 @@ function modernizeHome(){
           <b>01—05</b>
         </div>
         <div class="ip-os-core">
-          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/logo.jpg" alt="Instant Professionals registered logo" width="6250" height="6250" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
+          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/logo.jpg?v=${VERSION}" alt="Instant Professionals registered logo" width="6250" height="6250" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
           <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
           <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
           <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>
