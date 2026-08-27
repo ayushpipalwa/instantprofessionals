@@ -1,0 +1,464 @@
+/* Executive lifecycle dashboard — loaded after legacy homepage styles. */
+.ip-os-system {
+  --ip-life-navy: #071b3f;
+  --ip-life-navy-panel: #0b2850;
+  --ip-life-green: #00a651;
+  --ip-life-white: #ffffff;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(1rem, 2vw, 1.4rem) !important;
+  border: 1px solid rgba(0, 166, 81, 0.28) !important;
+  border-radius: 1.5rem !important;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0, 166, 81, 0.075), transparent 36%),
+    linear-gradient(145deg, #061833 0%, #0a2850 56%, #071b3f 100%) !important;
+  box-shadow:
+    0 30px 75px rgba(7, 27, 63, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+.ip-os-system::before,
+.ip-os-system::after {
+  position: absolute !important;
+  z-index: -1 !important;
+  border: 1px solid rgba(0, 166, 81, 0.15) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  content: "" !important;
+  pointer-events: none;
+}
+
+.ip-os-system::before {
+  width: 19rem !important;
+  height: 19rem !important;
+  top: -11rem !important;
+  right: -8rem !important;
+}
+
+.ip-os-system::after {
+  width: 12rem !important;
+  height: 12rem !important;
+  right: -6rem !important;
+  bottom: -7rem !important;
+}
+
+.ip-os-system-top {
+  position: relative;
+  z-index: 6;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 1rem;
+  padding: 0 0 0.9rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.ip-os-system-top div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.ip-os-system-top span {
+  color: var(--ip-life-green) !important;
+  font-family: Poppins, sans-serif;
+  font-size: 0.72rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.145em !important;
+}
+
+.ip-os-system-top small {
+  color: #adbed1 !important;
+  font-size: 0.61rem !important;
+  font-weight: 650;
+  letter-spacing: 0.085em !important;
+  line-height: 1.4;
+}
+
+.ip-os-system-top > b {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 1.9rem;
+  padding: 0.38rem 0.65rem;
+  border: 1px solid rgba(0, 166, 81, 0.32);
+  border-radius: 999px;
+  background: rgba(0, 166, 81, 0.09);
+  color: var(--ip-life-green) !important;
+  font-family: Poppins, sans-serif;
+  font-size: 0.66rem !important;
+  font-weight: 850;
+  letter-spacing: 0.1em !important;
+  white-space: nowrap;
+}
+
+.ip-os-system-top > b::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--ip-life-green);
+  box-shadow: 0 0 0 0.2rem rgba(0, 166, 81, 0.12);
+  content: "";
+}
+
+.ip-os-core {
+  position: relative !important;
+  display: block !important;
+  height: clamp(23.5rem, 35vw, 25.5rem) !important;
+  min-height: 0 !important;
+  margin: 0.55rem 0 0.45rem !important;
+  background: radial-gradient(circle at center, rgba(0, 166, 81, 0.055), transparent 43%);
+}
+
+.ip-os-core::before,
+.ip-os-core::after {
+  position: absolute !important;
+  z-index: 0 !important;
+  top: 50% !important;
+  left: 50% !important;
+  border-radius: 50% !important;
+  content: "" !important;
+  pointer-events: none;
+  transform: translate(-50%, -50%) !important;
+}
+
+.ip-os-core::before {
+  width: min(64%, 18rem) !important;
+  height: auto !important;
+  aspect-ratio: 1;
+  border: 1px dashed rgba(0, 166, 81, 0.38) !important;
+  background: transparent !important;
+  box-shadow:
+    0 0 0 1.9rem rgba(255, 255, 255, 0.012),
+    0 0 0 calc(1.9rem + 1px) rgba(0, 166, 81, 0.065) !important;
+}
+
+.ip-os-core::after {
+  width: min(38%, 10.7rem) !important;
+  height: auto !important;
+  aspect-ratio: 1;
+  border: 1px solid rgba(0, 166, 81, 0.36) !important;
+  background: radial-gradient(circle, rgba(0, 166, 81, 0.1), transparent 69%) !important;
+}
+
+.ip-os-center {
+  position: absolute !important;
+  z-index: 5 !important;
+  top: 50% !important;
+  left: 50% !important;
+  display: flex !important;
+  width: 7.8rem !important;
+  height: 7.8rem !important;
+  flex-direction: column !important;
+  gap: 0.36rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.58rem !important;
+  overflow: visible !important;
+  border: 1px solid rgba(0, 166, 81, 0.58) !important;
+  border-radius: 50% !important;
+  background: linear-gradient(145deg, rgba(10, 40, 80, 0.98), rgba(6, 24, 51, 0.98)) !important;
+  box-shadow:
+    0 0 0 0.52rem rgba(0, 166, 81, 0.06),
+    0 0 0 calc(0.52rem + 1px) rgba(255, 255, 255, 0.06),
+    0 18px 38px rgba(0, 0, 0, 0.32) !important;
+  text-align: center;
+  transform: translate(-50%, -50%) !important;
+}
+
+.ip-os-center::before {
+  position: absolute;
+  inset: -0.62rem;
+  z-index: -1;
+  border: 1px solid rgba(0, 166, 81, 0.2);
+  border-radius: 50%;
+  content: "";
+  animation: ip-dashboard-halo 5s ease-in-out infinite;
+}
+
+.ip-os-logo-mark {
+  position: relative;
+  display: block;
+  width: 4.35rem;
+  height: 4.35rem;
+  flex: 0 0 4.35rem;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+}
+
+.ip-os-logo-mark img {
+  position: absolute !important;
+  top: 47% !important;
+  left: 50% !important;
+  display: block !important;
+  width: 5.65rem !important;
+  max-width: none !important;
+  height: 5.65rem !important;
+  max-height: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.ip-os-center-copy {
+  display: grid;
+  gap: 0.05rem;
+  place-items: center;
+}
+
+.ip-os-center-copy b {
+  color: #ffffff !important;
+  font-family: Poppins, sans-serif;
+  font-size: 0.56rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.13em !important;
+  line-height: 1.15;
+}
+
+.ip-os-center-copy small {
+  margin: 0 !important;
+  color: #aebfd2 !important;
+  font-size: 0.42rem !important;
+  font-weight: 650 !important;
+  letter-spacing: 0.055em !important;
+  line-height: 1.25 !important;
+  text-transform: uppercase;
+}
+
+.ip-os-track {
+  position: absolute !important;
+  z-index: 4 !important;
+  display: grid !important;
+  width: min(36%, 11.6rem) !important;
+  min-width: 0 !important;
+  min-height: 4rem !important;
+  grid-template-columns: 2.25rem minmax(0, 1fr) !important;
+  gap: 0.66rem !important;
+  align-items: center !important;
+  padding: 0.66rem 0.72rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-radius: 0.9rem !important;
+  background: linear-gradient(145deg, rgba(20, 54, 91, 0.96), rgba(10, 35, 68, 0.96)) !important;
+  box-shadow:
+    0 13px 28px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease !important;
+}
+
+.ip-os-track::before {
+  position: absolute;
+  top: 0.62rem;
+  bottom: 0.62rem;
+  left: 0;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent, var(--ip-life-green), transparent);
+  content: "";
+}
+
+.ip-os-track::after {
+  position: absolute !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, transparent, rgba(0, 166, 81, 0.72)) !important;
+  box-shadow: none !important;
+  content: "" !important;
+}
+
+.ip-os-track-1 {
+  top: 0.2rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+.ip-os-track-1::after {
+  right: 50% !important;
+  bottom: -0.8rem !important;
+  width: 1px !important;
+  height: 0.8rem !important;
+  background: linear-gradient(180deg, rgba(0, 166, 81, 0.72), transparent) !important;
+  transform: translateX(50%) !important;
+}
+.ip-os-track-2 { top: 5.75rem !important; right: 0 !important; }
+.ip-os-track-2::after { left: -0.8rem !important; bottom: 1.15rem !important; width: 0.8rem !important; height: 1px !important; }
+.ip-os-track-3 { right: 0.55rem !important; bottom: 1rem !important; }
+.ip-os-track-3::after { top: 1.05rem !important; left: -0.8rem !important; width: 0.8rem !important; height: 1px !important; }
+.ip-os-track-4 { bottom: 1rem !important; left: 0.55rem !important; }
+.ip-os-track-4::after {
+  top: 1.05rem !important;
+  right: -0.8rem !important;
+  width: 0.8rem !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, rgba(0, 166, 81, 0.72), transparent) !important;
+}
+.ip-os-track-5 { top: 5.75rem !important; left: 0 !important; }
+.ip-os-track-5::after {
+  right: -0.8rem !important;
+  bottom: 1.15rem !important;
+  width: 0.8rem !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, rgba(0, 166, 81, 0.72), transparent) !important;
+}
+
+.ip-os-system .ip-os-track i {
+  display: grid !important;
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  place-items: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.52) !important;
+  border-radius: 50% !important;
+  background: var(--ip-life-green) !important;
+  color: #ffffff !important;
+  box-shadow: 0 7px 16px rgba(0, 0, 0, 0.22) !important;
+  font-family: Poppins, sans-serif;
+  font-size: 0.64rem !important;
+  font-style: normal;
+  font-weight: 900 !important;
+  letter-spacing: 0.01em;
+}
+
+.ip-os-track div {
+  display: block !important;
+  min-width: 0;
+}
+
+.ip-os-track b {
+  display: block;
+  color: #ffffff !important;
+  font-family: Poppins, sans-serif;
+  font-size: 0.72rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.055em !important;
+  line-height: 1.2;
+}
+
+.ip-os-track small {
+  display: block;
+  margin-top: 0.21rem !important;
+  color: #bac9da !important;
+  font-size: 0.58rem !important;
+  font-weight: 600;
+  line-height: 1.38 !important;
+}
+
+.ip-os-system-foot {
+  position: relative;
+  z-index: 6;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0.5rem !important;
+  padding-top: 0.82rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.ip-os-system-foot span {
+  display: grid !important;
+  min-height: 2rem !important;
+  place-items: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.58rem !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  color: #b9c8d9 !important;
+  font-size: 0.58rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.11em !important;
+  text-transform: uppercase;
+}
+
+.ip-os-system-foot span:nth-child(2) {
+  border-color: rgba(0, 166, 81, 0.36) !important;
+  background: rgba(0, 166, 81, 0.1) !important;
+  color: var(--ip-life-green) !important;
+}
+
+@keyframes ip-dashboard-halo {
+  0%, 100% { opacity: 0.55; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1.025); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ip-os-track:hover {
+    border-color: rgba(0, 166, 81, 0.48) !important;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(0, 166, 81, 0.08) !important;
+  }
+  .ip-os-track-1:hover { transform: translateX(-50%) translateY(-3px) !important; }
+  .ip-os-track-2:hover,
+  .ip-os-track-3:hover,
+  .ip-os-track-4:hover,
+  .ip-os-track-5:hover { transform: translateY(-3px) !important; }
+}
+
+@media (max-width: 991px) {
+  .ip-os-system { max-width: 42rem !important; margin-inline: auto !important; }
+}
+
+@media (max-width: 767px) {
+  .ip-os-system {
+    padding: 0.9rem !important;
+    border-radius: 1.15rem !important;
+  }
+  .ip-os-system-top span { font-size: 0.67rem !important; }
+  .ip-os-system-top small { font-size: 0.57rem !important; }
+  .ip-os-system-top > b { min-height: 1.75rem; padding: 0.32rem 0.55rem; font-size: 0.6rem !important; }
+  .ip-os-core { height: 23.2rem !important; margin-top: 0.35rem !important; }
+  .ip-os-core::before { width: min(70%, 15rem) !important; }
+  .ip-os-core::after { width: min(42%, 9rem) !important; }
+  .ip-os-center { width: 6.65rem !important; height: 6.65rem !important; padding: 0.48rem !important; }
+  .ip-os-logo-mark { width: 3.7rem; height: 3.7rem; flex-basis: 3.7rem; }
+  .ip-os-logo-mark img { width: 4.82rem !important; height: 4.82rem !important; }
+  .ip-os-center-copy b { font-size: 0.48rem !important; }
+  .ip-os-center-copy small { font-size: 0.35rem !important; }
+  .ip-os-track {
+    width: min(46%, 9.65rem) !important;
+    min-height: 3.55rem !important;
+    grid-template-columns: 1.9rem minmax(0, 1fr) !important;
+    gap: 0.48rem !important;
+    padding: 0.52rem 0.56rem !important;
+    border-radius: 0.72rem !important;
+  }
+  .ip-os-system .ip-os-track i { width: 1.9rem !important; height: 1.9rem !important; font-size: 0.56rem !important; }
+  .ip-os-track b { font-size: 0.61rem !important; }
+  .ip-os-track small { font-size: 0.49rem !important; }
+  .ip-os-track-1 { top: 0.08rem !important; }
+  .ip-os-track-2,
+  .ip-os-track-5 { top: 5rem !important; }
+  .ip-os-track-3,
+  .ip-os-track-4 { bottom: 0.75rem !important; }
+  .ip-os-track-3 { right: 0 !important; }
+  .ip-os-track-4 { left: 0 !important; }
+  .ip-os-system-foot span { min-height: 1.85rem !important; font-size: 0.52rem !important; }
+}
+
+@media (max-width: 390px) {
+  .ip-os-system-top small { max-width: 12rem; }
+  .ip-os-core { height: 22.2rem !important; }
+  .ip-os-track {
+    width: min(47%, 8.75rem) !important;
+    grid-template-columns: 1.75rem minmax(0, 1fr) !important;
+    gap: 0.38rem !important;
+    padding: 0.46rem !important;
+  }
+  .ip-os-system .ip-os-track i { width: 1.75rem !important; height: 1.75rem !important; font-size: 0.52rem !important; }
+  .ip-os-track b { font-size: 0.56rem !important; }
+  .ip-os-track small { font-size: 0.45rem !important; }
+  .ip-os-center { width: 6.15rem !important; height: 6.15rem !important; }
+  .ip-os-logo-mark { width: 3.35rem; height: 3.35rem; flex-basis: 3.35rem; }
+  .ip-os-logo-mark img { width: 4.35rem !important; height: 4.35rem !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ip-os-center::before { animation: none; }
+  .ip-os-track { transition: none !important; }
+}
