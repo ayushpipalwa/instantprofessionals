@@ -2,7 +2,7 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260826-team-role-cleanup-1";
+const VERSION="20260827-lifecycle-brand-green-1";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
 
 function loadVisionStyles(){
