@@ -374,7 +374,7 @@ def update_homepage() -> None:
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />
-    <link href="assets/css/home-fixes.css?v=20260827-profile-motto-1" rel="stylesheet" />
+    <link href="assets/css/home-fixes.css?v=20260827-profile-motto-2" rel="stylesheet" />
     <link href="assets/css/lifecycle-dashboard.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
@@ -492,7 +492,7 @@ def update_homepage() -> None:
     text = re.sub(r'\s*<link data-ip-vision="2" href="assets/css/vision-2\.css\?v=[^"]+" rel="stylesheet" />', '', text)
     text = re.sub(r'\s*<link href="assets/css/home-fixes\.css\?v=[^"]+" rel="stylesheet" />', '', text)
     text = re.sub(r'\s*<link href="assets/css/lifecycle-dashboard\.css\?v=[^"]+" rel="stylesheet" />', '', text)
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260827-profile-motto-1" rel="stylesheet" />\n    <link href="assets/css/lifecycle-dashboard.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />', 1)
+    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260827-profile-motto-2" rel="stylesheet" />\n    <link href="assets/css/lifecycle-dashboard.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />', 1)
     if 'assets/js/enquiry.js' not in text:
         text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
     text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260827-lifecycle-dashboard-2", text)
