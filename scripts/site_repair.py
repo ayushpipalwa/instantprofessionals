@@ -28,6 +28,12 @@ GOOGLE_TAG = f"""<!-- Google tag (gtag.js) -->
   gtag('js', new Date());
   gtag('config', '{GA_MEASUREMENT_ID}');
 </script>"""
+FAVICON_LINKS = """<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/favicon-192x192.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/img/favicon/site.webmanifest">"""
 PRICE_FACTOR = 0.70
 
 
@@ -327,7 +333,7 @@ def service_page(old: str) -> str:
   <meta property="og:title" content="{html.escape(seo_name)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary"><meta name="twitter:title" content="{html.escape(seo_name)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="theme-color" content="#071d3d">
-  <link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  {FAVICON_LINKS}
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1">
   <script type="application/ld+json" data-ip-seo-schema>{structured}</script>
 </head>
@@ -354,7 +360,7 @@ def redirect_page(clean: str, title: str) -> str:
 def policy_page(filename: str, title: str, sections: list[tuple[str, str]]) -> str:
     body = "".join(f"<h2>{html.escape(heading)}</h2><p>{text}</p>" for heading, text in sections)
     canonical = f"{SITE}/{filename}"
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}"><link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 24 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}">{FAVICON_LINKS}<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 24 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
 
 
 def update_homepage() -> None:
