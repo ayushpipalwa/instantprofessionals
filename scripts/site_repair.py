@@ -11,6 +11,8 @@ from __future__ import annotations
 import html
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -379,9 +381,7 @@ def update_homepage() -> None:
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260901-mobile-performance-1" rel="stylesheet" />
-    <link href="assets/css/home-fixes.css?v=20260901-mobile-performance-1" rel="stylesheet" />
-    <link href="assets/css/lifecycle-dashboard.css?v=20260901-mobile-performance-1" rel="stylesheet" />"""
+    <link data-ip-vision="2" href="assets/css/homepage.min.css?v=20260901-mobile-performance-2" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
     if 'class="skip-link"' not in text:
@@ -399,7 +399,7 @@ def update_homepage() -> None:
         </div>
         <aside class="ip-os-system" aria-label="Business compliance lifecycle">
           <div class="ip-os-system-top"><div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div><b>01—05</b></div>
-          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/favicon/android-chrome-512x512.png?v=20260901-mobile-performance-1" alt="Instant Professionals registered logo" width="512" height="512" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
+          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/favicon/ip-lifecycle-192.webp?v=20260901-mobile-performance-2" alt="Instant Professionals registered logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
           <div class="ip-os-system-foot"><span>Clarity</span><span>Control</span><span>Continuity</span></div>
         </aside>
       </div>
@@ -495,20 +495,19 @@ def update_homepage() -> None:
     text = text.replace("complex tax casesr", "complex tax cases")
     text = text.replace("Monthly/ Quarterly Compliances", "Monthly and quarterly compliance")
     text = re.sub(r'\s*<!--.*?-->', '', text, flags=re.S)
-    text = re.sub(r'\s*<link data-ip-vision="2" href="assets/css/vision-2\.css\?v=[^"]+" rel="stylesheet" />', '', text)
-    text = re.sub(r'\s*<link href="assets/css/home-fixes\.css\?v=[^"]+" rel="stylesheet" />', '', text)
-    text = re.sub(r'\s*<link href="assets/css/lifecycle-dashboard\.css\?v=[^"]+" rel="stylesheet" />', '', text)
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260901-mobile-performance-1" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260901-mobile-performance-1" rel="stylesheet" />\n    <link href="assets/css/lifecycle-dashboard.css?v=20260901-mobile-performance-1" rel="stylesheet" />', 1)
-    if 'assets/js/enquiry.js' not in text:
-        text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
-    text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260901-mobile-performance-1", text)
+    text = re.sub(r'\s*<link[^>]+(?:fonts\.googleapis\.com|fonts\.gstatic\.com|assets/vendor/aos/aos\.css|assets/vendor/bootstrap/css/bootstrap\.min\.css|assets/vendor/bootstrap-icons/bootstrap-icons\.css|assets/css/(?:style|vision-2|home-fixes|lifecycle-dashboard|homepage\.min)\.css)[^>]*>', '', text, flags=re.I)
+    text = text.replace('</head>', '    <link data-ip-vision="2" href="assets/css/homepage.min.css?v=20260901-mobile-performance-2" rel="stylesheet" />\n  </head>', 1)
+    text = re.sub(r'\s*<script[^>]+assets/vendor/aos/aos\.js[^>]*></script>', '', text, flags=re.I)
+    text = re.sub(r'\s*<script[^>]+assets/js/(?:enquiry|enquiry-home)\.js[^>]*></script>', '', text, flags=re.I)
+    text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260901-mobile-performance-2", text)
+    text = text.replace('</body>', '    <script src="assets/js/enquiry-home.js?v=20260901-mobile-performance-2" defer></script>\n  </body>', 1)
     path.write_text(text, encoding="utf-8")
 
 
 def update_shared_files() -> None:
     main = ROOT / "assets/js/main.js"
     text = main.read_text(encoding="utf-8")
-    text = re.sub(r'const VERSION="[^"]+";', 'const VERSION="20260901-mobile-performance-1";', text, count=1)
+    text = re.sub(r'const VERSION="[^"]+";', 'const VERSION="20260901-mobile-performance-2";', text, count=1)
     text = text.replace('role:"Team Professional"', 'role:"Executive Assistant"')
     text = re.sub(r'\n\{name:"Parth",[^\n]*\},?', '', text, count=1)
     if 'name:"Sparsh"' not in text:
@@ -591,6 +590,7 @@ def main() -> None:
     write_technical_files()
     update_homepage()
     update_shared_files()
+    subprocess.run([sys.executable, str(ROOT / "scripts/build_homepage_assets.py")], check=True)
     print(f"Generated {len(CATALOG)} audited service pages and {sum(1 for old, data in CATALOG.items() if old != data[0])} compatibility redirects.")
 
 
