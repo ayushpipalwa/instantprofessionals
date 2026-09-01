@@ -2,8 +2,9 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260827-lifecycle-dashboard-2";
+const VERSION="20260901-mobile-performance-1";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
+const LIFECYCLE_LOGO=`assets/img/favicon/android-chrome-512x512.png?v=${VERSION}`;
 
 function loadVisionStyles(){
   if(!document.querySelector('link[data-ip-vision="2"]')){
@@ -26,11 +27,20 @@ loadVisionStyles();
 // Current-law content is now generated statically on service pages.
 
 const navlinks=$("#navbar .scrollto",true);
-function setActiveNav(){const p=window.scrollY+200;navlinks.forEach(l=>{if(!l.hash)return;const s=$(l.hash);if(!s)return;l.classList.toggle("active",p>=s.offsetTop&&p<=s.offsetTop+s.offsetHeight)})}
-window.addEventListener("load",setActiveNav);document.addEventListener("scroll",setActiveNav);
+const header=$("#header");
+const topBtn=$(".back-to-top");
+function updateScrollState(){
+  const y=window.scrollY;
+  const p=y+200;
+  navlinks.forEach(l=>{if(!l.hash)return;const s=$(l.hash);if(!s)return;l.classList.toggle("active",p>=s.offsetTop&&p<=s.offsetTop+s.offsetHeight)});
+  if(header)header.classList.toggle("header-scrolled",y>80);
+  if(topBtn)topBtn.classList.toggle("active",y>100);
+}
+let scrollFrame=0;
+function scheduleScrollUpdate(){if(scrollFrame)return;scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;updateScrollState()})}
+window.addEventListener("load",updateScrollState,{once:true});
+window.addEventListener("scroll",scheduleScrollUpdate,{passive:true});
 function scrollto(sel){const h=$("#header"),e=$(sel);if(e)window.scrollTo({top:e.offsetTop-(h?h.offsetHeight:0),behavior:"smooth"})}
-const header=$("#header");if(header){const f=()=>header.classList.toggle("header-scrolled",window.scrollY>80);window.addEventListener("load",f);document.addEventListener("scroll",f)}
-const topBtn=$(".back-to-top");if(topBtn){const f=()=>topBtn.classList.toggle("active",window.scrollY>100);window.addEventListener("load",f);document.addEventListener("scroll",f)}
 on("click",".mobile-nav-toggle",function(){const n=$("#navbar");if(!n)return;n.classList.toggle("navbar-mobile");this.classList.toggle("bi-list");this.classList.toggle("bi-x")});
 on("click",".navbar .dropdown > a",function(e){const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){e.preventDefault();if(this.nextElementSibling)this.nextElementSibling.classList.toggle("dropdown-active")}},true);
 on("click",".scrollto",function(e){if(!this.hash||!$(this.hash))return;e.preventDefault();const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){n.classList.remove("navbar-mobile");const b=$(".mobile-nav-toggle");if(b){b.classList.toggle("bi-list");b.classList.toggle("bi-x")}}scrollto(this.hash)},true);
@@ -43,6 +53,9 @@ function modernizeHeader(){
     logo.alt="Instant Professionals registered logo";
     logo.removeAttribute("style");
     logo.removeAttribute("srcset");
+    logo.width=68;
+    logo.height=68;
+    logo.decoding="async";
     logo.style.width="68px";
     logo.style.height="68px";
     logo.style.objectFit="contain";
@@ -60,8 +73,8 @@ function modernizeHome(){
   hero.innerHTML=`
     <div class="ip-os-grid-bg" aria-hidden="true"></div>
     <div class="container ip-os-shell">
-      <div class="ip-os-copy" data-aos="fade-up">
-        <div class="ip-os-index"><img src="${BRAND_LOGO}" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+      <div class="ip-os-copy">
+        <div class="ip-os-index"><img src="${BRAND_LOGO}" width="64" height="64" decoding="async" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
         <h1>Compliance,<br><em>engineered around</em><br>your business.</h1>
         <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory — structured around how your business actually operates.</p>
         <div class="ip-os-actions">
@@ -74,13 +87,13 @@ function modernizeHome(){
           <div><strong>1</strong><span>Coordinated professional relationship</span></div>
         </div>
       </div>
-      <aside class="ip-os-system" data-aos="fade-left" aria-label="Business compliance lifecycle">
+      <aside class="ip-os-system" aria-label="Business compliance lifecycle">
         <div class="ip-os-system-top">
           <div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div>
           <b>01—05</b>
         </div>
         <div class="ip-os-core">
-          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/logo.jpg?v=${VERSION}" alt="Instant Professionals registered logo" width="6250" height="6250" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
+          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="${LIFECYCLE_LOGO}" alt="Instant Professionals registered logo" width="512" height="512" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
           <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
           <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
           <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>
@@ -147,24 +160,24 @@ function updateServiceRates(){
 }
 
 const team=[
-{name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/live/ayush-pipalwa.jpg",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
-{name:"Mayank Jain",role:"Founder",experience:"Direct Tax Professional",photo:"assets/img/team/live/mayank-jain.jpg",bio:"Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",expertise:["Direct Tax","Tax Advisory","Assessments"]},
-{name:"Renu Sharma",role:"Indirect Tax & GST Advisor",experience:"Senior Professional",photo:"assets/img/team/live/renu-sharma.jpg",bio:"Specialises in indirect taxation, GST advisory and tax litigation, supporting businesses with compliance, departmental proceedings, notices, assessments and dispute resolution.",expertise:["GST Advisory","Indirect Tax","Tax Litigation"]},
-{name:"Navdha Puri",role:"Audit & Assurance Advisor",experience:"15+ Years",photo:"assets/img/team/live/navdha-puri.jpg",bio:"Experienced Chartered Accountant focused on statutory audit, internal audit and assurance, with emphasis on controls, reliable reporting and risk-based recommendations.",expertise:["Statutory Audit","Internal Audit","Risk & Controls"]},
-{name:"Rohit Sharma",role:"Audit & Assurance Advisor",experience:"10+ Years",photo:"assets/img/team/live/ROHIT-SHARMA.jpg",bio:"Chartered Accountant specialising in audit and assurance, financial reporting, audit readiness and internal-control reviews for growing businesses.",expertise:["Audit & Assurance","Financial Reporting","Internal Controls"]},
-{name:"Mayank Hoiyani",role:"Chartered Accountant",experience:"7+ Years",photo:"assets/img/team/live/mayank-hoiyani.jpg",bio:"With 7+ years of professional experience, he advises businesses on GST, income tax, audit and assurance, statutory compliance and financial reporting. He also develops practical SOPs and internal-control frameworks to strengthen accuracy, accountability and operational efficiency.",expertise:["GST & Income Tax","Audit & Assurance","SOP Development","Financial Reporting"]},
-{name:"Surbhi Sharma",role:"Cost & Management Accountant",experience:"5+ Years",photo:"assets/img/team/live/surbhi-sharma.png",bio:"Cost and management accounting professional focused on budgeting, costing, MIS reporting, financial planning and operational efficiency.",expertise:["Costing","Budgeting","MIS & Analysis"]},
-{name:"Nisha Pal",role:"Manager",experience:"Client Operations",photo:"assets/img/team/live/nisha-pal.jpg",bio:"Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",expertise:["Client Management","Operations","Compliance Coordination"]},
-{name:"Yash Sharma",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/YASH-SHARMA.jpg",bio:"Supports bookkeeping, GST reconciliations, financial records and routine statutory compliance assignments.",expertise:["Bookkeeping","GST Reconciliation","Documentation"]},
-{name:"Vishal",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/VISHAL.jpg",bio:"Supports accounting operations, financial documentation, GST assistance and recurring compliance processes.",expertise:["Accounting Support","GST","Compliance"]},
-{name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/live/aaradhya.jpg",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
-{name:"Prashant",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/live/PRASHANT.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Sachin",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/live/sachin.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Ashutosh",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/live/ashutosh.jpg",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
-{name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/live/sparsh.jpg",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}
+{name:"Ayush Pipalwa",role:"Founder",experience:"10+ Years",photo:"assets/img/team/optimized/ayush-pipalwa.webp",bio:"Practising professional with more than a decade of experience across corporate and secretarial compliance, governance, risk advisory and business consulting.",expertise:["Corporate Compliance","Risk Advisory","Business Consulting"]},
+{name:"Mayank Jain",role:"Founder",experience:"Direct Tax Professional",photo:"assets/img/team/optimized/mayank-jain.webp",bio:"Direct tax professional advising individuals, founders and businesses on income-tax compliance, assessments, tax planning and practical tax-efficient structuring.",expertise:["Direct Tax","Tax Advisory","Assessments"]},
+{name:"Renu Sharma",role:"Indirect Tax & GST Advisor",experience:"Senior Professional",photo:"assets/img/team/optimized/renu-sharma.webp",bio:"Specialises in indirect taxation, GST advisory and tax litigation, supporting businesses with compliance, departmental proceedings, notices, assessments and dispute resolution.",expertise:["GST Advisory","Indirect Tax","Tax Litigation"]},
+{name:"Navdha Puri",role:"Audit & Assurance Advisor",experience:"15+ Years",photo:"assets/img/team/optimized/navdha-puri.webp",photoWidth:800,photoHeight:1000,bio:"Experienced Chartered Accountant focused on statutory audit, internal audit and assurance, with emphasis on controls, reliable reporting and risk-based recommendations.",expertise:["Statutory Audit","Internal Audit","Risk & Controls"]},
+{name:"Rohit Sharma",role:"Audit & Assurance Advisor",experience:"10+ Years",photo:"assets/img/team/optimized/rohit-sharma.webp",bio:"Chartered Accountant specialising in audit and assurance, financial reporting, audit readiness and internal-control reviews for growing businesses.",expertise:["Audit & Assurance","Financial Reporting","Internal Controls"]},
+{name:"Mayank Hoiyani",role:"Chartered Accountant",experience:"7+ Years",photo:"assets/img/team/optimized/mayank-hoiyani.webp",bio:"With 7+ years of professional experience, he advises businesses on GST, income tax, audit and assurance, statutory compliance and financial reporting. He also develops practical SOPs and internal-control frameworks to strengthen accuracy, accountability and operational efficiency.",expertise:["GST & Income Tax","Audit & Assurance","SOP Development","Financial Reporting"]},
+{name:"Surbhi Sharma",role:"Cost & Management Accountant",experience:"5+ Years",photo:"assets/img/team/optimized/surbhi-sharma.webp",bio:"Cost and management accounting professional focused on budgeting, costing, MIS reporting, financial planning and operational efficiency.",expertise:["Costing","Budgeting","MIS & Analysis"]},
+{name:"Nisha Pal",role:"Manager",experience:"Client Operations",photo:"assets/img/team/optimized/nisha-pal.webp",bio:"Manages client engagements, compliance coordination, documentation and timely delivery across recurring professional assignments.",expertise:["Client Management","Operations","Compliance Coordination"]},
+{name:"Yash Sharma",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/optimized/yash-sharma.webp",bio:"Supports bookkeeping, GST reconciliations, financial records and routine statutory compliance assignments.",expertise:["Bookkeeping","GST Reconciliation","Documentation"]},
+{name:"Vishal",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/optimized/vishal.webp",bio:"Supports accounting operations, financial documentation, GST assistance and recurring compliance processes.",expertise:["Accounting Support","GST","Compliance"]},
+{name:"Aaradhya",role:"Accounts Executive",experience:"Accounts & Compliance",photo:"assets/img/team/optimized/aaradhya.webp",bio:"Supports financial record-keeping, accounting documentation and day-to-day compliance execution.",expertise:["Record Keeping","Accounts Support","Compliance"]},
+{name:"Prashant",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/optimized/prashant.webp",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Sachin",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/optimized/sachin.webp",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Ashutosh",role:"Executive Assistant",experience:"Professional Support",photo:"assets/img/team/optimized/ashutosh.webp",bio:"Supports client assignments, documentation and coordinated professional-service delivery.",expertise:["Client Support","Documentation","Compliance"]},
+{name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/optimized/sparsh.webp",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}
 ];
 
-function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" alt="${m.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:""}<div class="ip-profile-placeholder" style="${m.photo?"display:none":"display:grid"}">${m.initials||m.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><span class="ip-experience">${m.experience}</span><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
+function renderTeam(){const s=$("#team");if(!s)return;s.className="team ip-team-section";s.innerHTML=`<div class="container"><div class="text-center" data-aos="fade-up"><div class="ip-team-eyebrow">Our Professionals</div><h2 class="ip-team-title">Expertise that works together.</h2><p class="ip-team-subtitle">A coordinated team across corporate compliance, taxation, audit, accounting and operations — aligned around timely execution and practical advice.</p></div><div class="ip-team-grid">${team.map((m,i)=>`<article class="ip-profile-card" data-aos="fade-up" data-aos-delay="${Math.min(i*45,270)}">${m.photo?`<img class="ip-profile-photo" src="${m.photo}?v=${VERSION}" width="${m.photoWidth||800}" height="${m.photoHeight||800}" alt="${m.name}" loading="lazy" decoding="async" fetchpriority="low" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:""}<div class="ip-profile-placeholder" style="${m.photo?"display:none":"display:grid"}">${m.initials||m.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div><div class="ip-profile-body"><h3 class="ip-profile-name">${m.name}</h3><div class="ip-profile-role">${m.role}</div><span class="ip-experience">${m.experience}</span><p class="ip-profile-bio">${m.bio}</p><div class="ip-tags">${m.expertise.map(x=>`<span class="ip-tag">${x}</span>`).join("")}</div></div></article>`).join("")}</div></div>`}
 
 function modernizeSocialPresence(){
   const main=$("#main");
@@ -172,7 +185,7 @@ function modernizeSocialPresence(){
   const section=document.createElement("section");
   section.id="social-presence";
   section.className="ip-social-presence";
-  section.innerHTML=`<div class="container"><div class="ip-social-shell" data-aos="fade-up"><div class="ip-social-copy"><span class="ip-social-kicker">SOCIAL / COMMUNITY</span><h2>Stay connected with<br><em>Instant Professionals.</em></h2><p>Follow our updates on compliance, taxation, registrations, business advisory and important professional developments — without the clutter of an outdated embedded social feed.</p><div class="ip-social-actions"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener" class="ip-social-btn ip-social-btn-primary"><i class="bi bi-facebook"></i> Follow on Facebook</a><a href="#contact" class="ip-social-btn ip-social-btn-secondary"><i class="bi bi-chat-dots"></i> Talk to our team</a></div></div><div class="ip-social-card"><div class="ip-social-brand"><img src="${BRAND_LOGO}" alt="Instant Professionals"><div><strong>Instant Professionals</strong><span>Professional updates • Compliance • Tax • Advisory</span></div></div><div class="ip-social-feature"><span class="ip-social-pill">LATEST FROM OUR NETWORK</span><h3>Professional insights, timely updates and practical guidance.</h3><p>We are simplifying the website experience by replacing the dated embedded Facebook window with a clean, responsive social presence panel.</p></div><div class="ip-social-links"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Facebook</span><b>Follow</b></a><a href="https://wa.me/918209785294" target="_blank" rel="noopener"><i class="bi bi-whatsapp" aria-hidden="true"></i><span>WhatsApp</span><b>Connect</b></a><a href="#services"><i class="bi bi-grid"></i><span>Services</span><b>Explore</b></a></div></div></div></div>`;
+  section.innerHTML=`<div class="container"><div class="ip-social-shell" data-aos="fade-up"><div class="ip-social-copy"><span class="ip-social-kicker">SOCIAL / COMMUNITY</span><h2>Stay connected with<br><em>Instant Professionals.</em></h2><p>Follow our updates on compliance, taxation, registrations, business advisory and important professional developments — without the clutter of an outdated embedded social feed.</p><div class="ip-social-actions"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener" class="ip-social-btn ip-social-btn-primary"><i class="bi bi-facebook"></i> Follow on Facebook</a><a href="#contact" class="ip-social-btn ip-social-btn-secondary"><i class="bi bi-chat-dots"></i> Talk to our team</a></div></div><div class="ip-social-card"><div class="ip-social-brand"><img src="${BRAND_LOGO}" width="64" height="64" decoding="async" alt="Instant Professionals"><div><strong>Instant Professionals</strong><span>Professional updates • Compliance • Tax • Advisory</span></div></div><div class="ip-social-feature"><span class="ip-social-pill">LATEST FROM OUR NETWORK</span><h3>Professional insights, timely updates and practical guidance.</h3><p>We are simplifying the website experience by replacing the dated embedded Facebook window with a clean, responsive social presence panel.</p></div><div class="ip-social-links"><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener"><i class="bi bi-facebook"></i><span>Facebook</span><b>Follow</b></a><a href="https://wa.me/918209785294" target="_blank" rel="noopener"><i class="bi bi-whatsapp" aria-hidden="true"></i><span>WhatsApp</span><b>Connect</b></a><a href="#services"><i class="bi bi-grid"></i><span>Services</span><b>Explore</b></a></div></div></div></div>`;
   const contact=$("#contact");
   if(contact)main.insertBefore(section,contact);else main.appendChild(section);
 }
@@ -183,11 +196,11 @@ function runSafely(label,fn){try{fn()}catch(error){console.error("[Instant Profe
 function boot(){
   [["header",modernizeHeader],["homepage",modernizeHome],["services",modernizeServices],["rates",updateServiceRates],["team",renderTeam],["social",modernizeSocialPresence],["contact",modernizeContact]]
     .forEach(([label,fn])=>runSafely(label,fn));
-  if(window.AOS)AOS.init({duration:650,easing:"ease-out-cubic",once:true,mirror:false});
+  if(window.AOS)AOS.init({duration:550,easing:"ease-out-cubic",once:true,mirror:false,disable:window.matchMedia("(prefers-reduced-motion: reduce)").matches});
+  updateScrollState();
 }
 if(document.readyState==="loading"){
-  document.addEventListener("DOMContentLoaded",()=>runSafely("team",renderTeam),{once:true});
-  window.addEventListener("load",boot,{once:true});
+  document.addEventListener("DOMContentLoaded",boot,{once:true});
 }else{
   boot();
 }

@@ -379,9 +379,9 @@ def update_homepage() -> None:
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />
-    <link href="assets/css/home-fixes.css?v=20260827-profile-motto-2" rel="stylesheet" />
-    <link href="assets/css/lifecycle-dashboard.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />"""
+    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260901-mobile-performance-1" rel="stylesheet" />
+    <link href="assets/css/home-fixes.css?v=20260901-mobile-performance-1" rel="stylesheet" />
+    <link href="assets/css/lifecycle-dashboard.css?v=20260901-mobile-performance-1" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
     if 'class="skip-link"' not in text:
@@ -390,16 +390,16 @@ def update_homepage() -> None:
     home_hero = f"""<section class="ip-home-hero ip-os-home" aria-labelledby="home-heading">
       <div class="ip-os-grid-bg" aria-hidden="true"></div>
       <div class="container ip-os-shell">
-        <div class="ip-os-copy" data-aos="fade-up">
-          <div class="ip-os-index"><img src="assets/img/instant-professionals-logo-2026.png" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+        <div class="ip-os-copy">
+          <div class="ip-os-index"><img src="assets/img/instant-professionals-logo-2026.png" width="64" height="64" decoding="async" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
           <h1 id="home-heading">Compliance,<br><em>engineered around</em><br>your business.</h1>
           <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory—structured around how your business operates.</p>
           <div class="ip-os-actions"><a class="ip-os-btn ip-os-btn-primary" href="#services">Explore services <i class="bi bi-arrow-right" aria-hidden="true"></i></a><a class="ip-os-btn ip-os-btn-ghost" href="#team">Meet our professionals</a></div>
           <div class="ip-os-credibility"><div><strong>2018</strong><span>Built on professional practice</span></div><div><strong>360°</strong><span>Compliance and advisory coverage</span></div><div><strong>1</strong><span>Coordinated professional relationship</span></div></div>
         </div>
-        <aside class="ip-os-system" data-aos="fade-left" aria-label="Business compliance lifecycle">
+        <aside class="ip-os-system" aria-label="Business compliance lifecycle">
           <div class="ip-os-system-top"><div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div><b>01—05</b></div>
-          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/logo.jpg?v=20260827-lifecycle-dashboard-2" alt="Instant Professionals registered logo" width="6250" height="6250" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
+          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/favicon/android-chrome-512x512.png?v=20260901-mobile-performance-1" alt="Instant Professionals registered logo" width="512" height="512" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
           <div class="ip-os-system-foot"><span>Clarity</span><span>Control</span><span>Continuity</span></div>
         </aside>
       </div>
@@ -481,7 +481,7 @@ def update_homepage() -> None:
     text = text.replace('<b>L:</b>', '<b>Landline:</b>').replace('<b>W:</b>', '<b>WhatsApp:</b>').replace('<b>E:</b>', '<b>Email:</b>')
     home_footer = f"""<footer id="footer" class="ip-home-footer">
       <div class="container ip-home-footer-grid">
-        <div><a class="ip-home-footer-brand" href="index.html"><img src="assets/img/instant-professionals-logo-2026.png" alt="Instant Professionals registered logo"><span>Instant Professionals</span></a><p>Coordinated compliance, tax, corporate and intellectual-property support for businesses and professionals across India.</p><div class="ip-home-footer-social"><a href="https://www.linkedin.com/company/instantprofessionals" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/instantprofessional/" target="_blank" rel="noopener">Instagram</a></div></div>
+        <div><a class="ip-home-footer-brand" href="index.html"><img src="assets/img/instant-professionals-logo-2026.png" width="64" height="64" loading="lazy" decoding="async" alt="Instant Professionals registered logo"><span>Instant Professionals</span></a><p>Coordinated compliance, tax, corporate and intellectual-property support for businesses and professionals across India.</p><div class="ip-home-footer-social"><a href="https://www.linkedin.com/company/instantprofessionals" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/instantprofessional/" target="_blank" rel="noopener">Instagram</a></div></div>
         <div><h2>Popular services</h2><ul><li><a href="gst-registration.html">GST Registration</a></li><li><a href="income-tax-return-filing.html">Income Tax Returns</a></li><li><a href="company-annual-filing.html">Company Annual Filing</a></li><li><a href="trademark-registration.html">Trademark Registration</a></li></ul></div>
         <div><h2>Policies</h2><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="refund-policy.html">Refund and Cancellation</a></li><li><a href="sitemap.xml">Sitemap</a></li></ul></div>
         <div><h2>Contact</h2><p><a href="tel:{PHONE_LINK}">{PHONE_DISPLAY}</a></p><p><a href="mailto:{EMAIL}">{EMAIL}</a></p><p>Serving clients across India</p></div>
@@ -498,21 +498,21 @@ def update_homepage() -> None:
     text = re.sub(r'\s*<link data-ip-vision="2" href="assets/css/vision-2\.css\?v=[^"]+" rel="stylesheet" />', '', text)
     text = re.sub(r'\s*<link href="assets/css/home-fixes\.css\?v=[^"]+" rel="stylesheet" />', '', text)
     text = re.sub(r'\s*<link href="assets/css/lifecycle-dashboard\.css\?v=[^"]+" rel="stylesheet" />', '', text)
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260827-profile-motto-2" rel="stylesheet" />\n    <link href="assets/css/lifecycle-dashboard.css?v=20260827-lifecycle-dashboard-2" rel="stylesheet" />', 1)
+    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link data-ip-vision="2" href="assets/css/vision-2.css?v=20260901-mobile-performance-1" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css?v=20260901-mobile-performance-1" rel="stylesheet" />\n    <link href="assets/css/lifecycle-dashboard.css?v=20260901-mobile-performance-1" rel="stylesheet" />', 1)
     if 'assets/js/enquiry.js' not in text:
         text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
-    text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260827-lifecycle-dashboard-2", text)
+    text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260901-mobile-performance-1", text)
     path.write_text(text, encoding="utf-8")
 
 
 def update_shared_files() -> None:
     main = ROOT / "assets/js/main.js"
     text = main.read_text(encoding="utf-8")
-    text = re.sub(r'const VERSION="[^"]+";', 'const VERSION="20260827-lifecycle-dashboard-2";', text, count=1)
+    text = re.sub(r'const VERSION="[^"]+";', 'const VERSION="20260901-mobile-performance-1";', text, count=1)
     text = text.replace('role:"Team Professional"', 'role:"Executive Assistant"')
     text = re.sub(r'\n\{name:"Parth",[^\n]*\},?', '', text, count=1)
     if 'name:"Sparsh"' not in text:
-        sparsh_member = '{name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/live/sparsh.jpg",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}'
+        sparsh_member = '{name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/optimized/sparsh.webp",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}'
         text = text.replace("\n];\n\nfunction renderTeam", ",\n" + sparsh_member + "\n];\n\nfunction renderTeam", 1)
     text = text.replace("loadCurrentLaw();", "// Current-law content is now generated statically on service pages.")
     text = text.replace("const SERVICE_RATE_MULTIPLIER=2.5;", "const SERVICE_RATE_MULTIPLIER=1;")
@@ -572,7 +572,8 @@ def write_technical_files() -> None:
             changefreq, priority = ("weekly", "0.9")
         elif page in {"privacy-policy.html", "terms.html", "refund-policy.html"}:
             changefreq, priority = ("yearly", "0.3")
-        sitemap.append(f"  <url><loc>{SITE}/{page}</loc><lastmod>2026-08-20</lastmod><changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>")
+        lastmod = "2026-09-01" if not page else "2026-08-20"
+        sitemap.append(f"  <url><loc>{SITE}/{page}</loc><lastmod>{lastmod}</lastmod><changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>")
     sitemap.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
