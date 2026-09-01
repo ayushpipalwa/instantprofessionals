@@ -2,9 +2,9 @@
 "use strict";
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
-const VERSION="20260901-mobile-performance-1";
+const VERSION="20260901-mobile-performance-2";
 const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
-const LIFECYCLE_LOGO=`assets/img/favicon/android-chrome-512x512.png?v=${VERSION}`;
+const LIFECYCLE_LOGO=`assets/img/favicon/ip-lifecycle-192.webp?v=${VERSION}`;
 
 function loadVisionStyles(){
   if(!document.querySelector('link[data-ip-vision="2"]')){
@@ -31,15 +31,25 @@ const header=$("#header");
 const topBtn=$(".back-to-top");
 function updateScrollState(){
   const y=window.scrollY;
-  const p=y+200;
-  navlinks.forEach(l=>{if(!l.hash)return;const s=$(l.hash);if(!s)return;l.classList.toggle("active",p>=s.offsetTop&&p<=s.offsetTop+s.offsetHeight)});
   if(header)header.classList.toggle("header-scrolled",y>80);
   if(topBtn)topBtn.classList.toggle("active",y>100);
 }
 let scrollFrame=0;
 function scheduleScrollUpdate(){if(scrollFrame)return;scrollFrame=requestAnimationFrame(()=>{scrollFrame=0;updateScrollState()})}
-window.addEventListener("load",updateScrollState,{once:true});
+window.addEventListener("load",scheduleScrollUpdate,{once:true});
 window.addEventListener("scroll",scheduleScrollUpdate,{passive:true});
+function initNavigationObserver(){
+  if(!("IntersectionObserver" in window))return;
+  const targets=navlinks.map(link=>link.hash?$(link.hash):null).filter(Boolean);
+  if(!targets.length)return;
+  const observer=new IntersectionObserver(entries=>{
+    const current=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+    if(!current)return;
+    const hash=`#${current.target.id}`;
+    navlinks.forEach(link=>link.classList.toggle("active",Boolean(link.hash)&&link.hash===hash));
+  },{rootMargin:"-20% 0px -60% 0px",threshold:[0,.2,.5]});
+  targets.forEach(target=>observer.observe(target));
+}
 function scrollto(sel){const h=$("#header"),e=$(sel);if(e)window.scrollTo({top:e.offsetTop-(h?h.offsetHeight:0),behavior:"smooth"})}
 on("click",".mobile-nav-toggle",function(){const n=$("#navbar");if(!n)return;n.classList.toggle("navbar-mobile");this.classList.toggle("bi-list");this.classList.toggle("bi-x")});
 on("click",".navbar .dropdown > a",function(e){const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){e.preventDefault();if(this.nextElementSibling)this.nextElementSibling.classList.toggle("dropdown-active")}},true);
@@ -93,7 +103,7 @@ function modernizeHome(){
           <b>01—05</b>
         </div>
         <div class="ip-os-core">
-          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="${LIFECYCLE_LOGO}" alt="Instant Professionals registered logo" width="512" height="512" decoding="async"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
+          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="${LIFECYCLE_LOGO}" alt="Instant Professionals registered logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
           <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
           <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
           <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>
@@ -196,8 +206,8 @@ function runSafely(label,fn){try{fn()}catch(error){console.error("[Instant Profe
 function boot(){
   [["header",modernizeHeader],["homepage",modernizeHome],["services",modernizeServices],["rates",updateServiceRates],["team",renderTeam],["social",modernizeSocialPresence],["contact",modernizeContact]]
     .forEach(([label,fn])=>runSafely(label,fn));
-  if(window.AOS)AOS.init({duration:550,easing:"ease-out-cubic",once:true,mirror:false,disable:window.matchMedia("(prefers-reduced-motion: reduce)").matches});
-  updateScrollState();
+  initNavigationObserver();
+  scheduleScrollUpdate();
 }
 if(document.readyState==="loading"){
   document.addEventListener("DOMContentLoaded",boot,{once:true});
