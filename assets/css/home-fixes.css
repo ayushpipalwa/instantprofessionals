@@ -1592,6 +1592,18 @@ img, svg, video, iframe { max-width: 100%; }
   .ip-os-track { transition: none; }
 }
 
+/* Mobile performance: keep the circular system intact without continuous paint work. */
+@media (max-width: 767px) {
+  .ip-os-center::before,
+  .ip-os-logo-mark::after {
+    animation: none !important;
+  }
+
+  .ip-os-grid-bg {
+    background-size: 52px 52px;
+  }
+}
+
 /* About profile and brand motto. */
 .ip-about-profile {
   max-width: 72rem;
