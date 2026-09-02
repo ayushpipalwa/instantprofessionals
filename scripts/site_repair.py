@@ -532,30 +532,12 @@ def update_shared_files() -> None:
 
 
 def write_policies() -> None:
-    policies = {
-        "privacy-policy.html": ("Privacy Policy", [
-            ("Information we collect", "We collect information that you voluntarily provide, such as your name, phone number, email address, service requirement and supporting documents shared during an engagement."),
-            ("How information is used", "Information is used to respond to enquiries, provide professional services, meet legal or regulatory obligations, maintain engagement records and improve service delivery."),
-            ("Website analytics", "We use Google Analytics to understand website traffic, page usage, device and browser categories, approximate location and interactions such as enquiries, WhatsApp clicks, calls, emails and package selections. We do not intentionally send names, email addresses, phone numbers, messages or uploaded documents to Google Analytics. Analytics information is used to measure and improve website performance and service journeys."),
-            ("WhatsApp enquiries", "Website enquiry forms prepare a WhatsApp message for your review. Nothing is transmitted through the website form until you choose to send that message in WhatsApp."),
-            ("Sharing and retention", "Information is shared only with authorised team members, professional advisers, service providers or authorities where necessary for the engagement or required by law. Records are retained for the period reasonably required for those purposes."),
-            ("Your choices", f"To request access, correction or deletion, subject to professional and legal retention duties, contact <a href=\"mailto:{EMAIL}\">{EMAIL}</a>."),
-        ]),
-        "terms.html": ("Terms of Service", [
-            ("Website information", "Website content is general information and is not a substitute for advice based on complete facts. Applicable law, forms, portal requirements, fees and timelines may change."),
-            ("Engagement", "A professional engagement begins only after scope, responsibility, fees, exclusions and required documents are confirmed in writing."),
-            ("Client responsibility", "Clients are responsible for providing complete, accurate and timely information and for reviewing drafts or confirmations before filing or submission."),
-            ("Third-party systems", "Government portals, banks, payment providers and other third-party systems operate independently. Their availability and processing timelines are outside our control."),
-        ]),
-        "refund-policy.html": ("Refund and Cancellation Policy", [
-            ("Before work begins", "A cancellation request received before substantive work begins may be eligible for refund after deduction of payment-processing or work-allocation costs, if any."),
-            ("After work begins", "Professional fees relating to review, drafting, consultation, filing preparation or other work already performed are not refundable. Unused third-party or government charges may be refundable only if they have not been incurred."),
-            ("Government rejection or delay", "A filing rejection, resubmission, objection or delay by an authority does not automatically create a refund entitlement where the agreed professional work has been performed."),
-            ("How to request", f"Send the engagement reference and reason to <a href=\"mailto:{EMAIL}\">{EMAIL}</a>. Each request is reviewed against the written scope and work completed."),
-        ]),
-    }
-    for filename, (title, sections) in policies.items():
-        (ROOT / filename).write_text(policy_page(filename, title, sections), encoding="utf-8")
+    """Policy pages are maintained as dedicated, legally reviewed documents.
+
+    Do not regenerate these pages from abbreviated text: that would discard the
+    service, privacy and refund boundaries intentionally drafted for the live site.
+    """
+    return
 
 
 def write_technical_files() -> None:
@@ -572,6 +554,8 @@ def write_technical_files() -> None:
         elif page in {"privacy-policy.html", "terms.html", "refund-policy.html"}:
             changefreq, priority = ("yearly", "0.3")
         lastmod = "2026-09-01" if not page else "2026-08-20"
+        if page in {"privacy-policy.html", "terms.html", "refund-policy.html"}:
+            lastmod = "2026-09-02"
         sitemap.append(f"  <url><loc>{SITE}/{page}</loc><lastmod>{lastmod}</lastmod><changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>")
     sitemap.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
