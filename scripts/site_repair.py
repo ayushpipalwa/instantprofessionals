@@ -290,7 +290,9 @@ def service_page(old: str) -> str:
         "gst-registration-amendment.html": "Instant GST Amendment",
         "income-tax-return-filing.html": "Instant Income Tax Return Filing",
     }.get(clean, f"Instant {title}")
-    description = f"Instant Professionals provides {title} support across India with clear scope, transparent pricing and coordinated assistance."
+    group = {"gst": "GST compliance", "tax": "tax compliance", "corporate": "corporate compliance", "ipr": "intellectual property", "labour": "labour law compliance", "trade": "import export compliance", "business": "business compliance", "design": "business growth support"}.get(category_key, "professional services")
+    keyword_text = f"Instant Professionals {title}, {title} India, {group}, professional services India"
+    description = f"{title} support across India from Instant Professionals: professional review, transparent scope and coordinated assistance."
     cards = "".join(
         f'<article class="ip-info-card"><i class="bi {icon}" aria-hidden="true"></i><h3>{heading}</h3><p>{html.escape(point)}</p></article>'
         for icon, heading, point in zip(
@@ -307,7 +309,7 @@ def service_page(old: str) -> str:
             {
                 "@type": "Service", "@id": canonical + "#service",
                 "name": f"{title} by Instant Professionals", "alternateName": seo_name,
-                "serviceType": title, "description": description, "url": canonical,
+                "serviceType": title, "description": description, "url": canonical, "keywords": keyword_text,
                 "provider": {"@id": SITE + "/#organization"},
                 "areaServed": {"@type": "Country", "name": "India"},
             },
@@ -329,12 +331,13 @@ def service_page(old: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>{html.escape(seo_name)} | Instant Professionals</title>
   <meta name="description" content="{html.escape(description)}">
+  <meta name="keywords" content="{html.escape(keyword_text)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="{canonical}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="Instant Professionals">
   <meta property="og:title" content="{html.escape(seo_name)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta property="og:locale" content="en_IN">
-  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="{html.escape(seo_name)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="theme-color" content="#071d3d">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{html.escape(title)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="twitter:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta name="theme-color" content="#071d3d">
   {FAVICON_LINKS}
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1">
   <script type="application/ld+json" data-ip-seo-schema>{structured}</script>
