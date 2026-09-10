@@ -276,12 +276,51 @@ def pricing_markup(prices: list[int]) -> str:
 <section id="pricing" class="ip-section ip-section-alt"><div class="ip-container"><div class="ip-section-head"><span class="ip-eyebrow">TRANSPARENT PRICING</span><h2>Professional-fee options</h2><p>All displayed service prices have been reconciled to the approved 30% reduction.</p></div><div class="ip-price-grid">{''.join(cards)}</div><p class="ip-price-note">Government fees, stamp duty, taxes and third-party charges are additional unless a written quotation expressly includes them.</p></div></section>"""
 
 
+SEO_OVERRIDES = {
+    "trademark-watch-service.html": {
+        "seo_name": "Trademark Watch Service Cost & Monitoring",
+        "description": "Trademark watch service cost, monitoring and conflict-alert support across India. Track potentially conflicting applications with Instant Professionals.",
+        "keywords": "trademark watch service cost, trademark monitoring service India, trademark conflict alerts, trademark watch, Instant Professionals"
+    },
+    "roc-search-report.html": {
+        "seo_name": "ROC Search Report | MCA Company Search & Due Diligence",
+        "description": "ROC search report and MCA company-record review for due diligence, transaction checks and informed decisions across India.",
+        "keywords": "ROC search report, MCA company search, company due diligence India, MCA records search, Instant Professionals"
+    },
+    "din-application.html": {
+        "seo_name": "DIN Application | Documents, Process & MCA Filing Support",
+        "description": "DIN application support with document review, process guidance and MCA filing coordination for eligible director appointments across India.",
+        "keywords": "DIN application documents, how to apply for DIN, DIN application process, MCA DIN filing, Instant Professionals"
+    },
+    "din-surrender.html": {
+        "seo_name": "DIN Surrender | Process, Documents & MCA Filing Support",
+        "description": "DIN surrender support with eligibility review, documents and MCA process guidance for permitted cases across India.",
+        "keywords": "DIN surrender online, DIN surrender process, surrender DIN documents, MCA DIN services, Instant Professionals"
+    },
+    "llp-name-change.html": {
+        "seo_name": "LLP Name Change | Procedure, Documents & MCA Filing",
+        "description": "LLP name change support with name-reservation review, partner approvals, agreement updates and MCA filing coordination across India.",
+        "keywords": "LLP name change procedure, change LLP name, LLP name change documents, MCA LLP filing, Instant Professionals"
+    },
+    "company-strike-off.html": {
+        "seo_name": "Company Strike Off | Process, Documents & MCA Filing",
+        "description": "Company strike-off support with eligibility review, document preparation and MCA filing coordination for eligible companies across India.",
+        "keywords": "company strike off, company status strike off, strike off company process, MCA strike off, Instant Professionals"
+    },
+    "company-name-change.html": {
+        "seo_name": "Company Name Change | Name Approval & MCA Filing",
+        "description": "Company name-change support covering name availability, approvals, constitutional documents and MCA filing coordination across India.",
+        "keywords": "company name change, MCA name approval, company name change process, company name reservation, Instant Professionals"
+    }
+}
+
+
 def service_page(old: str) -> str:
     clean, title, category_key, summary = CATALOG[old]
     category = CATEGORY[category_key]
     prices = final_prices(old)
     canonical = f"{SITE}/{clean}"
-    seo_name = {
+    default_seo_name = {
         "international-trademark-registration.html": "Instant International Trademark",
         "digital-signature-certificate.html": "Instant Digital Signature (DSC)",
         "director-resignation-removal.html": "Instant Director Resignation",
@@ -290,9 +329,10 @@ def service_page(old: str) -> str:
         "gst-registration-amendment.html": "Instant GST Amendment",
         "income-tax-return-filing.html": "Instant Income Tax Return Filing",
     }.get(clean, f"Instant {title}")
+    seo_name = SEO_OVERRIDES.get(clean, {}).get("seo_name", default_seo_name)
     group = {"gst": "GST compliance", "tax": "tax compliance", "corporate": "corporate compliance", "ipr": "intellectual property", "labour": "labour law compliance", "trade": "import export compliance", "business": "business compliance", "design": "business growth support"}.get(category_key, "professional services")
-    keyword_text = f"Instant Professionals {title}, {title} India, {group}, professional services India"
-    description = f"{title} support across India from Instant Professionals: professional review, transparent scope and coordinated assistance."
+    keyword_text = SEO_OVERRIDES.get(clean, {}).get("keywords", f"Instant Professionals {title}, {title} India, {group}, professional services India")
+    description = SEO_OVERRIDES.get(clean, {}).get("description", f"{title} support across India from Instant Professionals: professional review, transparent scope and coordinated assistance.")
     cards = "".join(
         f'<article class="ip-info-card"><i class="bi {icon}" aria-hidden="true"></i><h3>{heading}</h3><p>{html.escape(point)}</p></article>'
         for icon, heading, point in zip(
