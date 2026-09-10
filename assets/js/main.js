@@ -136,7 +136,7 @@ function modernizeServices(){
   section.innerHTML=`<div class="container">
     <div class="ip-service-head" data-aos="fade-up">
       <div><span class="ip-service-kicker">SERVICES / 360° COVERAGE</span><h2>One relationship.<br><em>Multiple professional capabilities.</em></h2></div>
-      <p>Choose a service area to go directly to the relevant page. Each category connects to the existing specialised pages across the Instant Professionals multipage website.</p>
+      <p>Select the service area that matches your requirement. Each category leads to a dedicated page with clear scope, pricing and the next steps—supported by one coordinated Instant Professionals team.</p>
     </div>
     <div class="ip-service-grid">
       ${services.map((s,i)=>`<article class="ip-service-card" data-aos="fade-up" data-aos-delay="${Math.min(i*65,260)}">
