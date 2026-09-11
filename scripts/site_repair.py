@@ -311,9 +311,83 @@ SEO_OVERRIDES = {
         "seo_name": "Company Name Change | Name Approval & MCA Filing",
         "description": "Company name-change support covering name availability, approvals, constitutional documents and MCA filing coordination across India.",
         "keywords": "company name change, MCA name approval, company name change process, company name reservation, Instant Professionals"
+    },
+    "commencement-of-business.html": {
+        "seo_name": "Commencement of Business Filing | INC-20A Support",
+        "description": "Commencement-of-business filing support with document review, subscriber-capital checks and MCA INC-20A filing coordination for eligible companies.",
+        "keywords": "commencement of business filing, INC-20A filing, declaration of commencement of business, MCA company compliance, Instant Professionals"
+    },
+    "pan-application.html": {
+        "seo_name": "PAN Application & PAN Correction | Document Support",
+        "description": "PAN application and correction support with document review for individuals, firms, companies and other eligible applicants across India.",
+        "keywords": "PAN application, PAN correction, PAN card documents, apply for PAN online, Instant Professionals"
+    },
+    "company-annual-filing.html": {
+        "seo_name": "Company Annual Filing | MGT-7 & AOC-4 Support",
+        "description": "Company annual-filing support for financial statements, annual return, MGT-7, AOC-4 and related MCA compliance across India.",
+        "keywords": "company annual filing, MGT-7 filing, AOC-4 filing, MCA annual return, Instant Professionals"
+    },
+    "share-transfer-transmission.html": {
+        "seo_name": "Share Transfer & Transmission | Company Documentation",
+        "description": "Share-transfer and transmission support with documentation, board process, statutory records and MCA compliance review for companies.",
+        "keywords": "share transfer company, share transmission, share transfer documents, company share transfer process, Instant Professionals"
+    },
+    "dissolution-of-firm.html": {
+        "seo_name": "Dissolution of Firm | Deed & Closure Support",
+        "description": "Partnership-firm dissolution support covering documentation, settlement planning and closure-related compliance review across India.",
+        "keywords": "dissolution of firm, partnership dissolution deed, firm closure process, partnership firm closure, Instant Professionals"
+    },
+    "copyright-application.html": {
+        "seo_name": "Copyright Application | Registration & Filing Support",
+        "description": "Copyright application support for eligible literary, artistic, software and other original works, with document and ownership review.",
+        "keywords": "copyright application, copyright registration India, software copyright, artistic work copyright, Instant Professionals"
+    },
+    "moa-aoa-printing.html": {
+        "seo_name": "MOA & AOA Printing | Updated Company Documents",
+        "description": "MOA and AOA printing support using the latest effective company constitutional documents and approved amendments.",
+        "keywords": "MOA AOA printing, memorandum articles printing, company constitutional documents, updated MOA AOA, Instant Professionals"
+    },
+    "patent-registration.html": {
+        "seo_name": "Patent Application Support | Documentation & Filing Coordination",
+        "description": "Patent-application documentation and filing coordination for inventions, with appropriate patent-professional involvement where required.",
+        "keywords": "patent application support, patent filing India, patent registration process, invention patent documents, Instant Professionals"
+    },
+    "iec-registration.html": {
+        "seo_name": "IEC Registration | Import Export Code Application",
+        "description": "IEC registration support with PAN, business and bank-information review for eligible importers and exporters across India.",
+        "keywords": "IEC registration, import export code application, IEC code documents, DGFT IEC registration, Instant Professionals"
+    },
+    "tds-returns.html": {
+        "seo_name": "TDS Return Filing | Quarterly Compliance Support",
+        "description": "TDS return preparation and filing support with challan, deduction, payment and statement reconciliation for applicable quarterly compliance.",
+        "keywords": "TDS return filing, quarterly TDS return, TDS statement filing, TDS compliance India, Instant Professionals"
+    },
+    "tan-application.html": {
+        "seo_name": "TAN Application | TDS Account Number Support",
+        "description": "TAN application and correction support with document review for tax-deduction and collection account number registration.",
+        "keywords": "TAN application, apply for TAN, TDS account number, TAN correction, Instant Professionals"
+    },
+    "gst-registration.html": {
+        "seo_name": "GST Registration | Documents, Process & Application Support",
+        "description": "GST registration support with eligibility review, document preparation, application filing and ARN follow-up for eligible businesses.",
+        "keywords": "GST registration, GST registration documents, GST registration process, apply for GST number, Instant Professionals"
+    },
+    "trademark-registration.html": {
+        "seo_name": "Trademark Registration | Search, Class Selection & Filing",
+        "description": "Trademark registration support with search, class selection, application preparation and filing coordination for brand protection across India.",
+        "keywords": "trademark registration, trademark search, trademark class selection, apply trademark India, Instant Professionals"
+    },
+    "income-tax-return-filing.html": {
+        "seo_name": "Income Tax Return Filing | ITR Support for Individuals & Businesses",
+        "description": "Income-tax return filing support with return-form selection, income review, tax-credit reconciliation and filing coordination across India.",
+        "keywords": "income tax return filing, ITR filing, file income tax return, business ITR, Instant Professionals"
+    },
+    "gst-returns.html": {
+        "seo_name": "GST Return Filing | GSTR-1, GSTR-3B & Reconciliation",
+        "description": "GST return filing support with GSTR-1, GSTR-3B, books, e-invoice and input-tax-credit reconciliation as applicable.",
+        "keywords": "GST return filing, GSTR-1 filing, GSTR-3B filing, GST reconciliation, Instant Professionals"
     }
 }
-
 
 def service_page(old: str) -> str:
     clean, title, category_key, summary = CATALOG[old]
