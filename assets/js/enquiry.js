@@ -775,12 +775,13 @@
     const sectionHost = document.querySelector(".ip-source-note") || document.querySelector(".ip-faq") || document.querySelector("main");
     if (!categoryElement || !sectionHost) return;
     const categoryText = categoryElement.textContent.toUpperCase();
-    const category = Object.keys(LEGAL_CURRENCY).find(function (key) {
+    let category = Object.keys(LEGAL_CURRENCY).find(function (key) {
       return categoryText.indexOf(key) !== -1;
     });
-    if (!category) return;
-
     const filename = window.location.pathname.split("/").pop() || "";
+    if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
+    if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
+    if (!category) return;
     const entry = Object.assign({}, LEGAL_CURRENCY[category]);
     if (/copyright/i.test(filename)) {
       entry.framework = "Copyright Act, 1957 and Copyright Rules, 2013, as amended, together with current Copyright Office procedures.";
@@ -826,9 +827,160 @@
     document.body.classList.add("ip-legal-layer-ready");
   }
 
+
+  const SERVICE_AUTOMATION_CHECKLISTS = {
+    "GST & INDIRECT TAX": ["PAN and constitution proof", "Principal place address proof", "Authorised signatory details", "Business activity and HSN/SAC", "Existing GST history or notice"],
+    "INCOME TAX & TDS": ["PAN and residential status", "Relevant financial year or tax year", "Income/payment working", "Tax payment and return records", "Notice, order or transaction documents"],
+    "CORPORATE & SECRETARIAL": ["Certificate of incorporation and CIN/LLPIN", "Current master data and constitutional documents", "Directors/partners and DSC details", "Event date and approvals", "Latest filings and registers"],
+    "WORKFORCE COMPLIANCE": ["Entity PAN and registration details", "Employee-wise wage data", "Joining/leaving dates", "Contribution and challan history", "Notice or inspection records"],
+    "INTELLECTUAL PROPERTY": ["Applicant identity and constitution", "Clear representation of the work or mark", "User/priority claim evidence", "Classes, goods or services", "Application, examination or opposition records"],
+    "IMPORT & EXPORT": ["Entity PAN and IEC details", "Product description and ITC(HS)", "Country of origin/destination", "Invoice and logistics values", "Product/sector licences"],
+    "BUSINESS REGISTRATION": ["Applicant identity and constitution", "PAN and contact details", "Business address proof", "Activity and jurisdiction", "Authorisation and digital signature"],
+    "BUSINESS GROWTH": ["Business model and objectives", "Historic financial data", "Revenue and cost assumptions", "Funding or contract documents", "Risk and compliance constraints"]
+  };
+
+  function inr(value) {
+    return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Number(value) || 0);
+  }
+
+  function numberValue(panel, name) {
+    const field = panel.querySelector('[name="' + name + '"]');
+    return field ? Number(field.value) || 0 : 0;
+  }
+
+  function calculatorMarkup(type) {
+    const common = '<p class="ip-tool-note">Indicative arithmetic only. Confirm applicability, rates, ceilings, classification and effective dates before acting.</p>';
+    if (type === "gst") return '<h3>GST amount calculator</h3><div class="ip-tool-grid"><label>Amount (₹)<input name="amount" type="number" min="0" step="0.01" value="10000"></label><label>GST rate (%)<select name="rate"><option>0</option><option>5</option><option>12</option><option selected>18</option><option>28</option></select></label><label>Amount type<select name="mode"><option value="exclusive">Exclusive of GST</option><option value="inclusive">Inclusive of GST</option></select></label></div><button type="button" data-calculate>Calculate</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "tds") return '<h3>TDS estimate</h3><div class="ip-tool-grid"><label>Payment/base amount (₹)<input name="amount" type="number" min="0" step="0.01" value="100000"></label><label>Effective TDS rate (%)<input name="rate" type="number" min="0" step="0.001" value="10"></label></div><button type="button" data-calculate>Calculate</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "pf") return '<h3>EPF contribution estimate</h3><div class="ip-tool-grid"><label>PF wage (₹)<input name="amount" type="number" min="0" step="1" value="15000"></label><label>Employee rate (%)<input name="employeeRate" type="number" min="0" step="0.01" value="12"></label><label>Employer rate (%)<input name="employerRate" type="number" min="0" step="0.01" value="12"></label></div><button type="button" data-calculate>Estimate</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "esi") return '<h3>ESI contribution estimate</h3><div class="ip-tool-grid"><label>Monthly wages (₹)<input name="amount" type="number" min="0" step="1" value="18000"></label><label>Employee rate (%)<input name="employeeRate" type="number" min="0" step="0.01" value="0.75"></label><label>Employer rate (%)<input name="employerRate" type="number" min="0" step="0.01" value="3.25"></label></div><button type="button" data-calculate>Estimate</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "trademark") return '<h3>Trademark renewal planner</h3><div class="ip-tool-grid"><label>Registration/last-renewal expiry basis date<input name="date" type="date"></label><label>Renewal cycle (years)<input name="years" type="number" min="1" value="10"></label></div><button type="button" data-calculate>Plan renewal</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "corporate") return '<h3>Corporate filing deadline planner</h3><div class="ip-tool-grid"><label>Trigger/event date<input name="date" type="date"></label><label>Applicable period (days)<input name="days" type="number" min="0" value="30"></label></div><button type="button" data-calculate>Calculate date</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "import") return '<h3>Indicative landed-cost calculator</h3><div class="ip-tool-grid"><label>Assessable value (₹)<input name="amount" type="number" min="0" step="0.01" value="100000"></label><label>BCD/other duty rate (%)<input name="dutyRate" type="number" min="0" step="0.01" value="10"></label><label>IGST rate (%)<input name="rate" type="number" min="0" step="0.01" value="18"></label><label>Freight/other cost (₹)<input name="other" type="number" min="0" step="0.01" value="0"></label></div><button type="button" data-calculate>Estimate</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    if (type === "business") return '<h3>Monthly break-even calculator</h3><div class="ip-tool-grid"><label>Fixed costs (₹)<input name="amount" type="number" min="0" step="0.01" value="100000"></label><label>Selling price per unit (₹)<input name="price" type="number" min="0" step="0.01" value="1000"></label><label>Variable cost per unit (₹)<input name="variable" type="number" min="0" step="0.01" value="600"></label></div><button type="button" data-calculate>Calculate</button><div class="ip-tool-result" aria-live="polite"></div>' + common;
+    return "";
+  }
+
+  function calculationType(category, filename) {
+    if (category === "GST & INDIRECT TAX") return "gst";
+    if (category === "INCOME TAX & TDS") return "tds";
+    if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
+    if (category === "WORKFORCE COMPLIANCE") return "pf";
+    if (category === "INTELLECTUAL PROPERTY" && /trademark/.test(filename)) return "trademark";
+    if (category === "CORPORATE & SECRETARIAL") return "corporate";
+    if (category === "IMPORT & EXPORT") return "import";
+    if (category === "BUSINESS GROWTH") return "business";
+    return "";
+  }
+
+  function runServiceCalculation(panel, type) {
+    const result = panel.querySelector(".ip-tool-result");
+    const amount = numberValue(panel, "amount");
+    const rate = numberValue(panel, "rate");
+    let textValue = "";
+    if (type === "gst") {
+      const mode = panel.querySelector('[name="mode"]').value;
+      const tax = mode === "inclusive" ? amount - amount / (1 + rate / 100) : amount * rate / 100;
+      const taxable = mode === "inclusive" ? amount - tax : amount;
+      const total = mode === "inclusive" ? amount : amount + tax;
+      textValue = "Taxable value: " + inr(taxable) + " · GST: " + inr(tax) + " · Invoice total: " + inr(total);
+    } else if (type === "tds") {
+      const tax = amount * rate / 100;
+      textValue = "Indicative TDS: " + inr(tax) + " · Net payment: " + inr(amount - tax);
+    } else if (type === "pf" || type === "esi") {
+      const employee = amount * numberValue(panel, "employeeRate") / 100;
+      const employer = amount * numberValue(panel, "employerRate") / 100;
+      textValue = "Employee contribution: " + inr(employee) + " · Employer contribution: " + inr(employer) + " · Total: " + inr(employee + employer);
+    } else if (type === "trademark") {
+      const date = panel.querySelector('[name="date"]').value;
+      if (!date) textValue = "Select the relevant registration or last-renewal date.";
+      else {
+        const due = new Date(date + "T00:00:00");
+        due.setFullYear(due.getFullYear() + numberValue(panel, "years"));
+        textValue = "Indicative next expiry: " + due.toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) + ". Verify the register and begin review well before expiry.";
+      }
+    } else if (type === "corporate") {
+      const date = panel.querySelector('[name="date"]').value;
+      if (!date) textValue = "Select the statutory trigger or event date.";
+      else {
+        const due = new Date(date + "T00:00:00");
+        due.setDate(due.getDate() + numberValue(panel, "days"));
+        textValue = "Indicative calendar date: " + due.toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" }) + ". Confirm how the governing provision counts days and any extension/holiday rule.";
+      }
+    } else if (type === "import") {
+      const duty = amount * numberValue(panel, "dutyRate") / 100;
+      const igst = (amount + duty) * rate / 100;
+      textValue = "Basic/other duty: " + inr(duty) + " · IGST estimate: " + inr(igst) + " · Landed total: " + inr(amount + duty + igst + numberValue(panel, "other"));
+    } else if (type === "business") {
+      const margin = numberValue(panel, "price") - numberValue(panel, "variable");
+      textValue = margin > 0 ? "Break-even volume: " + Math.ceil(amount / margin).toLocaleString("en-IN") + " units · Contribution per unit: " + inr(margin) : "Selling price must exceed variable cost.";
+    }
+    result.textContent = textValue;
+  }
+
+  function serviceAutomation() {
+    if (document.querySelector("[data-ip-service-tool]")) return;
+    const categoryElement = document.querySelector(".ip-hero .ip-eyebrow");
+    if (!categoryElement) return;
+    const categoryText = categoryElement.textContent.toUpperCase();
+    let category = Object.keys(SERVICE_AUTOMATION_CHECKLISTS).find(function (key) { return categoryText.indexOf(key) !== -1; });
+    const filename = window.location.pathname.split("/").pop() || "";
+    if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
+    if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
+    if (!category) return;
+    const type = calculationType(category, filename);
+    const legalPanel = document.querySelector("[data-ip-legal-currency]");
+    const host = legalPanel || document.querySelector(".ip-faq") || document.querySelector("main");
+    if (!host || !host.parentNode) return;
+
+    const section = document.createElement("section");
+    section.className = "ip-service-tool";
+    section.dataset.ipServiceTool = "true";
+    section.setAttribute("aria-label", "Service calculator and document readiness");
+    const checks = SERVICE_AUTOMATION_CHECKLISTS[category].map(function (item, index) {
+      return '<label><input type="checkbox" data-readiness value="' + index + '"> <span>' + item + '</span></label>';
+    }).join("");
+    section.innerHTML = '<div class="ip-tool-heading"><span>FREE SERVICE TOOL</span><h2>Estimate and prepare before you enquire</h2><p>No data entered here leaves your browser.</p></div>' +
+      (type ? '<div class="ip-tool-card" data-calculator="' + type + '">' + calculatorMarkup(type) + '</div>' : '') +
+      '<div class="ip-tool-card"><h3>Document-readiness check</h3><div class="ip-readiness-list">' + checks + '</div><div class="ip-readiness-progress"><span style="width:0%"></span></div><p class="ip-readiness-status" aria-live="polite">0 of 5 items ready</p><button type="button" data-send-readiness>Include result in enquiry</button></div>';
+
+    const style = document.createElement("style");
+    style.textContent = ".ip-service-tool{max-width:1180px;margin:28px auto;padding:25px;border:1px solid #dbe4ee;border-radius:18px;background:#fff;box-shadow:0 14px 36px rgba(7,29,61,.08);color:#1a1a1a}.ip-tool-heading>span{font-size:.76rem;font-weight:800;letter-spacing:.1em;color:#00a651}.ip-tool-heading h2{margin:6px 0;color:#071d3d;font-size:clamp(1.35rem,3vw,2rem)}.ip-tool-heading p{color:#667085}.ip-tool-card{margin-top:20px;padding:20px;border:1px solid #e4e7ec;border-radius:14px;background:#f8fafc}.ip-tool-card h3{margin:0 0 14px;color:#071d3d}.ip-tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.ip-tool-grid label,.ip-readiness-list label{display:flex;flex-direction:column;gap:6px;font-weight:650;font-size:.9rem}.ip-tool-grid input,.ip-tool-grid select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;background:#fff}.ip-tool-card button{margin-top:15px;padding:11px 16px;border:0;border-radius:9px;background:#071d3d;color:#fff;font-weight:750;cursor:pointer}.ip-tool-result{margin-top:14px;padding:12px;border-left:4px solid #00a651;background:#fff;font-weight:700;color:#071d3d;min-height:46px}.ip-tool-note{font-size:.78rem;color:#667085;margin:12px 0 0}.ip-readiness-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}.ip-readiness-list label{flex-direction:row;align-items:flex-start;font-weight:500}.ip-readiness-progress{height:9px;margin-top:16px;border-radius:99px;background:#e4e7ec;overflow:hidden}.ip-readiness-progress span{display:block;height:100%;background:#00a651;transition:width .2s}.ip-readiness-status{margin:8px 0 0;color:#475467}@media(max-width:760px){.ip-service-tool{margin:20px 16px;padding:18px}.ip-tool-card{padding:16px}}";
+    document.head.appendChild(style);
+    host.parentNode.insertBefore(section, host);
+
+    const calc = section.querySelector("[data-calculator]");
+    if (calc) calc.querySelector("[data-calculate]").addEventListener("click", function () { runServiceCalculation(calc, type); });
+    const boxes = Array.from(section.querySelectorAll("[data-readiness]"));
+    const status = section.querySelector(".ip-readiness-status");
+    const bar = section.querySelector(".ip-readiness-progress span");
+    function updateReadiness() {
+      const count = boxes.filter(function (box) { return box.checked; }).length;
+      status.textContent = count + " of " + boxes.length + " items ready";
+      bar.style.width = Math.round(count / boxes.length * 100) + "%";
+    }
+    boxes.forEach(function (box) { box.addEventListener("change", updateReadiness); });
+    section.querySelector("[data-send-readiness]").addEventListener("click", function () {
+      const ready = boxes.filter(function (box) { return box.checked; }).map(function (box) { return box.parentNode.textContent.trim(); });
+      const pending = boxes.filter(function (box) { return !box.checked; }).map(function (box) { return box.parentNode.textContent.trim(); });
+      const form = document.querySelector(".ip-enquiry-form");
+      const message = "Document readiness — Ready: " + (ready.join(", ") || "none") + ". Pending: " + (pending.join(", ") || "none") + ".";
+      if (form) {
+        const field = form.querySelector('[name="message"]');
+        if (field) field.value = message;
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (field) field.focus();
+      } else {
+        navigator.clipboard && navigator.clipboard.writeText(message);
+        status.textContent = "Readiness summary copied. Include it with your enquiry.";
+      }
+    });
+  }
+
   function initialise() {
     bindAnalyticsLinks();
     serviceLegalCurrency();
+    serviceAutomation();
     bindNavigation();
     bindForms();
     bindPackageButtons();
