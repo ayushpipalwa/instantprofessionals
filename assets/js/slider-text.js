@@ -55,6 +55,7 @@
 
   const installLogo = () => {
     document.querySelectorAll('img[src*="LOGO.png"], img[alt*="Instant Professionals"]').forEach((img) => {
+      if (img.closest(".ip-os-logo-mark")) return;
       img.src = LOGO_PATH;
       img.removeAttribute("srcset");
     });
@@ -196,7 +197,7 @@
     const oldHideStyle = document.getElementById("ip-hide-team-photos");
     if (oldHideStyle) oldHideStyle.remove();
     installPhotoStyles();
-    section.querySelectorAll(".ip-profile-card").forEach(card => updateCard(card, ".ip-profile-name", ".ip-folder-team-photo"));
+    section.querySelectorAll(".ip-profile-card").forEach(card => { if (!card.querySelector(".ip-profile-photo")) updateCard(card, ".ip-profile-name", ".ip-folder-team-photo"); });
     section.querySelectorAll(".member").forEach(card => updateCard(card, ".member-info h4, h4", ".member-img"));
     applyFounderProfiles(section);
   };

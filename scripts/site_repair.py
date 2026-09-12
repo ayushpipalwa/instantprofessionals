@@ -11,6 +11,8 @@ from __future__ import annotations
 import html
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -19,6 +21,21 @@ SITE = "https://instantprofessionals.in"
 PHONE_DISPLAY = "+91 82097 85294"
 PHONE_LINK = "+918209785294"
 EMAIL = "info@instantprofessionals.in"
+GA_MEASUREMENT_ID = "G-TG0272S260"
+GOOGLE_TAG = f"""<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', '{GA_MEASUREMENT_ID}');
+</script>"""
+FAVICON_LINKS = """<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/favicon-192x192.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/img/favicon/site.webmanifest">"""
 PRICE_FACTOR = 0.70
 
 
@@ -182,7 +199,7 @@ def header_markup() -> str:
     <button class="ip-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><i class="bi bi-list" aria-hidden="true"></i><span>Menu</span></button>
     <nav id="site-nav" class="ip-nav" aria-label="Primary navigation">
       <a href="index.html">Home</a>
-      <a href="index.html#services">Services</a>
+      <a href="services.html">Services</a>
       <details><summary>Registrations</summary><div class="ip-nav-menu">
         <a href="{route('GST Registration.html')}">GST Registration</a><a href="{route('MSME Registration.html')}">Udyam Registration</a>
         <a href="{route('iesregistration.html')}">IEC Registration</a><a href="{route('epf registration.html')}">EPF Registration</a>
@@ -217,7 +234,7 @@ def footer_markup() -> str:
   </div>
 </footer>
 <a class="ip-whatsapp" href="https://wa.me/918209785294?text=Hello%2C%20I%20would%20like%20to%20speak%20with%20Instant%20Professionals." target="_blank" rel="noopener" aria-label="Contact Instant Professionals on WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
-<script src="assets/js/enquiry.js" defer></script>"""
+<script src="assets/js/enquiry.js?v=20260824-analytics-1" defer></script>"""
 
 
 def form_markup(title: str, prices: list[int]) -> str:
@@ -259,12 +276,137 @@ def pricing_markup(prices: list[int]) -> str:
 <section id="pricing" class="ip-section ip-section-alt"><div class="ip-container"><div class="ip-section-head"><span class="ip-eyebrow">TRANSPARENT PRICING</span><h2>Professional-fee options</h2><p>All displayed service prices have been reconciled to the approved 30% reduction.</p></div><div class="ip-price-grid">{''.join(cards)}</div><p class="ip-price-note">Government fees, stamp duty, taxes and third-party charges are additional unless a written quotation expressly includes them.</p></div></section>"""
 
 
+SEO_OVERRIDES = {
+    "trademark-watch-service.html": {
+        "seo_name": "Trademark Watch Service Cost & Monitoring",
+        "description": "Trademark watch service cost, monitoring and conflict-alert support across India. Track potentially conflicting applications with Instant Professionals.",
+        "keywords": "trademark watch service cost, trademark monitoring service India, trademark conflict alerts, trademark watch, Instant Professionals"
+    },
+    "roc-search-report.html": {
+        "seo_name": "ROC Search Report | MCA Company Search & Due Diligence",
+        "description": "ROC search report and MCA company-record review for due diligence, transaction checks and informed decisions across India.",
+        "keywords": "ROC search report, MCA company search, company due diligence India, MCA records search, Instant Professionals"
+    },
+    "din-application.html": {
+        "seo_name": "DIN Application | Documents, Process & MCA Filing Support",
+        "description": "DIN application support with document review, process guidance and MCA filing coordination for eligible director appointments across India.",
+        "keywords": "DIN application documents, how to apply for DIN, DIN application process, MCA DIN filing, Instant Professionals"
+    },
+    "din-surrender.html": {
+        "seo_name": "DIN Surrender | Process, Documents & MCA Filing Support",
+        "description": "DIN surrender support with eligibility review, documents and MCA process guidance for permitted cases across India.",
+        "keywords": "DIN surrender online, DIN surrender process, surrender DIN documents, MCA DIN services, Instant Professionals"
+    },
+    "llp-name-change.html": {
+        "seo_name": "LLP Name Change | Procedure, Documents & MCA Filing",
+        "description": "LLP name change support with name-reservation review, partner approvals, agreement updates and MCA filing coordination across India.",
+        "keywords": "LLP name change procedure, change LLP name, LLP name change documents, MCA LLP filing, Instant Professionals"
+    },
+    "company-strike-off.html": {
+        "seo_name": "Company Strike Off | Process, Documents & MCA Filing",
+        "description": "Company strike-off support with eligibility review, document preparation and MCA filing coordination for eligible companies across India.",
+        "keywords": "company strike off, company status strike off, strike off company process, MCA strike off, Instant Professionals"
+    },
+    "company-name-change.html": {
+        "seo_name": "Company Name Change | Name Approval & MCA Filing",
+        "description": "Company name-change support covering name availability, approvals, constitutional documents and MCA filing coordination across India.",
+        "keywords": "company name change, MCA name approval, company name change process, company name reservation, Instant Professionals"
+    },
+    "commencement-of-business.html": {
+        "seo_name": "Commencement of Business Filing | INC-20A Support",
+        "description": "Commencement-of-business filing support with document review, subscriber-capital checks and MCA INC-20A filing coordination for eligible companies.",
+        "keywords": "commencement of business filing, INC-20A filing, declaration of commencement of business, MCA company compliance, Instant Professionals"
+    },
+    "pan-application.html": {
+        "seo_name": "PAN Application & PAN Correction | Document Support",
+        "description": "PAN application and correction support with document review for individuals, firms, companies and other eligible applicants across India.",
+        "keywords": "PAN application, PAN correction, PAN card documents, apply for PAN online, Instant Professionals"
+    },
+    "company-annual-filing.html": {
+        "seo_name": "Company Annual Filing | MGT-7 & AOC-4 Support",
+        "description": "Company annual-filing support for financial statements, annual return, MGT-7, AOC-4 and related MCA compliance across India.",
+        "keywords": "company annual filing, MGT-7 filing, AOC-4 filing, MCA annual return, Instant Professionals"
+    },
+    "share-transfer-transmission.html": {
+        "seo_name": "Share Transfer & Transmission | Company Documentation",
+        "description": "Share-transfer and transmission support with documentation, board process, statutory records and MCA compliance review for companies.",
+        "keywords": "share transfer company, share transmission, share transfer documents, company share transfer process, Instant Professionals"
+    },
+    "dissolution-of-firm.html": {
+        "seo_name": "Dissolution of Firm | Deed & Closure Support",
+        "description": "Partnership-firm dissolution support covering documentation, settlement planning and closure-related compliance review across India.",
+        "keywords": "dissolution of firm, partnership dissolution deed, firm closure process, partnership firm closure, Instant Professionals"
+    },
+    "copyright-application.html": {
+        "seo_name": "Copyright Application | Registration & Filing Support",
+        "description": "Copyright application support for eligible literary, artistic, software and other original works, with document and ownership review.",
+        "keywords": "copyright application, copyright registration India, software copyright, artistic work copyright, Instant Professionals"
+    },
+    "moa-aoa-printing.html": {
+        "seo_name": "MOA & AOA Printing | Updated Company Documents",
+        "description": "MOA and AOA printing support using the latest effective company constitutional documents and approved amendments.",
+        "keywords": "MOA AOA printing, memorandum articles printing, company constitutional documents, updated MOA AOA, Instant Professionals"
+    },
+    "patent-registration.html": {
+        "seo_name": "Patent Application Support | Documentation & Filing Coordination",
+        "description": "Patent-application documentation and filing coordination for inventions, with appropriate patent-professional involvement where required.",
+        "keywords": "patent application support, patent filing India, patent registration process, invention patent documents, Instant Professionals"
+    },
+    "iec-registration.html": {
+        "seo_name": "IEC Registration | Import Export Code Application",
+        "description": "IEC registration support with PAN, business and bank-information review for eligible importers and exporters across India.",
+        "keywords": "IEC registration, import export code application, IEC code documents, DGFT IEC registration, Instant Professionals"
+    },
+    "tds-returns.html": {
+        "seo_name": "TDS Return Filing | Quarterly Compliance Support",
+        "description": "TDS return preparation and filing support with challan, deduction, payment and statement reconciliation for applicable quarterly compliance.",
+        "keywords": "TDS return filing, quarterly TDS return, TDS statement filing, TDS compliance India, Instant Professionals"
+    },
+    "tan-application.html": {
+        "seo_name": "TAN Application | TDS Account Number Support",
+        "description": "TAN application and correction support with document review for tax-deduction and collection account number registration.",
+        "keywords": "TAN application, apply for TAN, TDS account number, TAN correction, Instant Professionals"
+    },
+    "gst-registration.html": {
+        "seo_name": "GST Registration | Documents, Process & Application Support",
+        "description": "GST registration support with eligibility review, document preparation, application filing and ARN follow-up for eligible businesses.",
+        "keywords": "GST registration, GST registration documents, GST registration process, apply for GST number, Instant Professionals"
+    },
+    "trademark-registration.html": {
+        "seo_name": "Trademark Registration | Search, Class Selection & Filing",
+        "description": "Trademark registration support with search, class selection, application preparation and filing coordination for brand protection across India.",
+        "keywords": "trademark registration, trademark search, trademark class selection, apply trademark India, Instant Professionals"
+    },
+    "income-tax-return-filing.html": {
+        "seo_name": "Income Tax Return Filing | ITR Support for Individuals & Businesses",
+        "description": "Income-tax return filing support with return-form selection, income review, tax-credit reconciliation and filing coordination across India.",
+        "keywords": "income tax return filing, ITR filing, file income tax return, business ITR, Instant Professionals"
+    },
+    "gst-returns.html": {
+        "seo_name": "GST Return Filing | GSTR-1, GSTR-3B & Reconciliation",
+        "description": "GST return filing support with GSTR-1, GSTR-3B, books, e-invoice and input-tax-credit reconciliation as applicable.",
+        "keywords": "GST return filing, GSTR-1 filing, GSTR-3B filing, GST reconciliation, Instant Professionals"
+    }
+}
+
 def service_page(old: str) -> str:
     clean, title, category_key, summary = CATALOG[old]
     category = CATEGORY[category_key]
     prices = final_prices(old)
     canonical = f"{SITE}/{clean}"
-    description = f"{summary} Professional support across India."
+    default_seo_name = {
+        "international-trademark-registration.html": "Instant International Trademark",
+        "digital-signature-certificate.html": "Instant Digital Signature (DSC)",
+        "director-resignation-removal.html": "Instant Director Resignation",
+        "share-transfer-transmission.html": "Instant Share Transfer",
+        "increase-authorised-capital.html": "Instant Authorised Capital Increase",
+        "gst-registration-amendment.html": "Instant GST Amendment",
+        "income-tax-return-filing.html": "Instant Income Tax Return Filing",
+    }.get(clean, f"Instant {title}")
+    seo_name = SEO_OVERRIDES.get(clean, {}).get("seo_name", default_seo_name)
+    group = {"gst": "GST compliance", "tax": "tax compliance", "corporate": "corporate compliance", "ipr": "intellectual property", "labour": "labour law compliance", "trade": "import export compliance", "business": "business compliance", "design": "business growth support"}.get(category_key, "professional services")
+    keyword_text = SEO_OVERRIDES.get(clean, {}).get("keywords", f"Instant Professionals {title}, {title} India, {group}, professional services India")
+    description = SEO_OVERRIDES.get(clean, {}).get("description", f"{title} support across India from Instant Professionals: professional review, transparent scope and coordinated assistance.")
     cards = "".join(
         f'<article class="ip-info-card"><i class="bi {icon}" aria-hidden="true"></i><h3>{heading}</h3><p>{html.escape(point)}</p></article>'
         for icon, heading, point in zip(
@@ -276,32 +418,49 @@ def service_page(old: str) -> str:
     documents = "".join(f"<li>{html.escape(item)}</li>" for item in category["documents"])
     source_name, source_url = category["source"]
     structured = json.dumps({
-        "@context": "https://schema.org", "@type": "Service", "name": title,
-        "description": description, "url": canonical,
-        "provider": {"@type": "Organization", "name": "Instant Professionals", "url": SITE + "/"},
-        "areaServed": "India",
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Service", "@id": canonical + "#service",
+                "name": f"{title} by Instant Professionals", "alternateName": seo_name,
+                "serviceType": title, "description": description, "url": canonical, "keywords": keyword_text,
+                "provider": {"@id": SITE + "/#organization"},
+                "areaServed": {"@type": "Country", "name": "India"},
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+                    {"@type": "ListItem", "position": 2, "name": "Services", "item": SITE + "/services.html"},
+                    {"@type": "ListItem", "position": 3, "name": title, "item": canonical},
+                ],
+            },
+        ],
     }, ensure_ascii=False)
     return f"""<!doctype html>
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{html.escape(title)} | Instant Professionals</title>
+  {GOOGLE_TAG}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>{html.escape(seo_name)} | Instant Professionals</title>
   <meta name="description" content="{html.escape(description)}">
+  <meta name="keywords" content="{html.escape(keyword_text)}">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="{canonical}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="Instant Professionals">
-  <meta property="og:title" content="{html.escape(title)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png">
-  <meta name="twitter:card" content="summary"><meta name="theme-color" content="#071d3d">
-  <link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css">
-  <script type="application/ld+json">{structured}</script>
+  <meta property="og:title" content="{html.escape(seo_name)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
+  <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{html.escape(title)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="twitter:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta name="theme-color" content="#071d3d">
+  {FAVICON_LINKS}
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1">
+  <script type="application/ld+json" data-ip-seo-schema>{structured}</script>
 </head>
 <body>
 {header_markup()}
 <main id="main-content">
-  <section class="ip-hero"><div class="ip-container ip-hero-grid"><div><span class="ip-eyebrow">{category['label']}</span><h1>{html.escape(title)}</h1><p class="ip-lead">{html.escape(summary)}</p><div class="ip-trust"><span><i class="bi bi-person-check" aria-hidden="true"></i> Professional review</span><span><i class="bi bi-shield-check" aria-hidden="true"></i> Scope confirmed first</span><span><i class="bi bi-chat-square-text" aria-hidden="true"></i> Coordinated support</span></div></div>{form_markup(title, prices)}</div></section>
+  <nav class="ip-breadcrumb ip-container" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="services.html">Services</a><span aria-hidden="true">›</span><span aria-current="page">{html.escape(title)}</span></nav>
+  <section class="ip-hero"><div class="ip-container ip-hero-grid"><div><span class="ip-eyebrow">INSTANT PROFESSIONALS • {category['label']}</span><h1>{html.escape(title)}</h1><p class="ip-lead">{html.escape(summary)}<span class="ip-seo-context">Instant Professionals supports this service across India with professional review and a confirmed scope.</span></p><div class="ip-trust"><span><i class="bi bi-person-check" aria-hidden="true"></i> Professional review</span><span><i class="bi bi-shield-check" aria-hidden="true"></i> Scope confirmed first</span><span><i class="bi bi-chat-square-text" aria-hidden="true"></i> Coordinated support</span></div></div>{form_markup(title, prices)}</div></section>
   <section class="ip-section"><div class="ip-container"><div class="ip-section-head"><span class="ip-eyebrow">HOW WE HELP</span><h2>A clear, review-led process</h2><p>Applicability, forms, portal requirements and statutory timelines can change. We confirm the current position from your facts before filing or advising.</p></div><div class="ip-card-grid">{cards}</div></div></section>
   <section class="ip-section ip-section-alt"><div class="ip-container"><div class="ip-section-head"><span class="ip-eyebrow">DOCUMENT CHECKLIST</span><h2>Information generally required</h2><p>The final checklist depends on the applicant, transaction and current portal requirements.</p></div><ul class="ip-list">{documents}</ul><div class="ip-source-note">Authoritative portal: <a href="{source_url}" target="_blank" rel="noopener">{html.escape(source_name)}</a>. The portal and applicable law prevail over general website information.</div></div></section>
 {pricing_markup(prices).lstrip()}
@@ -314,30 +473,32 @@ def service_page(old: str) -> str:
 
 def redirect_page(clean: str, title: str) -> str:
     target = html.escape(clean, quote=True)
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Redirecting to {html.escape(title)} | Instant Professionals</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{SITE}/{target}"><meta http-equiv="refresh" content="0; url={target}"><script>window.location.replace({json.dumps(clean)});</script></head><body><main><h1>{html.escape(title)}</h1><p>This service has moved to a cleaner address. <a href="{target}">Continue to {html.escape(title)}</a>.</p></main></body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8">{GOOGLE_TAG}<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Redirecting to {html.escape(title)} | Instant Professionals</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{SITE}/{target}"><meta http-equiv="refresh" content="0; url={target}"><script>window.location.replace({json.dumps(clean)});</script></head><body><main><h1>{html.escape(title)}</h1><p>This service has moved to a cleaner address. <a href="{target}">Continue to {html.escape(title)}</a>.</p></main></body></html>"""
 
 
 def policy_page(filename: str, title: str, sections: list[tuple[str, str]]) -> str:
     body = "".join(f"<h2>{html.escape(heading)}</h2><p>{text}</p>" for heading, text in sections)
     canonical = f"{SITE}/{filename}"
-    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}"><link rel="icon" href="assets/img/favicon/favicon.ico"><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 18 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
+    return f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>{html.escape(title)} | Instant Professionals</title><meta name="description" content="{html.escape(title)} for users and clients of Instant Professionals."><meta name="robots" content="index,follow"><link rel="canonical" href="{canonical}">{FAVICON_LINKS}<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">POLICY</span><h1>{html.escape(title)}</h1><p><strong>Last updated:</strong> 24 August 2026</p>{body}</main>{footer_markup()}</body></html>"""
 
 
 def update_homepage() -> None:
     path = ROOT / "index.html"
     text = path.read_text(encoding="utf-8")
+    if GA_MEASUREMENT_ID not in text:
+        text = text.replace("  <head>", "  <head>\n    " + GOOGLE_TAG.replace("\n", "\n    "), 1)
     text = text.replace('<html lang="en">', '<html lang="en-IN">', 1)
-    text = re.sub(r'<title>.*?</title>', '<title>Instant Professionals | Compliance, Tax and Business Advisory</title>', text, count=1, flags=re.S)
+    text = re.sub(r'<title>.*?</title>', '<title>Instant Professionals | GST, Trademark & Compliance Services</title>', text, count=1, flags=re.S)
     metadata = f"""
     <link rel="canonical" href="{SITE}/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Instant Professionals" />
-    <meta property="og:title" content="Instant Professionals | Compliance, Tax and Business Advisory" />
+    <meta property="og:title" content="Instant Professionals | GST, Trademark & Compliance Services" />
     <meta property="og:description" content="Tax, corporate compliance, intellectual property and business advisory services across India." />
     <meta property="og:url" content="{SITE}/" />
     <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <link href="assets/css/home-fixes.css" rel="stylesheet" />"""
+    <link data-ip-vision="2" href="assets/css/homepage.min.css?v=20260901-mobile-performance-2" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
         text = text.replace("    <!-- Favicons -->", metadata + "\n\n    <!-- Favicons -->", 1)
     if 'class="skip-link"' not in text:
@@ -346,16 +507,16 @@ def update_homepage() -> None:
     home_hero = f"""<section class="ip-home-hero ip-os-home" aria-labelledby="home-heading">
       <div class="ip-os-grid-bg" aria-hidden="true"></div>
       <div class="container ip-os-shell">
-        <div class="ip-os-copy" data-aos="fade-up">
-          <div class="ip-os-index"><img src="assets/img/instant-professionals-logo-2026.png" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+        <div class="ip-os-copy">
+          <div class="ip-os-index"><img src="assets/img/instant-professionals-logo-2026.png" width="64" height="64" decoding="async" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
           <h1 id="home-heading">Compliance,<br><em>engineered around</em><br>your business.</h1>
           <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory—structured around how your business operates.</p>
           <div class="ip-os-actions"><a class="ip-os-btn ip-os-btn-primary" href="#services">Explore services <i class="bi bi-arrow-right" aria-hidden="true"></i></a><a class="ip-os-btn ip-os-btn-ghost" href="#team">Meet our professionals</a></div>
           <div class="ip-os-credibility"><div><strong>2018</strong><span>Built on professional practice</span></div><div><strong>360°</strong><span>Compliance and advisory coverage</span></div><div><strong>1</strong><span>Coordinated professional relationship</span></div></div>
         </div>
-        <aside class="ip-os-system" data-aos="fade-left" aria-label="Business compliance lifecycle">
+        <aside class="ip-os-system" aria-label="Business compliance lifecycle">
           <div class="ip-os-system-top"><div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div><b>01—05</b></div>
-          <div class="ip-os-core"><div class="ip-os-center"><img src="assets/img/instant-professionals-logo-2026.png" alt=""><small>COORDINATED<br>OVERSIGHT</small></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
+          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/favicon/ip-lifecycle-192.webp?v=20260901-mobile-performance-2" alt="Instant Professionals registered logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
           <div class="ip-os-system-foot"><span>Clarity</span><span>Control</span><span>Continuity</span></div>
         </aside>
       </div>
@@ -365,8 +526,8 @@ def update_homepage() -> None:
     <!-- End Hero -->"""
     text = re.sub(r'<div\s+id="carouselExampleCaptions".*?<!-- End Hero -->', home_hero, text, count=1, flags=re.S)
 
-    about = """<p>Instant Professionals is a multidisciplinary platform managed by experienced Chartered Accountants, Company Secretaries, Cost and Management Accountants, and legal professionals. Founded in 2018, we provide registrations, licences, financial reporting, tax planning, labour-law compliance, intellectual-property protection and business advisory services across India. We differentiate ourselves through transparent pricing, defined turnaround times and dedicated Compliance Managers.</p><p>With more than 1,100 clients, we support startups, MSMEs, professionals and established businesses through coordinated professional services under one roof.</p>"""
-    text = re.sub(r'<div class="row content" data-aos="fade-up">.*?</div>\s*</div>\s*</section>', f'<div class="row content" data-aos="fade-up"><div class="col-lg-12">{about}</div></div></div></section>', text, count=1, flags=re.S)
+    about = """<p>Founded in 2018, Instant Professionals is a multidisciplinary professional-services platform bringing together experienced Chartered Accountants, Company Secretaries, Cost and Management Accountants, and legal professionals. We provide coordinated support across registrations and licences, financial reporting, tax planning and compliance, labour-law compliance, intellectual-property protection, corporate governance, and business advisory services throughout India.</p><p>Trusted by more than 11,000 clients—including startups, MSMEs, professionals, and established enterprises—we distinguish ourselves through transparent pricing, clearly defined turnaround times, multidisciplinary expertise, and dedicated Compliance Managers.</p><aside class="ip-motto" aria-labelledby="ip-motto-title"><span class="ip-motto-label">Our motto</span><strong id="ip-motto-title" lang="sa-Latn">Svārthātītaṃ kartavyaṃ dharmaḥ.</strong><span class="ip-motto-meaning">“Duty that transcends self-interest is Dharma.”</span><p>For Instant Professionals, this means placing principled responsibility above immediate convenience or personal gain. We recommend what clients genuinely need, communicate costs and timelines transparently, protect confidentiality, and perform every assignment with integrity, accuracy, accountability, and respect for the law. Every engagement is approached not merely as a transaction, but as a responsibility.</p></aside>"""
+    text = re.sub(r'<div class="row content(?: ip-about-profile)?" data-aos="fade-up">.*?</div>\s*</div>\s*</section>', f'<div class="row content ip-about-profile" data-aos="fade-up"><div class="col-lg-12">{about}</div></div></div></section>', text, count=1, flags=re.S)
 
     contact_panel = f"""<div class="col-lg-5" data-aos="fade-right"><div class="ip-home-contact-card"><span>CONTACT</span><h3>Talk to a professional</h3><p>Discuss the facts, timelines and required outcome with our team before engagement.</p><ul><li><i class="bi bi-telephone" aria-hidden="true"></i><a href="tel:{PHONE_LINK}">{PHONE_DISPLAY}</a></li><li><i class="bi bi-envelope" aria-hidden="true"></i><a href="mailto:{EMAIL}">{EMAIL}</a></li><li><i class="bi bi-whatsapp" aria-hidden="true"></i><a href="https://wa.me/918209785294" target="_blank" rel="noopener">WhatsApp</a></li></ul><p class="ip-home-contact-note">Serving businesses and professionals across India.</p></div></div>"""
     text = re.sub(r'<div class="col-lg-5" data-aos="fade-right">\s*<iframe.*?</iframe>\s*</div>', contact_panel, text, count=1, flags=re.S)
@@ -437,7 +598,7 @@ def update_homepage() -> None:
     text = text.replace('<b>L:</b>', '<b>Landline:</b>').replace('<b>W:</b>', '<b>WhatsApp:</b>').replace('<b>E:</b>', '<b>Email:</b>')
     home_footer = f"""<footer id="footer" class="ip-home-footer">
       <div class="container ip-home-footer-grid">
-        <div><a class="ip-home-footer-brand" href="index.html"><img src="assets/img/instant-professionals-logo-2026.png" alt="Instant Professionals registered logo"><span>Instant Professionals</span></a><p>Coordinated compliance, tax, corporate and intellectual-property support for businesses and professionals across India.</p><div class="ip-home-footer-social"><a href="https://www.linkedin.com/company/instantprofessionals" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/instantprofessional/" target="_blank" rel="noopener">Instagram</a></div></div>
+        <div><a class="ip-home-footer-brand" href="index.html"><img src="assets/img/instant-professionals-logo-2026.png" width="64" height="64" loading="lazy" decoding="async" alt="Instant Professionals registered logo"><span>Instant Professionals</span></a><p>Coordinated compliance, tax, corporate and intellectual-property support for businesses and professionals across India.</p><div class="ip-home-footer-social"><a href="https://www.linkedin.com/company/instantprofessionals" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/instantprofessional/" target="_blank" rel="noopener">Instagram</a></div></div>
         <div><h2>Popular services</h2><ul><li><a href="gst-registration.html">GST Registration</a></li><li><a href="income-tax-return-filing.html">Income Tax Returns</a></li><li><a href="company-annual-filing.html">Company Annual Filing</a></li><li><a href="trademark-registration.html">Trademark Registration</a></li></ul></div>
         <div><h2>Policies</h2><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="refund-policy.html">Refund and Cancellation</a></li><li><a href="sitemap.xml">Sitemap</a></li></ul></div>
         <div><h2>Contact</h2><p><a href="tel:{PHONE_LINK}">{PHONE_DISPLAY}</a></p><p><a href="mailto:{EMAIL}">{EMAIL}</a></p><p>Serving clients across India</p></div>
@@ -451,16 +612,24 @@ def update_homepage() -> None:
     text = text.replace("complex tax casesr", "complex tax cases")
     text = text.replace("Monthly/ Quarterly Compliances", "Monthly and quarterly compliance")
     text = re.sub(r'\s*<!--.*?-->', '', text, flags=re.S)
-    text = text.replace('    <link href="assets/css/home-fixes.css" rel="stylesheet" />\n', '')
-    text = text.replace('    <link href="assets/css/style.css" rel="stylesheet" />', '    <link href="assets/css/style.css" rel="stylesheet" />\n    <link href="assets/css/home-fixes.css" rel="stylesheet" />', 1)
-    if 'assets/js/enquiry.js' not in text:
-        text = text.replace('    <script src="assets/js/main.js"></script>', '    <script src="assets/js/main.js"></script>\n    <script src="assets/js/enquiry.js" defer></script>')
+    text = re.sub(r'\s*<link[^>]+(?:fonts\.googleapis\.com|fonts\.gstatic\.com|assets/vendor/aos/aos\.css|assets/vendor/bootstrap/css/bootstrap\.min\.css|assets/vendor/bootstrap-icons/bootstrap-icons\.css|assets/css/(?:style|vision-2|home-fixes|lifecycle-dashboard|homepage\.min)\.css)[^>]*>', '', text, flags=re.I)
+    text = text.replace('</head>', '    <link data-ip-vision="2" href="assets/css/homepage.min.css?v=20260901-mobile-performance-2" rel="stylesheet" />\n  </head>', 1)
+    text = re.sub(r'\s*<script[^>]+assets/vendor/aos/aos\.js[^>]*></script>', '', text, flags=re.I)
+    text = re.sub(r'\s*<script[^>]+assets/js/(?:enquiry|enquiry-home)\.js[^>]*></script>', '', text, flags=re.I)
+    text = re.sub(r"assets/js/main\.js(?:\?v=[^\s\"']+)?", "assets/js/main.js?v=20260901-mobile-performance-2", text)
+    text = text.replace('</body>', '    <script src="assets/js/enquiry-home.js?v=20260901-mobile-performance-2" defer></script>\n  </body>', 1)
     path.write_text(text, encoding="utf-8")
 
 
 def update_shared_files() -> None:
     main = ROOT / "assets/js/main.js"
     text = main.read_text(encoding="utf-8")
+    text = re.sub(r'const VERSION="[^"]+";', 'const VERSION="20260901-mobile-performance-2";', text, count=1)
+    text = text.replace('role:"Team Professional"', 'role:"Executive Assistant"')
+    text = re.sub(r'\n\{name:"Parth",[^\n]*\},?', '', text, count=1)
+    if 'name:"Sparsh"' not in text:
+        sparsh_member = '{name:"Sparsh",role:"Executive Assistant",experience:"Statutory & Digital Coordination",photo:"assets/img/team/optimized/sparsh.webp",bio:"Supports executive coordination, tracks statutory and regulatory updates, and manages the organisation’s social-media calendar, publishing and routine engagement.",expertise:["Executive Assistance","Statutory Updates","Social Media Management"]}'
+        text = text.replace("\n];\n\nfunction renderTeam", ",\n" + sparsh_member + "\n];\n\nfunction renderTeam", 1)
     text = text.replace("loadCurrentLaw();", "// Current-law content is now generated statically on service pages.")
     text = text.replace("const SERVICE_RATE_MULTIPLIER=2.5;", "const SERVICE_RATE_MULTIPLIER=1;")
     text = text.replace('photo:"assets/img/team/live/sachin.jpg"', 'photo:"assets/img/team/live/sachin.jpg"')
@@ -480,40 +649,35 @@ def update_shared_files() -> None:
 
 
 def write_policies() -> None:
-    policies = {
-        "privacy-policy.html": ("Privacy Policy", [
-            ("Information we collect", "We collect information that you voluntarily provide, such as your name, phone number, email address, service requirement and supporting documents shared during an engagement."),
-            ("How information is used", "Information is used to respond to enquiries, provide professional services, meet legal or regulatory obligations, maintain engagement records and improve service delivery."),
-            ("WhatsApp enquiries", "Website enquiry forms prepare a WhatsApp message for your review. Nothing is transmitted through the website form until you choose to send that message in WhatsApp."),
-            ("Sharing and retention", "Information is shared only with authorised team members, professional advisers, service providers or authorities where necessary for the engagement or required by law. Records are retained for the period reasonably required for those purposes."),
-            ("Your choices", f"To request access, correction or deletion, subject to professional and legal retention duties, contact <a href=\"mailto:{EMAIL}\">{EMAIL}</a>."),
-        ]),
-        "terms.html": ("Terms of Service", [
-            ("Website information", "Website content is general information and is not a substitute for advice based on complete facts. Applicable law, forms, portal requirements, fees and timelines may change."),
-            ("Engagement", "A professional engagement begins only after scope, responsibility, fees, exclusions and required documents are confirmed in writing."),
-            ("Client responsibility", "Clients are responsible for providing complete, accurate and timely information and for reviewing drafts or confirmations before filing or submission."),
-            ("Third-party systems", "Government portals, banks, payment providers and other third-party systems operate independently. Their availability and processing timelines are outside our control."),
-        ]),
-        "refund-policy.html": ("Refund and Cancellation Policy", [
-            ("Before work begins", "A cancellation request received before substantive work begins may be eligible for refund after deduction of payment-processing or work-allocation costs, if any."),
-            ("After work begins", "Professional fees relating to review, drafting, consultation, filing preparation or other work already performed are not refundable. Unused third-party or government charges may be refundable only if they have not been incurred."),
-            ("Government rejection or delay", "A filing rejection, resubmission, objection or delay by an authority does not automatically create a refund entitlement where the agreed professional work has been performed."),
-            ("How to request", f"Send the engagement reference and reason to <a href=\"mailto:{EMAIL}\">{EMAIL}</a>. Each request is reviewed against the written scope and work completed."),
-        ]),
-    }
-    for filename, (title, sections) in policies.items():
-        (ROOT / filename).write_text(policy_page(filename, title, sections), encoding="utf-8")
+    """Policy pages are maintained as dedicated, legally reviewed documents.
+
+    Do not regenerate these pages from abbreviated text: that would discard the
+    service, privacy and refund boundaries intentionally drafted for the live site.
+    """
+    return
 
 
 def write_technical_files() -> None:
     clean_routes = sorted({data[0] for data in CATALOG.values()})
-    pages = ["", *clean_routes, "privacy-policy.html", "terms.html", "refund-policy.html"]
+    specialist = ["cma-project-report.html", "accounting-bookkeeping.html", "virtual-cfo.html", "tax-notice-response.html"]
+    pages = ["", "services.html", *specialist, *clean_routes, "privacy-policy.html", "terms.html", "refund-policy.html"]
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    sitemap.extend(f"  <url><loc>{SITE}/{page}</loc></url>" for page in pages)
+    for page in pages:
+        changefreq, priority = ("monthly", "0.8")
+        if page == "":
+            changefreq, priority = ("weekly", "1.0")
+        elif page == "services.html":
+            changefreq, priority = ("weekly", "0.9")
+        elif page in {"privacy-policy.html", "terms.html", "refund-policy.html"}:
+            changefreq, priority = ("yearly", "0.3")
+        lastmod = "2026-09-01" if not page else "2026-08-20"
+        if page in {"privacy-policy.html", "terms.html", "refund-policy.html"}:
+            lastmod = "2026-09-02"
+        sitemap.append(f"  <url><loc>{SITE}/{page}</loc><lastmod>{lastmod}</lastmod><changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>")
     sitemap.append("</urlset>")
     (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
-    (ROOT / "404.html").write_text(f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Instant Professionals</title><meta name="robots" content="noindex"><link rel="stylesheet" href="assets/css/service-page-v3.css"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">404</span><h1>Page not found</h1><p>The address may have changed during our website quality upgrade.</p><p><a class="ip-primary-button" href="index.html#services">Browse services</a></p></main>{footer_markup()}</body></html>""", encoding="utf-8")
+    (ROOT / "404.html").write_text(f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Page not found | Instant Professionals</title><meta name="robots" content="noindex"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">404</span><h1>Page not found</h1><p>The address may have changed during our website quality upgrade.</p><p><a class="ip-primary-button" href="index.html#services">Browse services</a></p></main>{footer_markup()}</body></html>""", encoding="utf-8")
     for obsolete in ("form.html", "inner-page.html", "pdflist.html", "portfolio-details.html"):
         (ROOT / obsolete).write_text(redirect_page("index.html", "Instant Professionals"), encoding="utf-8")
 
@@ -527,6 +691,7 @@ def main() -> None:
     write_technical_files()
     update_homepage()
     update_shared_files()
+    subprocess.run([sys.executable, str(ROOT / "scripts/build_homepage_assets.py")], check=True)
     print(f"Generated {len(CATALOG)} audited service pages and {sum(1 for old, data in CATALOG.items() if old != data[0])} compatibility redirects.")
 
 

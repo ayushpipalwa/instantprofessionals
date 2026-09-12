@@ -1,0 +1,29 @@
+/* About section readability and responsive typography */
+.about-section .motto-card p,
+.motto-card p {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.08rem;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+
+.about-section .motto-card .motto-translation,
+.motto-card .motto-translation {
+  color: #86efac;
+  font-size: 1.18rem;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .about-section .motto-card p,
+  .motto-card p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .about-section .motto-card .motto-translation,
+  .motto-card .motto-translation {
+    font-size: 1.05rem;
+  }
+}
