@@ -716,8 +716,119 @@
     addFaqSchema(items);
   }
 
+
+  const LEGAL_CURRENCY_REVIEWED = "12 September 2026";
+  const LEGAL_CURRENCY = {
+    "GST & INDIRECT TAX": {
+      framework: "Central Goods and Services Tax Act, 2017; Integrated Goods and Services Tax Act, 2017; applicable State/UT GST law; CGST Rules, 2017; current notifications, circulars and portal advisories.",
+      authority: "CBIC GST law and notifications",
+      url: "https://cbic-gst.gov.in/gst-law.html",
+      caution: "Rate, exemption, place of supply, registration, return and procedural positions must be checked for the relevant period and State."
+    },
+    "INCOME TAX & TDS": {
+      framework: "Income-tax Act, 2025 and Income-tax Rules, 2026 for Tax Year 2026–27 onward; Income-tax Act, 1961 and Income-tax Rules, 1962 for earlier financial/assessment years, subject to transition provisions.",
+      authority: "Income Tax Department",
+      url: "https://www.incometax.gov.in/iec/foportal/",
+      caution: "Use the law, form, utility and portal process applicable to the transaction, payment or filing period; old and new Act references are not interchangeable."
+    },
+    "CORPORATE & SECRETARIAL": {
+      framework: "Companies Act, 2013 or Limited Liability Partnership Act, 2008, as applicable, together with the current rules, MCA forms, notifications, circulars and entity records.",
+      authority: "Ministry of Corporate Affairs",
+      url: "https://www.mca.gov.in/content/mca/global/en/acts-rules/ebooks.html",
+      caution: "Applicability depends on entity type, event date, capital, listing/status, approvals, registers and the version of the MCA form available on filing date."
+    },
+    "WORKFORCE COMPLIANCE": {
+      framework: "Employees’ Provident Funds and Miscellaneous Provisions Act, 1952 and schemes, or Employees’ State Insurance Act, 1948 and regulations, as applicable, together with current portal directions.",
+      authority: "EPFO / ESIC",
+      url: "https://www.epfindia.gov.in/site_en/Acts&Manuals.php",
+      caution: "Coverage, wage components, employee status, notified area, contribution period and portal records require fact-specific verification."
+    },
+    "INTELLECTUAL PROPERTY": {
+      framework: "Trade Marks Act, 1999 and Trade Marks Rules, 2017; Copyright Act, 1957 and Copyright Rules, 2013; or Patents Act, 1970 and Patents Rules, 2003, as applicable and amended.",
+      authority: "IP India — Acts and Rules",
+      url: "https://ipindia.gov.in/acts-rules.htm",
+      caution: "The applicable statute, class, ownership, use, priority, limitation, evidence and current Registry practice depend on the specific right and proceeding."
+    },
+    "IMPORT & EXPORT": {
+      framework: "Foreign Trade (Development and Regulation) Act, 1992; Foreign Trade Policy 2023 and Handbook of Procedures, as amended; DGFT notifications, public notices and product-specific restrictions.",
+      authority: "Directorate General of Foreign Trade",
+      url: "https://www.dgft.gov.in/CP/?opt=ft-policy",
+      caution: "IEC status does not replace customs, product, sector, sanctions, licensing or destination-specific checks."
+    },
+    "BUSINESS REGISTRATION": {
+      framework: "The governing framework depends on the registration: MSMED/Udyam notifications, Income-tax PAN/TAN rules, Information Technology Act/CCA directions, and applicable Central, State or local licensing law.",
+      authority: "Government registration portal",
+      url: "https://www.india.gov.in/",
+      caution: "Registration names are not substitutes for an applicability review; activity, constitution, location, turnover, workforce and sector may trigger separate laws."
+    },
+    "BUSINESS GROWTH": {
+      framework: "Applicable contract, consumer, advertising, intellectual-property, data-protection, tax and sector rules depend on the engagement and business model.",
+      authority: "India Code",
+      url: "https://www.indiacode.nic.in/",
+      caution: "Commercial support must be scoped separately from legal, tax, financial or regulatory opinions."
+    }
+  };
+
+  function serviceLegalCurrency() {
+    if (document.querySelector("[data-ip-legal-currency]") || document.body.classList.contains("ip-legal-layer-ready")) return;
+    const categoryElement = document.querySelector(".ip-hero .ip-eyebrow");
+    const sectionHost = document.querySelector(".ip-source-note") || document.querySelector(".ip-faq") || document.querySelector("main");
+    if (!categoryElement || !sectionHost) return;
+    const categoryText = categoryElement.textContent.toUpperCase();
+    const category = Object.keys(LEGAL_CURRENCY).find(function (key) {
+      return categoryText.indexOf(key) !== -1;
+    });
+    if (!category) return;
+
+    const filename = window.location.pathname.split("/").pop() || "";
+    const entry = Object.assign({}, LEGAL_CURRENCY[category]);
+    if (/copyright/i.test(filename)) {
+      entry.framework = "Copyright Act, 1957 and Copyright Rules, 2013, as amended, together with current Copyright Office procedures.";
+    } else if (/patent/i.test(filename)) {
+      entry.framework = "Patents Act, 1970 and Patents Rules, 2003, as amended, together with current Patent Office procedures.";
+    } else if (/trademark/i.test(filename)) {
+      entry.framework = "Trade Marks Act, 1999 and Trade Marks Rules, 2017, as amended, together with current Trade Marks Registry practice and e-filing requirements.";
+    } else if (/esic|esi-/.test(filename)) {
+      entry.framework = "Employees’ State Insurance Act, 1948 and applicable regulations, contribution rules and ESIC portal directions, as amended.";
+      entry.authority = "Employees’ State Insurance Corporation";
+      entry.url = "https://www.esic.gov.in/act";
+    } else if (/epf|pf-/.test(filename)) {
+      entry.framework = "Employees’ Provident Funds and Miscellaneous Provisions Act, 1952 and applicable schemes, notifications and EPFO portal directions, as amended.";
+    } else if (/udyam/.test(filename)) {
+      entry.framework = "Micro, Small and Medium Enterprises Development Act, 2006 and the current Udyam Registration notification, classification criteria and official portal directions.";
+      entry.authority = "Udyam Registration — Ministry of MSME";
+      entry.url = "https://udyamregistration.gov.in/";
+    } else if (/digital-signature/.test(filename)) {
+      entry.framework = "Information Technology Act, 2000, applicable rules and Controller of Certifying Authorities directions governing digital signatures and certifying authorities.";
+      entry.authority = "Controller of Certifying Authorities";
+      entry.url = "https://cca.gov.in/";
+    }
+
+    const panel = document.createElement("aside");
+    panel.className = "ip-legal-currency";
+    panel.dataset.ipLegalCurrency = "true";
+    panel.setAttribute("aria-label", "Legal currency and official source");
+    panel.innerHTML =
+      '<div class="ip-legal-currency-head"><span>LEGAL CURRENCY</span><strong>Reviewed ' + LEGAL_CURRENCY_REVIEWED + '</strong></div>' +
+      '<p><b>Framework:</b> ' + entry.framework + '</p>' +
+      '<p><b>Verification note:</b> ' + entry.caution + '</p>' +
+      '<p class="ip-legal-currency-source"><a target="_blank" rel="noopener" href="' + entry.url + '">Verify through ' + entry.authority + ' <span aria-hidden="true">↗</span></a></p>' +
+      '<p class="ip-legal-currency-limit">This is a service-page currency note, not a legal opinion. The enacted law, rules, notifications, circulars, forms, portal utilities and authority records applicable on the relevant date prevail.</p>';
+
+    const style = document.createElement("style");
+    style.textContent =
+      ".ip-legal-currency{max-width:1180px;margin:24px auto;padding:20px 22px;border:1px solid #d9e3ef;border-left:5px solid #00a651;border-radius:14px;background:#f7fafc;color:#344054;box-shadow:0 10px 30px rgba(7,29,61,.06)}" +
+      ".ip-legal-currency-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.ip-legal-currency-head span{color:#00a651;font-size:.76rem;font-weight:800;letter-spacing:.09em}.ip-legal-currency-head strong{color:#071d3d;font-size:.82rem}.ip-legal-currency p{margin:8px 0;font-size:.92rem;line-height:1.55}.ip-legal-currency-source a{color:#071d3d;font-weight:750}.ip-legal-currency-limit{color:#667085;font-size:.8rem!important}" +
+      "@media(max-width:760px){.ip-legal-currency{margin:18px 16px;padding:17px}.ip-legal-currency-head{align-items:flex-start;flex-direction:column;gap:3px}}";
+    document.head.appendChild(style);
+    if (sectionHost.classList.contains("ip-source-note")) sectionHost.parentNode.insertBefore(panel, sectionHost);
+    else sectionHost.parentNode.insertBefore(panel, sectionHost);
+    document.body.classList.add("ip-legal-layer-ready");
+  }
+
   function initialise() {
     bindAnalyticsLinks();
+    serviceLegalCurrency();
     bindNavigation();
     bindForms();
     bindPackageButtons();
