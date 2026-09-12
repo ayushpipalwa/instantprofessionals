@@ -775,12 +775,13 @@
     const sectionHost = document.querySelector(".ip-source-note") || document.querySelector(".ip-faq") || document.querySelector("main");
     if (!categoryElement || !sectionHost) return;
     const categoryText = categoryElement.textContent.toUpperCase();
-    const category = Object.keys(LEGAL_CURRENCY).find(function (key) {
+    let category = Object.keys(LEGAL_CURRENCY).find(function (key) {
       return categoryText.indexOf(key) !== -1;
     });
-    if (!category) return;
-
     const filename = window.location.pathname.split("/").pop() || "";
+    if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
+    if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
+    if (!category) return;
     const entry = Object.assign({}, LEGAL_CURRENCY[category]);
     if (/copyright/i.test(filename)) {
       entry.framework = "Copyright Act, 1957 and Copyright Rules, 2013, as amended, together with current Copyright Office procedures.";
@@ -922,9 +923,11 @@
     const categoryElement = document.querySelector(".ip-hero .ip-eyebrow");
     if (!categoryElement) return;
     const categoryText = categoryElement.textContent.toUpperCase();
-    const category = Object.keys(SERVICE_AUTOMATION_CHECKLISTS).find(function (key) { return categoryText.indexOf(key) !== -1; });
-    if (!category) return;
+    let category = Object.keys(SERVICE_AUTOMATION_CHECKLISTS).find(function (key) { return categoryText.indexOf(key) !== -1; });
     const filename = window.location.pathname.split("/").pop() || "";
+    if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
+    if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
+    if (!category) return;
     const type = calculationType(category, filename);
     const legalPanel = document.querySelector("[data-ip-legal-currency]");
     const host = legalPanel || document.querySelector(".ip-faq") || document.querySelector("main");
