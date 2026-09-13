@@ -1,0 +1,77 @@
+name: RC1 Production Site Health
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '30 2 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rc1-site-health
+  cancel-in-progress: true
+
+jobs:
+  production-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check production homepage and critical routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://instantprofessionals.in"
+          routes=(
+            "/"
+            "/services.html"
+            "/ai-business-automation.html"
+            "/gst-registration.html"
+            "/trademark-registration.html"
+            "/privacy-policy.html"
+            "/terms.html"
+            "/sitemap.xml"
+            "/robots.txt"
+          )
+          for route in "${routes[@]}"; do
+            echo "Checking ${BASE}${route}"
+            curl --fail --silent --show-error --location \
+              --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 \
+              --output /dev/null "${BASE}${route}"
+          done
+
+      - name: Verify HTTPS, canonical domain and core production markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          homepage="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/)"
+          printf '%s' "$homepage" | grep -Fq 'G-TG0272S260' || { echo 'GA4 measurement ID missing from production homepage'; exit 1; }
+          printf '%s' "$homepage" | grep -Fq 'https://instantprofessionals.in/' || { echo 'Canonical production domain marker missing'; exit 1; }
+          printf '%s' "$homepage" | grep -Fq 'Instant Professionals' || { echo 'Brand marker missing from homepage'; exit 1; }
+
+      - name: Verify AI funnel safeguards
+        shell: bash
+        run: |
+          set -euo pipefail
+          page="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/ai-business-automation.html)"
+          printf '%s' "$page" | grep -Fq 'Human review remains mandatory' || { echo 'Human-review safeguard missing'; exit 1; }
+          printf '%s' "$page" | grep -Fq 'does not replace professional advice' || { echo 'Preliminary-routing disclaimer missing'; exit 1; }
+
+      - name: Verify enquiry endpoint is present on homepage
+        shell: bash
+        run: |
+          set -euo pipefail
+          page="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/)"
+          printf '%s' "$page" | grep -Fq 'script.google.com/macros/s/' || { echo 'Google Apps Script enquiry endpoint missing'; exit 1; }
+
+      - name: Check www redirect
+        shell: bash
+        run: |
+          set -euo pipefail
+          final_url="$(curl --silent --show-error --location --max-time 30 --output /dev/null --write-out '%{url_effective}' https://www.instantprofessionals.in/)"
+          case "$final_url" in
+            https://instantprofessionals.in/*|https://www.instantprofessionals.in/*) ;;
+            *) echo "Unexpected www destination: $final_url"; exit 1;;
+          esac
