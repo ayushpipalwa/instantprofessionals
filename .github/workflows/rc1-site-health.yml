@@ -47,24 +47,27 @@ jobs:
         run: |
           set -euo pipefail
           homepage="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/)"
-          printf '%s' "$homepage" | grep -Fq 'G-TG0272S260' || { echo 'GA4 measurement ID missing from production homepage'; exit 1; }
-          printf '%s' "$homepage" | grep -Fq 'https://instantprofessionals.in/' || { echo 'Canonical production domain marker missing'; exit 1; }
-          printf '%s' "$homepage" | grep -Fq 'Instant Professionals' || { echo 'Brand marker missing from homepage'; exit 1; }
+          grep -Fq 'G-TG0272S260' <<<"$homepage" || { echo 'GA4 measurement ID missing from production homepage'; exit 1; }
+          grep -Fq 'https://instantprofessionals.in/' <<<"$homepage" || { echo 'Canonical production domain marker missing'; exit 1; }
+          grep -Fq 'Instant Professionals' <<<"$homepage" || { echo 'Brand marker missing from homepage'; exit 1; }
 
-      - name: Verify AI funnel safeguards
+      - name: Verify AI funnel safeguards and conversion wiring
         shell: bash
         run: |
           set -euo pipefail
           page="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/ai-business-automation.html)"
-          printf '%s' "$page" | grep -Fq 'Human review remains mandatory' || { echo 'Human-review safeguard missing'; exit 1; }
-          printf '%s' "$page" | grep -Fq 'does not replace professional advice' || { echo 'Preliminary-routing disclaimer missing'; exit 1; }
+          grep -Fq 'Human review remains mandatory' <<<"$page" || { echo 'Human-review safeguard missing'; exit 1; }
+          grep -Fq 'does not replace professional advice' <<<"$page" || { echo 'Preliminary-routing disclaimer missing'; exit 1; }
+          grep -Fq 'G-TG0272S260' <<<"$page" || { echo 'GA4 missing from AI funnel'; exit 1; }
+          grep -Fq 'script.google.com/macros/s/' <<<"$page" || { echo 'Lead-capture endpoint missing from AI funnel'; exit 1; }
+          grep -Fq 'mca-name-reservation-search-approval.html' <<<"$page" || { echo 'Incorporation route is not wired to the MCA setup path'; exit 1; }
 
       - name: Verify enquiry endpoint is present on homepage
         shell: bash
         run: |
           set -euo pipefail
           page="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/)"
-          printf '%s' "$page" | grep -Fq 'script.google.com/macros/s/' || { echo 'Google Apps Script enquiry endpoint missing'; exit 1; }
+          grep -Fq 'script.google.com/macros/s/' <<<"$page" || { echo 'Google Apps Script enquiry endpoint missing'; exit 1; }
 
       - name: Check www redirect
         shell: bash
