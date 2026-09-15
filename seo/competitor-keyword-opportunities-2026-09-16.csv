@@ -1,0 +1,15 @@
+keyword,volume,priority,target
+trademark search,301000,high,trademark-registration.html
+tax deducted at source,368000,high,tds-returns.html
+input tax credit,165000,high,gst-returns.html
+copyright,135000,high,copyright-application.html
+trademark,90500,high,trademark-registration.html
+trademark registry,74000,high,trademark-registration.html
+register as trademark,74000,high,trademark-registration.html
+fssai license,110000,high,new-content-cluster
+fssai licence renewal,8100,medium,new-content-cluster
+food license registration,5400,medium,new-content-cluster
+fssai license apply online,4400,medium,new-content-cluster
+e pan download,246000,medium,pan-application.html
+pan card download pdf,201000,medium,pan-application.html
+esic number,14800,medium,esic-registration.html
