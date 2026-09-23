@@ -12,6 +12,11 @@ encrypted encRequest are posted to CCAvenue; card/UPI details stay on its hosted
 
 ## Activation is blocked by default
 
+The owner-supplied Node checkout kit has now passed synthetic interoperability
+checks; see [kit validation](KIT_VALIDATION.md) for archive provenance, the verified
+wire format and remaining API/notification acceptance gates. This does not enable
+payments or establish merchant-account readiness.
+
 payments/config.js has no backend URL. Startup requires merchant credentials and
 CCAVENUE_KIT_VERIFIED=true; live additionally requires ENABLE_LIVE_PAYMENTS=true.
 No actual merchant sandbox or live payment has been made. This is a reviewable scaffold
@@ -155,7 +160,7 @@ customer details or encrypted payload is sent. Disable enhanced form measurement
 ## Tests and remaining merchant acceptance
 
 Run node --test payments/backend/test/*.test.mjs from the repository root.
-Fourteen CCAvenue tests cover fail-closed configuration, crypto roundtrip, tampering, nonce/
+Fifteen CCAvenue tests cover supplied-kit known answers, fail-closed configuration, crypto roundtrip, tampering, nonce/
 amount binding, single issuance, independent confirmation, delayed capture, duplicate events/
 captures, reversals, callback redirects, recovery, persistence, mode isolation, request limits
 and status-API envelopes. All use synthetic fixtures, not real merchant credentials.
