@@ -1,175 +1,189 @@
-# Payments: Razorpay quote checkout
+# CCAvenue payments — agreed-quote checkout
 
-## Current status and architecture
+CCAvenue is the only payment provider in this draft. Existing multipage branding, indicative
+prices, enquiry/WhatsApp flows and AI readiness questionnaire remain intact. Payments require
+an owner-issued fixed-total INR quote. No prices, tax amounts or credentials are invented.
+This is one-time hosted checkout, not a subscription or recurring debit.
 
-Implemented on production base `1ce64ea`. Existing multipage HTML, branding, enquiry forms,
-Google Apps Script lead capture, WhatsApp routing and indicative package prices are preserved.
-No gateway configuration was present. The AI funnel has six unpriced offers; service pages
-explicitly require scope review and separate taxes/government charges. Consequently this
-integration charges only a privately issued, fixed-total quote, not an indicative package price.
-No product prices, tax amounts or merchant credentials have been invented.
+GitHub Pages serves /payments/. A separately hosted Node 22.13+ backend creates an encrypted
+CCAvenue request and receives returns. It independently checks CCAvenue's status API before
+confirming payment. Working keys never reach the browser. The protocol's access_code and
+encrypted encRequest are posted to CCAvenue; card/UPI details stay on its hosted page.
 
-`/payments/` is a static, responsive checkout page linked from the AI offer section and the
-shared service-page enquiry script. The buyer opens a private quote link or enters its code,
-reviews scope/total, accepts terms, and opens Razorpay Standard Checkout. It supports INR
-with UPI/cards as enabled and available on the merchant account. This is one-time checkout;
-the reminder plan is NOT automatically turned into a subscription or recurring debit.
+## Activation is blocked by default
 
-GitHub Pages cannot execute payment APIs. Deploy `payments/backend/` as a separate Node
-service, with HTTPS and an attached persistent disk. The Pages workflow now stages an
-allowlist of public web assets into `_site`, excluding backend folders, environment files,
-databases and tooling. The unmerged AI workspace in PR #61 remains independent; this
-change neither depends on nor modifies its private AI API or credentials.
+payments/config.js has no backend URL. Startup requires merchant credentials and
+CCAVENUE_KIT_VERIFIED=true; live additionally requires ENABLE_LIVE_PAYMENTS=true.
+No actual merchant sandbox or live payment has been made. This is a reviewable scaffold
+with synthetic tests, not a certified merchant connection.
 
-**Disabled by default:** `payments/config.js` has an empty `apiBase`. The backend refuses
-missing configuration and requires explicit live opt-in. This PR alone cannot take money.
+Owner setup:
+1. Activate the business CCAvenue M.A.R.S account, complete merchant/settlement-bank
+   verification and enable the intended INR/UPI/card methods.
+2. Download the current hosted-checkout integration kit and status-API documentation from
+   M.A.R.S. Obtain Merchant ID, checkout Access Code/Working Key and status-API credentials.
+   API credentials can differ; register the backend outbound IP if required. Confirm test access.
+3. Validate this adapter against that kit: AES-128-CBC, MD5-derived key, fixed byte IV 00..0f,
+   PKCS#7 padding, hex encoding, form encRequest/access_code and returned encResp;
+   orderStatusTracker API version 1.2 JSON, field order_currncy and capture status Shipped.
+   Check actual response examples and endpoints. Adapt differences rather than bypassing
+   verification. Only then set CCAVENUE_KIT_VERIFIED=true, including for test mode.
+4. Deploy payments/backend/ on a single Node host with HTTPS, private persistent disk and
+   stable outbound IP where required. Do not use ephemeral/serverless storage or multiple
+   hosts sharing SQLite over a network filesystem.
+5. Configure the private environment below. Register the frontend domain and backend
+   /callback and /cancel URLs with CCAvenue as required.
+6. Configure asynchronous Order Status/Echo/Dynamic Event Notifications to /webhook ONLY
+   after confirming the account sends form-encoded encResp including merchant_param1.
+   Other formats are rejected and need an adapter plus independent status verification.
+7. Confirm the capture process in M.A.R.S. This implementation treats Shipped as confirmed
+   payment. Callback Success and API Successful remain pending. Configure merchant capture
+   or confirm orders in the dashboard as appropriate. The code does not capture automatically.
+8. Complete sandbox acceptance, then set the public backend URL in payments/config.js.
+   Review service/tax/delivery/contact/privacy/terms/refund policies before enabling live.
+   Use separate live credentials/database and an owner-controlled live acceptance test.
 
-## Owner setup before enabling payments
+Never share working keys in chat or source control.
 
-1. Connect/activate the business Razorpay merchant account, complete required verification
-   and settlement-bank setup, and enable the intended payment methods. Confirm the public
-   contact, privacy, service delivery, terms and refund policies match actual operations.
-2. Provision a Node 22.13+ service with a persistent disk (single application instance,
-   SQLite WAL). This implementation is not suitable for ephemeral/serverless filesystems
-   or multiple hosts sharing a network-mounted SQLite file. Use a transactional shared
-   database adapter before horizontal scaling.
-3. Set the environment below in the host's private secret manager. Do not send secrets in
-   chat, commit `.env`, store them in browser configuration, or write them into Pages builds.
-4. In the test dashboard enable **automatic capture**. Configure a webhook at
-   `https://YOUR-PAYMENT-HOST/webhook` for `payment.captured`, `order.paid`, and
-   `payment.failed`, using a distinct random webhook secret. Configure these separately
-   for live mode later. Do not use `/verify` as the webhook URL.
-5. Start the backend, verify `/health`, then set only its HTTPS base URL in
-   `payments/config.js`. Serve the website from the exact `ALLOWED_ORIGIN`.
-6. Complete the sandbox matrix below with real merchant TEST keys. Only after it passes,
-   configure a separate live database, live keys, live webhook and `PAYMENT_MODE=live` plus
-   `ENABLE_LIVE_PAYMENTS=true`. Arrange an owner-authorized live acceptance payment and
-   refund/reconciliation check. Merge/deploy the reviewed frontend and backend together.
+## Environment and hosting
 
-| Environment variable | Purpose |
+| Variable | Purpose |
 | --- | --- |
-| `PAYMENT_MODE` | `test` (default) or `live`; must match key prefix |
-| `ENABLE_LIVE_PAYMENTS` | Must be exactly `true` in live mode |
-| `RAZORPAY_KEY_ID` | Account/mode key ID; returned publicly only for checkout |
-| `RAZORPAY_KEY_SECRET` | Private API authentication and checkout HMAC secret |
-| `RAZORPAY_WEBHOOK_SECRET` | Separate private webhook HMAC secret |
-| `ALLOWED_ORIGIN` | Exact frontend origin, e.g. `https://instantprofessionals.in`, no trailing slash |
-| `PAYMENT_DB_PATH` | Absolute persistent SQLite filename outside the public checkout; parent must exist |
-| `HOST`, `PORT` | Bind address and port; defaults `127.0.0.1:3001`; set `HOST=0.0.0.0` if required by host |
+| PAYMENT_MODE | test by default, or live |
+| ENABLE_LIVE_PAYMENTS | Exactly true required for live |
+| CCAVENUE_KIT_VERIFIED | Exactly true after merchant-kit compatibility validation |
+| CCAVENUE_MERCHANT_ID | Numeric merchant account ID |
+| CCAVENUE_ACCESS_CODE | Checkout code, exposed only as required by hosted-checkout protocol |
+| CCAVENUE_WORKING_KEY | PRIVATE checkout encryption/return decryption key |
+| CCAVENUE_API_ACCESS_CODE | Approved status-API access code |
+| CCAVENUE_API_WORKING_KEY | PRIVATE status-API encryption/decryption key |
+| ALLOWED_ORIGIN | Exact site origin, e.g. https://instantprofessionals.in |
+| PAYMENT_PUBLIC_ORIGIN | Exact backend origin; /callback must fit the provider's 100-character limit |
+| PAYMENT_DB_PATH | Absolute SQLite filename on private persistent disk, outside public checkout |
+| HOST, PORT | Defaults 127.0.0.1 and 3001; use 0.0.0.0 only if hosting requires it |
 
-Local test setup: use `ALLOWED_ORIGIN=http://localhost:8080`, a local database path and
-`apiBase: 'http://localhost:3001'`. Run `node --env-file=.env server.mjs` from the backend
-folder and serve the repository with a local static server on port 8080. The `.env` file is
-ignored; start from `.env.example`. There are no third-party runtime dependencies.
+Start from backend/.env.example. Run node --env-file=.env server.mjs from payments/backend.
+There are no third-party runtime dependencies. Test-only localhost HTTP is accepted; real
+provider callbacks require a registered reachable HTTPS endpoint. /health reports mode/provider.
 
-Terminate TLS at the hosting proxy. Apply trusted per-client request limits and a global
-provider budget there; built-in 120 requests/minute uses the socket address and intentionally
-does not trust arbitrary forwarded headers. Behind a proxy this is an aggregate limit.
-Preserve webhook bodies byte-for-byte; no JSON rewriting. Do not log request bodies, bearer
-quote codes, authorization headers, signatures or customer payment details. Restrict disk and
-operator shell access, back up SQLite with its online backup facilities, and test restoration.
+Pinned checkout hosts: test.ccavenue.com and secure.ccavenue.com.
+Pinned API hosts: apitest.ccavenue.com and api.ccavenue.com.
+Confirm them against the merchant kit. Credentials do not have mode-identifying prefixes:
+explicitly isolate test/live keys and databases. Reconcile pending orders before key rotation.
 
-## Issue an agreed quote privately
+Terminate HTTPS at the hosting edge and apply trusted per-client limits. Built-in limits are
+120/minute per socket address, separate client/notification buckets; forwarded IPs are not
+trusted. Behind a proxy these are aggregate limits. Protect filesystem access, use SQLite
+online backups, test restoration and avoid logging keys, private codes, encrypted messages
+or payment details.
 
-There is no public quote-creation/admin API. On the private backend host, create a JSON file
-OUTSIDE the public repository containing `label` (up to 120 characters), `scope` (up to 1500),
-`amount` (integer INR paise; ₹1–₹10 lakh supported) and `expires` (future Unix milliseconds).
-Use the actual owner-approved amount; include all applicable taxes and expressly included
-charges in the payable total and explain exclusions in scope. Avoid personal/confidential
-details in the label/scope; keep the customer-to-quote mapping in the private engagement record.
+The Pages workflow stages only public assets into _site; backend, secrets and databases
+are excluded. The separate AI backend in PR #61 remains independent.
 
-Run `node --env-file=.env admin.mjs quote /private/agreed-quote.json` on that host.
-It returns a reference, random private code and URL of the form
-`https://instantprofessionals.in/payments/#quote=...`. Send this privately to the intended
-customer through your normal approved channel. Possession of the code authorizes viewing
-and paying that quote; it is not a customer login. Only its SHA-256 hash is stored in SQLite.
-Never place quote links in analytics, public issues, sitemaps or source control.
+## Private quote operations
 
-The fragment is removed before any third-party scripts load, and the code is kept in tab
-session storage to recover after reload. Private codes and scope are not included in GA events.
-Use `node --env-file=.env admin.mjs list` to inspect quote/order/payment references privately.
+Create an owner-approved JSON file OUTSIDE the public repository with:
+- label: service name, at most 120 characters;
+- scope: work/inclusions/exclusions, at most 1500 characters, no personal identifiers;
+- amount: integer INR paise, including all charges being collected;
+- expires: future Unix milliseconds.
 
-## Verification, replay protection and operations
+Supported totals are ₹1–₹10 lakh, an implementation bound rather than a pricing rule.
+Use approved amounts and explain applicable taxes/government charges in the written scope.
 
-- All frontend APIs use POST JSON plus the private quote code; exact-origin CORS is an
-  additional browser boundary, not authentication. Requests are size-limited and time-bounded.
-- `/orders` reads amount/currency from the private quote, never browser input. It atomically
-  claims order creation and reuses its persisted Razorpay order on retries. Provider receipt,
-  amount and currency are checked before binding the order.
-- `/verify` checks HMAC-SHA256 of the SERVER-STORED order ID plus payment ID using a
-  timing-safe comparison. It then fetches the payment from Razorpay and validates order,
-  amount, currency and captured status. Authorization alone is not success.
-- `/webhook` verifies HMAC over the original raw bytes with the webhook secret, then commits
-  event deduplication, receipt and paid state in one transaction. Replays and late failures do
-  not produce duplicate receipts or downgrade success. Unknown/mismatched orders are not paid.
-- `/status` fetches order payments and reconciles captured payments if a callback was lost.
-  A success query parameter, frontend callback or forged signature alone cannot confirm payment.
-- Expiry stops new/reopened checkout, but a provider order already open in a browser can still
-  complete afterwards; captured money is always recorded. Expiry is not gateway cancellation.
-- If order creation times out/crashes after reaching Razorpay, the quote stays `creating` and
-  cannot create another order blindly. Find the order by quote reference/receipt in the merchant
-  dashboard/API; run `node --env-file=.env admin.mjs reconcile QUOTE_ID ORDER_ID`. It checks
-  account, amount, currency and receipt before binding and fetching capture status. Do not
-  reset the state or issue a second payable quote until the merchant confirms the first order
-  cannot be paid. Unknown-order webhook failures are retried by Razorpay; reconcile promptly.
-- `receipts` is the authoritative capture ledger, unique by quote/order/payment. It is not a tax
-  invoice, refund ledger or automatic delivery trigger. The team must match the reference to
-  the engagement, reconcile with Razorpay, and arrange delivery/invoice. No filing, email,
-  WhatsApp message or legal service is automatically triggered by a client callback.
-- Refunds/disputes remain merchant-dashboard operations. Reconcile them before fulfillment;
-  historical captured receipts are retained and do not indicate current net settlement.
-  Do not reuse a paid quote for a second payment after a refund. Add refund/dispute event
-  processing and a durable outbox before automating fulfillment.
-- Monitor `/health`, error rates, webhook failures, unresolved `creating` quotes and daily
-  settlement reconciliation. Replay failed webhooks after recovery. Secret rotation must keep
-  the old webhook secret available for retried events, per Razorpay; this scaffold uses one
-  active secret, so drain/reconcile old retries before switching. Keep active quote key IDs stable.
+Run on the private backend host:
+node --env-file=.env admin.mjs quote /private/agreed-quote.json
 
-## Analytics and customer outcomes
+Send the returned private link/code only to the intended customer through the normal
+approved channel. Possession allows viewing/paying that quote; it is not a customer login.
+Keep the customer mapping in the private engagement record. The database stores only a
+SHA-256 code hash. The URL fragment is removed before third-party scripts load; the code
+stays in tab session storage for return/reload recovery. If unavailable, re-enter the code.
 
-GA4 uses the site's existing measurement ID. Events: `begin_checkout`, `checkout_dismissed`,
-`payment_failed`, `checkout_error`, `payment_verification_pending`, and `purchase` only after
-server-confirmed capture. Test-mode events have a `test_` prefix to avoid live purchase counts.
-Purchase includes INR value and Razorpay order ID as `transaction_id`, with tab deduplication.
-No code, customer contact, private scope or payment signature is sent. Keep GA4 enhanced
-measurement disabled for this checkout path so automatic form events cannot capture private
-codes. Browser analytics is best effort and can miss closed tabs/ad blockers; use the private
-receipt ledger and merchant dashboard for accounting, not GA4.
+Private inspection: node --env-file=.env admin.mjs list
+Reconciliation: node --env-file=.env admin.mjs reconcile QUOTE_ID [CCAVENUE_TRACKING_ID]
 
-The page has separate messages for unavailable configuration, invalid/expired quote, failure,
-dismissal, pending capture, unavailable verification and confirmed payment. Buyers can check
-status after closing/reloading without starting a new payment. Existing enquiry paths still work.
+Use an exact tracking reference when investigating multiple transactions. Monitor pending/
+review quotes, notification failures and settlements daily; run reconciliation after outages.
 
-## Validation and remaining acceptance work
+CCAvenue does not enforce unique merchant order IDs. /session atomically marks a quote
+pending BEFORE returning one encrypted checkout. It never reissues for pending/paid/failed/
+review states, even after response loss or restart. A TID is also sent, but its documented
+uniqueness window is 24 hours. This cannot guarantee protection from replaying an already
+issued gateway form. Expiry blocks issuance, not an already-open gateway page.
 
-Run `node --test payments/backend/test/*.test.mjs` from the repository root. Automated tests
-use synthetic provider responses and cover price tampering, signed callbacks, captured versus
-authorized, raw-body webhook HMAC, duplicate/out-of-order events, transaction rollback,
-recovery, persistence, origin/method/body checks, fail-closed configuration, rate limits and
-ambiguous creation. CI also syntax-checks frontend scripts and builds the public-only artifact.
+For cancellation, failure, lost response or a request that never reached CCAvenue, reconcile
+first. An operator must establish that an old attempt cannot complete before issuing a
+fresh quote. Never reset pending to new or blindly create another payable quote. Preserve
+old references. Distinct confirmed tracking IDs on one quote are retained and flagged review.
 
-No real merchant test credentials were supplied, so no actual Razorpay sandbox payment or
-live payment was performed. Before activation, record results for:
+## Verification and accounting
 
-1. Test card success/failure, dismissal and retry of the same order; UPI supported flows on
-   intended desktop/mobile browsers (test mode may not reproduce every live UPI flow).
-2. Captured success with exact agreed INR total, reference and one private receipt.
-3. Close the browser before the callback; confirm webhook updates the ledger, then reopen
-   the quote link and check status. Test duplicate webhook delivery and delayed capture.
-4. Unavailable provider/backend, invalid signature, reload, expired quote and terms checkbox.
-5. Real host restart with persistent disk, backup restoration and order-timeout reconciliation.
-6. Live key/secret isolation, webhook delivery, domain/HTTPS, merchant payment-method approval,
-   final quote/tax/policy review and owner-controlled live acceptance/refund test.
+/quote, /session and /status require POST JSON plus the private code. Exact-origin CORS
+is an additional browser boundary, not authentication. The server owns amount/currency/
+callbacks, a random merchant_param1 nonce, and a 17-digit TID.
 
-Implementation validation: 11 backend tests passed. Browser checks using mocked Razorpay in
-Edge passed for disabled configuration, quote review/consent, captured success, analytics
-deduplication, reload, dismissal/failure, service/AI links and 390px mobile overflow. Mobile
-checkout was visually inspected. These do not substitute for merchant sandbox acceptance.
-The existing `scripts/qa_site.py` reported 118 findings on Windows; the unmodified production
-commit produced the exact same output. Existing pricing/sitemap assertions and seven
-case-colliding filename aliases remain outside this payment change. No colliding HTML file
-is included in the commit; Linux Pages builds preserve those existing case-sensitive routes.
+/callback, /cancel and /webhook accept form encResp. Invalid ciphertext, duplicate parameters,
+or wrong quote/nonce/amount/currency/tracking are rejected. CBC encryption is NOT a MAC or
+signature. No earlier provider HMAC verification is reused. Only independent TLS-protected
+status lookup matching order, tracking, INR total and Shipped status confirms payment.
 
-Official references checked 24 September 2026:
-- https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/
-- https://razorpay.com/docs/webhooks/validate-test/
+Browser returns redirect to the fixed /payments/ URL without success flags or credentials.
+GET cancellation changes no payment state. /status recovers missing callbacks. Repeated
+notifications can advance from pending to captured without duplicating receipts. Transactions
+keep ledger/state updates atomic. Late failures do not erase confirmed receipts. Refund,
+reversal, fraud and chargeback states reported by the API flag review.
+
+cca_receipts records captures, not tax invoices or current net settlement. The team must
+reconcile with M.A.R.S, then invoice/deliver. Refund execution, disputes and fulfillment remain
+manual. No filing, messaging or service delivery is triggered automatically. Fresh provider-
+specific tables ensure records from any earlier provider draft are not reused.
+
+## Customer states and analytics
+
+The page handles disabled configuration, new/expired quote, pending, unsuccessful/cancelled,
+paid and review. Returning customers recheck status. Already-issued checkout cannot reopen;
+the page offers status checking and contact instead.
+
+GA4 uses the existing measurement ID. Events include begin_checkout, checkout_error,
+payment_verification_pending, payment_failed, payment_review_required and purchase.
+Test events have a test_ prefix. Purchase requires server-confirmed payment and uses the
+CCAvenue tracking ID for transaction_id, with tab deduplication. No private code, scope,
+customer details or encrypted payload is sent. Disable enhanced form measurement for
+/payments/; automatic page views are disabled here. GA is best effort, not accounting.
+
+## Tests and remaining merchant acceptance
+
+Run node --test payments/backend/test/*.test.mjs from the repository root.
+Fourteen CCAvenue tests cover fail-closed configuration, crypto roundtrip, tampering, nonce/
+amount binding, single issuance, independent confirmation, delayed capture, duplicate events/
+captures, reversals, callback redirects, recovery, persistence, mode isolation, request limits
+and status-API envelopes. All use synthetic fixtures, not real merchant credentials.
+
+Mocked Edge browser checks also passed for disabled configuration, consent, hosted form
+POST, return/reload, confirmed/failed/pending/review states, analytics deduplication and
+390px mobile layout. The confirmed mobile screen was visually inspected.
+
+The prior provider's test results do not certify CCAvenue. Before activation, verify:
+1. Current merchant kit, encryption interoperability, registered domains/returns.
+2. API credentials/IP allowlisting, actual response schema and capture-state mapping.
+3. Actual TEST success, failure/cancellation, pending capture and approved UPI/card flows on
+   desktop/mobile; confirm test environment behavior with CCAvenue.
+4. Closed browser, lost callback, repeated notifications, replay, restart and backup restore.
+5. Exact INR total, one receipt per tracking reference, duplicate-capture review and manual retry.
+6. Owner-controlled live acceptance, refund and settlement reconciliation after sandbox sign-off.
+
+Prior baseline audit: scripts/qa_site.py produces identical 118 findings on the untouched
+production commit and payment branch on Windows. Existing pricing/sitemap assertions and
+seven case-colliding HTML aliases remain outside this change.
+
+## Primary references checked 24 September 2026
+
+- https://links.avenues.info/downloads/CCAvenue_Integration_Ver_3_3.pdf
+- https://links.avenues.info/downloads/CCAvenues_API_Vers-1_3.pdf
+  (Official indexed API document; direct download unavailable during this work.)
+- https://www.ccavenue.com/faq
+- https://www.ccavenue.com/article/Receive-real-time-updates-of-key-events-in-your-Merchant-Account-through-CCAvenues-Dynamic-Event-Notifications
+
+The current account-specific M.A.R.S kit is authoritative. Do not enable on the strength
+of public documents or synthetic tests alone.
