@@ -1,0 +1,7 @@
+{
+  "name": "instant-professionals-payments",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "scripts": { "start": "node server.mjs", "test": "node --test test/*.test.mjs", "admin": "node admin.mjs" }
+}

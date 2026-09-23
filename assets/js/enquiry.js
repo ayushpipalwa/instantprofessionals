@@ -3,6 +3,20 @@
 
   const WHATSAPP_NUMBER = "918209785294";
 
+  // Payment follows an agreed scope; preserve all existing enquiry/package actions.
+  function addPaymentLink() {
+    const target = document.querySelector('.ip-end-inner');
+    if (!target || target.querySelector('[data-ip-payment]')) return;
+    const link = document.createElement('a');
+    link.href = 'payments/';
+    link.className = 'ip-primary-button';
+    link.dataset.ipPayment = 'quote';
+    link.textContent = 'Pay an agreed quote';
+    target.appendChild(link);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addPaymentLink);
+  else addPaymentLink();
+
   const GA_MEASUREMENT_ID = "G-TG0272S260";
 
   function loadGoogleAnalytics() {

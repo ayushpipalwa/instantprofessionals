@@ -1,0 +1,19 @@
+name: Payment integration tests
+on:
+  pull_request:
+  push:
+    branches: [master]
+permissions:
+  contents: read
+jobs:
+  payments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test payments/backend/test/*.test.mjs
+      - run: node --check payments/app.js
+      - run: node --check assets/js/enquiry.js
+      - run: python3 scripts/build_pages.py
