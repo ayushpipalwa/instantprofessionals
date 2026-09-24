@@ -1,0 +1,8 @@
+*
+!package.json
+!package-lock.json
+!core.mjs
+!server.mjs
+!postgres.mjs
+!cloud-server.mjs
+!Dockerfile
