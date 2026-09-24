@@ -5,6 +5,11 @@ prices, enquiry/WhatsApp flows and AI readiness questionnaire remain intact. Pay
 an owner-issued fixed-total INR quote. No prices, tax amounts or credentials are invented.
 This is one-time hosted checkout, not a subscription or recurring debit.
 
+For the agreed shared-infrastructure deployment with IPREPORT, use the
+[Cloud Run and PostgreSQL guide](CLOUD_RUN.md). Its separate cloud-server.mjs entrypoint
+uses persistent PostgreSQL and a restricted staff reporting view. The SQLite instructions
+below apply only to the original single-host option, not Cloud Run.
+
 GitHub Pages serves /payments/. A separately hosted Node 22.13+ backend creates an encrypted
 CCAvenue request and receives returns. It independently checks CCAvenue's status API before
 confirming payment. Working keys never reach the browser. The protocol's access_code and
@@ -68,7 +73,8 @@ Never share working keys in chat or source control.
 | HOST, PORT | Defaults 127.0.0.1 and 3001; use 0.0.0.0 only if hosting requires it |
 
 Start from backend/.env.example. Run node --env-file=.env server.mjs from payments/backend.
-There are no third-party runtime dependencies. Test-only localhost HTTP is accepted; real
+The SQLite entrypoint uses Node built-ins; the Cloud Run option also uses the locked pg driver.
+Test-only localhost HTTP is accepted; real
 provider callbacks require a registered reachable HTTPS endpoint. /health reports mode/provider.
 
 Pinned checkout hosts: test.ccavenue.com and secure.ccavenue.com.
