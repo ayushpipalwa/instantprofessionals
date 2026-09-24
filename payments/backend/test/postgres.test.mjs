@@ -29,7 +29,7 @@ test('PostgreSQL concurrency, durable receipts, read-only reporting and async HT
   assert.equal(attempts.filter(a=>a.status==='fulfilled').length,1);
   row=await findQuote(db,cfg,q.token);
   await assert.rejects(()=>findQuote(db,{...cfg,account:'live:12345'},q.token));
-  let response={order_no:q.id,reference_no:'123456',order_currncy:'INR',order_amt:'1234.00',order_status:'Successful'};
+  let response={order_no:q.id,reference_no:'123456',order_currncy:'INR',order_amt:'1234.00',order_capt_amt:'1234.00',order_status:'Successful'};
   const api=async()=>({...response});
   const notification=changes=>encrypt(new URLSearchParams({order_id:q.id,tracking_id:'123456',currency:'INR',
     amount:'1234.00',merchant_param1:row.nonce,...changes}).toString(),cfg.workingKey);
@@ -42,6 +42,15 @@ test('PostgreSQL concurrency, durable receipts, read-only reporting and async HT
   await assert.rejects(()=>acceptNotification(db,cfg,notification({}),api));
   assert.equal(Number((await db.query('SELECT count(*) AS n FROM ip_payments.receipts')).rows[0].n),0);
   response.order_amt='1234.00';
+  for (const captured of ['1.00', '0.00', undefined]) {
+    response.order_capt_amt=captured;
+    await assert.rejects(()=>acceptNotification(db,cfg,notification({}),api));
+  }
+  response.order_capt_amt='1234.00';
+  response.reference_no=9007199254740992;
+  await assert.rejects(()=>acceptNotification(db,cfg,notification({tracking_id:'9007199254740992'}),api));
+  assert.equal(Number((await db.query('SELECT count(*) AS n FROM ip_payments.receipts')).rows[0].n),0);
+  response.reference_no='123456';
   await Promise.all(Array.from({length:8},()=>acceptNotification(db,cfg,notification({}),api)));
   assert.equal((await findQuote(db,cfg,q.token)).state,'paid');
   assert.equal(Number((await db.query('SELECT count(*) AS n FROM ip_payments.receipts')).rows[0].n),1);

@@ -14,7 +14,7 @@ const cfg = config(env);
 async function setup(t, options = {}) {
   const db = openStore(options.path || ':memory:');
   const quote = createQuote(db, cfg, { label: 'Synthetic service', scope: 'Synthetic total, not a merchant offer.', amount: 123400, expires: Date.now() + 3600000 });
-  const provider = { order_no: quote.id, reference_no: '123456789012', order_currncy: 'INR', order_amt: '1234.00', order_status: 'Shipped', status: 0 };
+  const provider = { order_no: quote.id, reference_no: '123456789012', order_currncy: 'INR', order_amt: '1234.00', order_capt_amt: '1234.00', order_status: 'Shipped', status: 0 };
   let lookups = 0;
   const api = async (id, ref) => { lookups++; assert.equal(id, quote.id); if (ref) assert.match(ref, /^\d+$/); return provider; };
   const server = makeServer(cfg, db, options.api || api);
@@ -162,4 +162,17 @@ test('rate limiting applies to public endpoints and callbacks', async t => {
   for (let i = 0; i < 120; i++) assert.equal((await s.request('/quote')).code, 200);
   assert.equal((await s.request('/quote')).code, 429);
   assert.equal((await s.notify({}, '/webhook', 'bad')).code, 400);
+});
+
+ test('partial or missing captures and rounded references cannot create receipts', async t => {
+  const s = await setup(t); await s.request('/session');
+  for (const captured of ['1.00', '0.00', undefined]) {
+    s.provider.order_capt_amt = captured;
+    assert.notEqual((await s.notify()).code, 200);
+    assert.equal(s.db.prepare('SELECT COUNT(*) n FROM cca_receipts').get().n, 0);
+  }
+  s.provider.order_capt_amt = '1234.00';
+  s.provider.reference_no = 9007199254740992;
+  assert.equal((await s.notify({tracking_id: '9007199254740992'})).code, 409);
+  assert.equal(s.db.prepare('SELECT COUNT(*) n FROM cca_receipts').get().n, 0);
 });

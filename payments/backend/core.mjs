@@ -119,10 +119,14 @@ export function gateway(cfg, fetchImpl = fetch) {
   };
 }
 export function recordStatus(db, q, data, reference) {
+  if (typeof data.reference_no === 'number' && !Number.isSafeInteger(data.reference_no))
+    fail(409, 'Payment reference requires reconciliation.');
   const tracking = String(data.reference_no || '');
   if (data.order_no !== q.id || data.order_currncy !== 'INR' || paise(data.order_amt) !== q.amount ||
       !/^\d{1,25}$/.test(tracking) || (reference && tracking !== reference)) fail(409, 'Payment does not match the agreed quote.');
   if (data.order_status === 'Shipped') {
+    // A confirmed order can be partially captured; never receipt the full quote then.
+    if (paise(data.order_capt_amt) !== q.amount) fail(409, 'Captured payment does not match the agreed quote.');
     // Only confirmed/captured orders count as paid; Successful can still await confirmation.
     db.prepare('INSERT OR IGNORE INTO cca_receipts VALUES (?, ?, ?, ?)').run(tracking, q.id, q.amount, Date.now());
     const receipt = db.prepare('SELECT * FROM cca_receipts WHERE payment_id = ?').get(tracking);

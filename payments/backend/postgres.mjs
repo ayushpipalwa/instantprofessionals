@@ -59,10 +59,14 @@ async function recordStatus(client, cfg, id, data, reference) {
   // Serialize all state and receipt effects for this quote across Cloud Run instances.
   const q = quote((await client.query('SELECT * FROM ip_payments.quotes WHERE id=$1 AND account=$2 FOR UPDATE', [id,cfg.account])).rows[0]);
   if (!q) fail(404, 'Quote not found.');
+  if (typeof data.reference_no === 'number' && !Number.isSafeInteger(data.reference_no))
+    fail(409, 'Payment reference requires reconciliation.');
   const tracking = String(data.reference_no || '');
   if (data.order_no !== q.id || data.order_currncy !== 'INR' || paise(data.order_amt) !== q.amount ||
       !/^\d{1,25}$/.test(tracking) || (reference && reference !== tracking)) fail(409, 'Payment does not match the agreed quote.');
   if (data.order_status === 'Shipped') {
+    // A confirmed order can be partially captured; never receipt the full quote then.
+    if (paise(data.order_capt_amt) !== q.amount) fail(409, 'Captured payment does not match the agreed quote.');
     await client.query(`INSERT INTO ip_payments.receipts (account,payment_id,quote_id,amount,captured_at)
       VALUES ($1,$2,$3,$4,$5) ON CONFLICT (account,payment_id) DO NOTHING`, [cfg.account,tracking,q.id,q.amount,Date.now()]);
     const receipt = (await client.query('SELECT quote_id FROM ip_payments.receipts WHERE account=$1 AND payment_id=$2', [cfg.account,tracking])).rows[0];
