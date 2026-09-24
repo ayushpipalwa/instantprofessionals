@@ -93,3 +93,17 @@ Deploy test first, validate callbacks/reconciliation and staff permissions, then
 separate live secrets/database. Keep customer CTAs disabled until acceptance succeeds.
 Rollback by disabling checkout/config and reporting, keeping the ledger and callback
 service available to reconcile already-issued orders. Never drop payment tables to roll back.
+
+## Merchant API requirements verified 24 September 2026
+
+The authenticated CCAvenue API guide requires the merchant server public IP to be
+registered before status API calls work, and issues a corresponding access code.
+Cloud Run requires stable outbound IP routing for this; ordinary service URLs and
+Cloud SQL public IPs are not egress IPs. Budget fixed egress separately before provisioning.
+The existing staff service had no outbound VPC connection configured at inspection.
+
+The status guide distinguishes order_amt from order_capt_amt (which can be partial).
+Only Shipped with the full quote captured creates a receipt. Missing/partial capture
+fails verification and requires reconciliation. Unsafe numeric JSON reference values
+are rejected rather than rounded; a 25-digit reference must be returned as a string.
+Merchant test access, fixed-IP registration, KYC and end-to-end acceptance remain open.
