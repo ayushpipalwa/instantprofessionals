@@ -125,6 +125,11 @@ def main():
     for name in ("sitemap.xml", "seo-sitemap.xml"):
         try:
             tree = ET.fromstring(read(name))
+            order = {"loc": 0, "lastmod": 1, "changefreq": 2, "priority": 3}
+            for entry in tree:
+                ranks = [order.get(child.tag.rsplit("}", 1)[-1], 99) for child in entry]
+                if ranks != sorted(ranks):
+                    errors.append(f"{name}: sitemap children must follow loc/lastmod/changefreq/priority order")
             urls = [e.text for e in tree.iter() if e.tag.endswith("}loc")]
             if len(urls) != len(set(urls)):
                 errors.append(f"{name}: duplicate URLs")
