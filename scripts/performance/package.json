@@ -1,0 +1,8 @@
+{
+  "name": "instantprofessionals-homepage-assets",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "purgecss": "7.0.2"
+  }
+}

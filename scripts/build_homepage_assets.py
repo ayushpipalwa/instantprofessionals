@@ -4,12 +4,10 @@
 from __future__ import annotations
 
 import json
+import argparse
 import re
 import subprocess
 from pathlib import Path
-
-from PIL import Image
-
 
 ROOT = Path(__file__).resolve().parents[1]
 ICON_JSON = ROOT / "assets/vendor/bootstrap-icons/bootstrap-icons.json"
@@ -81,6 +79,12 @@ def build_css(names: list[str], icon_map: dict[str, int]) -> None:
     parts = [icon_css(names, icon_map)]
     for path in sources:
         text = path.read_text(encoding="utf-8")
+        if path.name == "bootstrap.min.css":
+            text = subprocess.check_output(
+                ["node", str(ROOT / "scripts/performance/subset-bootstrap.cjs")],
+                text=True,
+                encoding="utf-8",
+            )
         if path.name in {"service-hub.css", "vision-2.css"}:
             text = re.sub(r'@import\s+url\([^;]+\);\s*', "", text)
         parts.append(text)
@@ -97,6 +101,8 @@ html,body,button,input,select,textarea,h1,h2,h3,h4,h5,h6{font-family:var(--ip-fo
 
 
 def build_lifecycle_logo() -> None:
+    from PIL import Image
+
     with Image.open(LIFECYCLE_SOURCE) as source:
         image = source.convert("RGBA")
         image.thumbnail((192, 192), Image.Resampling.LANCZOS)
@@ -104,8 +110,15 @@ def build_lifecycle_logo() -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--css-only", action="store_true", help="Rebuild CSS without image/font dependencies")
+    args = parser.parse_args()
     icon_map = json.loads(ICON_JSON.read_text(encoding="utf-8"))
     names = home_icon_names()
+    if args.css_only:
+        build_css(names, icon_map)
+        print(f"Built {CSS_TARGET.relative_to(ROOT)} ({CSS_TARGET.stat().st_size:,} bytes)")
+        return
     build_icon_font(names, icon_map)
     build_css(names, icon_map)
     build_lifecycle_logo()
