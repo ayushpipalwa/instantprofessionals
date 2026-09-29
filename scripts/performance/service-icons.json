@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "gst-registration.html",
+    "gst-returns.html",
+    "income-tax-return-filing.html",
+    "company-annual-filing.html",
+    "mca-name-reservation-search-approval.html",
+    "trademark-registration.html",
+    "roc-search-report.html"
+  ],
+  "scripts": ["assets/js/enquiry.js"],
+  "aliases": {"building-check": "building", "buildings": "building"}
+}
