@@ -1,0 +1,34 @@
+name: Homepage CSS validation
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'assets/css/**'
+      - 'assets/js/main.js'
+      - 'assets/js/enquiry-home.js'
+      - 'assets/vendor/bootstrap/**'
+      - 'scripts/build_homepage_assets.py'
+      - 'scripts/performance/**'
+      - '.github/workflows/homepage-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  homepage-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+        working-directory: scripts/performance
+      - run: python scripts/build_homepage_assets.py --css-only
+      - name: Require the committed bundle to match source
+        run: git diff --exit-code -- assets/css/homepage.min.css
