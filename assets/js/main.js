@@ -3,7 +3,8 @@
 const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(s);
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
 const VERSION="20260901-mobile-performance-2";
-const BRAND_LOGO=`assets/img/instant-professionals-logo-2026.png?v=${VERSION}`;
+// Match static markup so the browser can reuse one logo request.
+const BRAND_LOGO="assets/img/instant-professionals-logo-2026.png";
 const LIFECYCLE_LOGO=`assets/img/favicon/ip-lifecycle-192.webp?v=${VERSION}`;
 
 function loadVisionStyles(){

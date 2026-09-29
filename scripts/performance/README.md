@@ -1,9 +1,10 @@
 # Homepage CSS build
 
-The homepage bundle retains all custom styles, icon rules, keyframes and variables.
-Only its copy of Bootstrap is reduced, using the homepage and both homepage scripts
-as content sources. Form-validation and interactive states are explicitly retained.
-Shared Bootstrap and service-page styles are not modified.
+The homepage bundle subsets Bootstrap and the legacy style.css using its HTML and
+both homepage scripts, including dynamically rendered sections. The other design
+styles are retained in full. Icon rules, keyframes, variables, form-validation,
+navigation and interactive states are explicitly retained. Shared CSS source files,
+Bootstrap and service-page styles are not modified.
 
 To regenerate the CSS after changing homepage markup or JavaScript:
 
