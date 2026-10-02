@@ -57,6 +57,29 @@ Never share working keys in chat or source control.
 
 ## Environment and hosting
 
+### Controlled TEST acceptance entry
+
+Use `/payments/test.html` on the registered `https://www.instantprofessionals.in`
+origin for owner-controlled sandbox acceptance. `test-config.js` pins the isolated
+`ip-payments-test` service; the page requires healthy TEST/CCAvenue health before
+each request, rejects live quotes and posts checkout only to `test.ccavenue.com`.
+Customer `config.js` remains empty. Deploy the matching backend update first so
+health permits the registered origin and TEST callback/cancel returns use this page.
+
+Create a private quote with the existing `postgres-admin.mjs quote PRIVATE.json`
+operator mechanism in the isolated test environment, with integer `amount: 100`
+(INR 1.00, the backend minimum), a future expiry and clearly synthetic scope.
+Use its private code in the TEST page; keep codes out of logs and chat. Quote
+amounts, order IDs and callback URLs are never taken from browser parameters.
+
+The supplied CCAvenue checklist requires allow-listing a static outbound IP for
+the status API. Ordinary Cloud Run public egress does not satisfy that requirement.
+Verify a retained static egress setup and CCAvenue registration before acceptance;
+never replace independent verification with an event notification. The supplied
+Dynamic Event Notification guide describes encrypted `encResp` using the primary
+URL working key. Confirm TEST key/nonce compatibility before registering echo or
+reconciliation notifications. Neither attachment supplies sandbox payment details.
+
 | Variable | Purpose |
 | --- | --- |
 | PAYMENT_MODE | test by default, or live |

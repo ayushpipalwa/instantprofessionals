@@ -112,9 +112,10 @@ test('late failure does not downgrade paid; duplicate captures and reversals req
 });
 test('cancel and callback redirect to fixed frontend; GET success parameters never mark paid', async t => {
   const s = await setup(t); await s.request('/session');
-  const callback = await s.notify({}, '/callback'); assert.equal(callback.code, 303); assert.equal(callback.location, cfg.origin + '/payments/');
+  const callback = await s.notify({}, '/callback'); assert.equal(callback.code, 303); assert.equal(callback.location, cfg.origin + '/payments/test.html');
   const failedReturn = await s.notify({}, '/callback', 'invalid'); assert.equal(failedReturn.code, 303);
   const cancel = await fetch(s.url + '/cancel', { redirect: 'manual' }); assert.equal(cancel.status, 303);
+  assert.equal(cancel.headers.get('location'), cfg.origin + '/payments/test.html');
   assert.equal((await s.request('/status?success=true')).code, 404);
 });
 test('status recovers closed checkout and reconciles after expiry; new expired session blocked', async t => {
@@ -127,6 +128,11 @@ test('status recovers closed checkout and reconciles after expiry; new expired s
 });
 test('CORS, method, request sizes, content types and private quote access', async t => {
   const s = await setup(t);
+  const health = await fetch(s.url + '/health', { headers: { Origin: cfg.origin } });
+  assert.equal(health.headers.get('access-control-allow-origin'), cfg.origin);
+  assert.deepEqual(await health.json(), { ok: true, mode: 'test', provider: 'ccavenue' });
+  const foreignHealth = await fetch(s.url + '/health', { headers: { Origin: 'https://evil.example' } });
+  assert.equal(foreignHealth.headers.get('access-control-allow-origin'), null);
   assert.equal((await s.request('/quote', {}, { Origin: 'https://evil.example' })).code, 403);
   assert.equal((await s.request('/quote', {}, {}, 'GET')).code, 405);
   assert.equal((await s.request('/quote', {}, { 'Content-Type': 'text/plain' })).code, 415);
