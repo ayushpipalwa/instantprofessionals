@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Instant Professionals AI — a private workspace for Indian tax, compliance and professional drafting.">
+  <meta name="theme-color" content="#071d3d">
+  <title>AI Workspace | Instant Professionals</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./config.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#prompt">Skip to message</a>
+  <aside>
+    <a class="brand" href="../index.html"><img src="../assets/img/instant-professionals-logo-2026.png" alt="" width="48" height="48"><span>Instant <br><strong>Professionals</strong></span></a>
+    <button id="new-chat" class="new-chat">＋ New conversation</button>
+    <p class="eyebrow">YOUR WORKSPACE</p>
+    <nav id="modes" aria-label="Professional workflows"></nav>
+    <div class="sidebar-footer"><a href="../services.html">Explore our services ↗</a><a href="../index.html#contact">Speak to a professional ↗</a><span>CA · CS · CMA · Legal</span></div>
+  </aside>
+  <main>
+    <header><div><strong>Instant Professionals <span class="gold">AI</span></strong><span class="badge">Private preview</span></div><button id="connect" class="subtle">Connection settings</button></header>
+    <div class="workspace">
+      <section id="welcome">
+        <div class="emblem" aria-hidden="true">✦</div>
+        <p class="eyebrow">EXPERTISE, WITH A HEAD START</p>
+        <h1>What are we<br><span>working on today?</span></h1>
+        <p class="intro">Research a question. Review a document. Shape a first draft. <br>Your professional workspace, all in one conversation.</p>
+        <div id="starters" class="starters"></div>
+      </section>
+      <section id="messages" role="log" aria-label="Conversation" aria-live="polite"></section>
+      <div class="compose-area">
+        <p id="status" role="status">Preview mode · Connect your team’s AI service to begin.</p>
+        <form id="chat-form">
+          <label class="sr-only" for="prompt">Your message</label>
+          <textarea id="prompt" rows="3" maxlength="12000" placeholder="Ask a professional question… Include the period, facts and desired outcome." required></textarea>
+          <div id="attachment" hidden></div>
+          <div class="compose-tools"><div><label class="file-button" for="document">＋ Add text document</label><input id="document" type="file" accept=".txt,.md,.csv" class="sr-only"><span id="mode-label">GST</span></div><button id="stop" type="button" hidden>Stop</button><button id="send" type="submit">Send ↑</button></div>
+        </form>
+        <p class="fine-print">AI drafts require professional review. Verify law, dates and calculations. Chats stay in this tab; submitted content is sent to your configured provider. <a href="../privacy-policy.html">Privacy</a></p>
+      </div>
+    </div>
+    <noscript>This workspace requires JavaScript. <a href="../services.html">Browse our services</a>.</noscript>
+  </main>
+  <dialog id="settings"><form method="dialog"><h2>Connect your workspace</h2><p>The service address is configured by your administrator. Use a team access token here, never a model provider API key.</p><p id="endpoint-label"></p><label for="token">Team access token</label><input id="token" type="password" autocomplete="off" maxlength="256"><p class="fine-print">Held in memory for this tab only. Request access from your administrator.</p><button value="cancel">Cancel</button><button id="save-connection" value="save">Connect</button></form></dialog>
+</body>
+</html>
