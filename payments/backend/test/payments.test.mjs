@@ -176,3 +176,13 @@ test('rate limiting applies to public endpoints and callbacks', async t => {
   assert.equal((await s.notify({tracking_id: '9007199254740992'})).code, 409);
   assert.equal(s.db.prepare('SELECT COUNT(*) n FROM cca_receipts').get().n, 0);
 });
+
+test('configuration diagnostics identify names without disclosing supplied values', () => {
+  const sentinel = 'private-value-sentinel';
+  assert.throws(() => config({ ...env, CCAVENUE_MERCHANT_ID: sentinel }), error => {
+    assert.match(error.message, /CCAVENUE_MERCHANT_ID/);
+    assert.ok(!error.message.includes(sentinel));
+    assert.equal(error.status, 503);
+    return true;
+  });
+});
