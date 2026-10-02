@@ -10,7 +10,7 @@ from urllib.parse import unquote, urljoin, urlsplit
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE = "https://instantprofessionals.in/"
+SITE = "https://www.instantprofessionals.in/"
 FOCUS = {"gst-registration.html", "gst-returns.html", "income-tax-return-filing.html",
          "company-annual-filing.html", "mca-name-reservation-search-approval.html",
          "trademark-registration.html", "fssai-registration.html", "roc-search-report.html"}

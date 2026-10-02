@@ -23,7 +23,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          BASE="https://instantprofessionals.in"
+          BASE="https://www.instantprofessionals.in"
           routes=(
             "/"
             "/services.html"
@@ -46,16 +46,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          homepage="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/)"
+          homepage="$(curl --fail --silent --show-error --location --max-time 30 https://www.instantprofessionals.in/)"
           grep -Fq 'G-TG0272S260' <<<"$homepage" || { echo 'GA4 measurement ID missing from production homepage'; exit 1; }
-          grep -Fq 'https://instantprofessionals.in/' <<<"$homepage" || { echo 'Canonical production domain marker missing'; exit 1; }
+          grep -Fq 'https://www.instantprofessionals.in/' <<<"$homepage" || { echo 'Canonical production domain marker missing'; exit 1; }
           grep -Fq 'Instant Professionals' <<<"$homepage" || { echo 'Brand marker missing from homepage'; exit 1; }
 
       - name: Verify AI funnel safeguards and conversion wiring
         shell: bash
         run: |
           set -euo pipefail
-          page="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/ai-business-automation.html)"
+          page="$(curl --fail --silent --show-error --location --max-time 30 https://www.instantprofessionals.in/ai-business-automation.html)"
           grep -Fq 'Human review remains mandatory' <<<"$page" || { echo 'Human-review safeguard missing'; exit 1; }
           grep -Fq 'does not replace professional advice' <<<"$page" || { echo 'Preliminary-routing disclaimer missing'; exit 1; }
           grep -Fq 'G-TG0272S260' <<<"$page" || { echo 'GA4 missing from AI funnel'; exit 1; }
@@ -66,7 +66,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          page="$(curl --fail --silent --show-error --location --max-time 30 https://instantprofessionals.in/)"
+          page="$(curl --fail --silent --show-error --location --max-time 30 https://www.instantprofessionals.in/)"
           grep -Fq 'script.google.com/macros/s/' <<<"$page" || { echo 'Google Apps Script enquiry endpoint missing'; exit 1; }
 
       - name: Check www redirect
@@ -75,6 +75,6 @@ jobs:
           set -euo pipefail
           final_url="$(curl --silent --show-error --location --max-time 30 --output /dev/null --write-out '%{url_effective}' https://www.instantprofessionals.in/)"
           case "$final_url" in
-            https://instantprofessionals.in/*|https://www.instantprofessionals.in/*) ;;
+            https://www.instantprofessionals.in/*|https://www.instantprofessionals.in/*) ;;
             *) echo "Unexpected www destination: $final_url"; exit 1;;
           esac
