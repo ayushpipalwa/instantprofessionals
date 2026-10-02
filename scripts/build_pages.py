@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / '_site'
 PUBLIC_EXTENSIONS = {'.html', '.css', '.js', '.json', '.xml', '.txt', '.ico', '.png', '.jpg',
                      '.jpeg', '.webp', '.svg', '.gif', '.woff', '.woff2', '.ttf', '.eot', '.map', '.pdf', '.webmanifest'}
-PUBLIC_DIRS = {'assets', 'payments', 'ai', 'forms', 'seo'}
+PUBLIC_DIRS = {'assets', 'payments', 'pay', 'ai', 'forms', 'seo'}
 
 def public(path):
     parts = path.parts
