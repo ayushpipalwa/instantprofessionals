@@ -5,7 +5,8 @@
   const cleanLocation = location.origin + location.pathname;
   let token = new URLSearchParams(location.hash.slice(1)).get('quote') || '';
   history.replaceState(null, '', location.pathname);
-  const storageKey = 'ip-ccavenue-quote';
+  const testOnly = window.IP_PAYMENT_CONFIG?.testOnly === true;
+  const storageKey = testOnly ? 'ip-ccavenue-test-quote' : 'ip-ccavenue-quote';
   try { if (token) sessionStorage.setItem(storageKey, token); else token = sessionStorage.getItem(storageKey) || ''; } catch {}
   const base = (window.IP_PAYMENT_CONFIG?.apiBase || '').replace(/\/$/, '');
   const validBase = (() => {
@@ -30,11 +31,19 @@
     $('quote-form').querySelector('button').disabled = busy;
   }
   async function api(path) {
+    if (testOnly) {
+      const health = await fetch(base + '/health', { credentials: 'omit', signal: AbortSignal.timeout(20000) });
+      const ready = await health.json();
+      if (!health.ok || ready.ok !== true || ready.mode !== 'test' || ready.provider !== 'ccavenue') {
+        throw new Error('TEST checkout blocked: backend must report test mode and CCAvenue.');
+      }
+    }
     const response = await fetch(base + path, { method: 'POST', credentials: 'omit',
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quoteToken: token }), signal: AbortSignal.timeout(20000) });
     let result;
     try { result = await response.json(); } catch { throw new Error('Payment service unavailable. Check status before retrying.'); }
     if (!response.ok) throw new Error(result.error || 'Payment service unavailable.');
+    if (testOnly && path !== '/session' && result.mode !== 'test') throw new Error('TEST checkout blocked: quote is not in test mode.');
     return result;
   }
   function render(result) {
@@ -83,7 +92,7 @@
     try {
       const session = await api('/session');
       // Pin gateway destinations; never execute arbitrary provider HTML or scripts.
-      const expected = 'https://' + (quote.mode === 'test' ? 'test' : 'secure') +
+      const expected = 'https://' + (testOnly || quote.mode === 'test' ? 'test' : 'secure') +
         '.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
       if (session.action !== expected || !/^[a-f0-9]+$/i.test(session.fields?.encRequest || '') ||
           typeof session.fields?.access_code !== 'string') throw new Error('Invalid checkout response. Contact our team.');

@@ -10,12 +10,15 @@ export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote
   const buckets = new Map();
   const server = createServer(async (req, res) => {
     const send = (code, data) => { res.writeHead(code); res.end(data ? JSON.stringify(data) : undefined); };
-    const back = () => { res.writeHead(303, { Location: cfg.origin + '/payments/' }); res.end(); };
+    const back = () => { res.writeHead(303, { Location: cfg.origin + (cfg.mode === 'test' ? '/payments/test.html' : '/payments/') }); res.end(); };
     res.setHeader('Content-Type', 'application/json'); res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff'); res.setHeader('Referrer-Policy', 'no-referrer'); res.setHeader('Vary', 'Origin');
     const callback = ['/callback', '/cancel'].includes(req.url), notification = callback || req.url === '/webhook';
     try {
-      if (req.url === '/health' && req.method === 'GET') return send(200, { ok: true, mode: cfg.mode, provider: 'ccavenue' });
+      if (req.url === '/health' && req.method === 'GET') {
+        if (req.headers.origin === cfg.origin) res.setHeader('Access-Control-Allow-Origin', cfg.origin);
+        return send(200, { ok: true, mode: cfg.mode, provider: 'ccavenue' });
+      }
       if (!notification && !['/quote', '/session', '/status'].includes(req.url)) fail(404, 'Not found.');
       if (!notification) {
         if (req.headers.origin !== cfg.origin) fail(403, 'Origin is not allowed.');
