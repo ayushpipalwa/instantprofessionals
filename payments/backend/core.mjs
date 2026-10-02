@@ -33,12 +33,19 @@ export function config(env = process.env) {
       (u.protocol === 'https:' || (mode === 'test' && u.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(u.hostname))); }
     catch { return false; }
   }
-  if (!['test', 'live'].includes(mode) || !validOrigin(origin) || !validOrigin(backend) ||
-      !/^\d+$/.test(env.CCAVENUE_MERCHANT_ID || '') || !env.CCAVENUE_ACCESS_CODE || !env.CCAVENUE_WORKING_KEY ||
-      !env.CCAVENUE_API_ACCESS_CODE || !env.CCAVENUE_API_WORKING_KEY ||
-      !isAbsolute(env.PAYMENT_DB_PATH || '') || backend.length + '/callback'.length > 100 ||
-      env.CCAVENUE_KIT_VERIFIED !== 'true' ||
-      (mode === 'live' && env.ENABLE_LIVE_PAYMENTS !== 'true')) fail(503, 'Payment service is not configured.');
+  const invalid = [
+    [!['test', 'live'].includes(mode), 'PAYMENT_MODE'],
+    [!validOrigin(origin), 'ALLOWED_ORIGIN'],
+    [!validOrigin(backend) || backend.length + '/callback'.length > 100, 'PAYMENT_PUBLIC_ORIGIN'],
+    [!/^\\d+$/.test(env.CCAVENUE_MERCHANT_ID || ''), 'CCAVENUE_MERCHANT_ID'],
+    ...['CCAVENUE_ACCESS_CODE','CCAVENUE_WORKING_KEY','CCAVENUE_API_ACCESS_CODE','CCAVENUE_API_WORKING_KEY']
+      .map(name => [!env[name], name]),
+    [!isAbsolute(env.PAYMENT_DB_PATH || ''), 'PAYMENT_DB_PATH'],
+    [env.CCAVENUE_KIT_VERIFIED !== 'true', 'CCAVENUE_KIT_VERIFIED'],
+    [mode === 'live' && env.ENABLE_LIVE_PAYMENTS !== 'true', 'ENABLE_LIVE_PAYMENTS'],
+  ].filter(([bad]) => bad).map(([,name]) => name);
+  // Names only: never put credentials or their values into errors or logs.
+  if (invalid.length) fail(503, 'Payment service is not configured: ' + invalid.join(', ') + '.');
   return { mode, origin, backend, merchantId: env.CCAVENUE_MERCHANT_ID,
     account: mode + ':' + env.CCAVENUE_MERCHANT_ID, accessCode: env.CCAVENUE_ACCESS_CODE,
     workingKey: env.CCAVENUE_WORKING_KEY, apiCode: env.CCAVENUE_API_ACCESS_CODE,
