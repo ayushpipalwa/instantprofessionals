@@ -37,7 +37,7 @@ export function config(env = process.env) {
     [!['test', 'live'].includes(mode), 'PAYMENT_MODE'],
     [!validOrigin(origin), 'ALLOWED_ORIGIN'],
     [!validOrigin(backend) || backend.length + '/callback'.length > 100, 'PAYMENT_PUBLIC_ORIGIN'],
-    [!/^\\d+$/.test(env.CCAVENUE_MERCHANT_ID || ''), 'CCAVENUE_MERCHANT_ID'],
+    [!/^\d+$/.test(env.CCAVENUE_MERCHANT_ID || ''), 'CCAVENUE_MERCHANT_ID'],
     ...['CCAVENUE_ACCESS_CODE','CCAVENUE_WORKING_KEY','CCAVENUE_API_ACCESS_CODE','CCAVENUE_API_WORKING_KEY']
       .map(name => [!env[name], name]),
     [!isAbsolute(env.PAYMENT_DB_PATH || ''), 'PAYMENT_DB_PATH'],
