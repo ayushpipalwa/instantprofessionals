@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://instantprofessionals.in/sitemap.xml
-Sitemap: https://instantprofessionals.in/seo-sitemap.xml
+Sitemap: https://www.instantprofessionals.in/sitemap.xml
+Sitemap: https://www.instantprofessionals.in/seo-sitemap.xml

@@ -67,7 +67,7 @@ Never share working keys in chat or source control.
 | CCAVENUE_WORKING_KEY | PRIVATE checkout encryption/return decryption key |
 | CCAVENUE_API_ACCESS_CODE | Approved status-API access code |
 | CCAVENUE_API_WORKING_KEY | PRIVATE status-API encryption/decryption key |
-| ALLOWED_ORIGIN | Exact site origin, e.g. https://instantprofessionals.in |
+| ALLOWED_ORIGIN | Exact site origin, e.g. https://www.instantprofessionals.in |
 | PAYMENT_PUBLIC_ORIGIN | Exact backend origin; /callback must fit the provider's 100-character limit |
 | PAYMENT_DB_PATH | Absolute SQLite filename on private persistent disk, outside public checkout |
 | HOST, PORT | Defaults 127.0.0.1 and 3001; use 0.0.0.0 only if hosting requires it |

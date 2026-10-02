@@ -17,7 +17,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE = "https://instantprofessionals.in"
+SITE = "https://www.instantprofessionals.in"
 PHONE_DISPLAY = "+91 82097 85294"
 PHONE_LINK = "+918209785294"
 EMAIL = "info@instantprofessionals.in"
