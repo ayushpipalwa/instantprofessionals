@@ -19,5 +19,7 @@ jobs:
           python-version: '3.12'
       - name: Validate metadata, structured data, sitemap and links
         run: python scripts/qa_seo.py
+      - name: Validate reviewed prices and enquiry selections
+        run: python scripts/qa_pricing.py
       - name: Stage public site
         run: python scripts/build_pages.py

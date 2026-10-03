@@ -683,6 +683,7 @@ def write_technical_files() -> None:
 
 
 def main() -> None:
+    raise SystemExit("Retired generator: its historical prices and templates are obsolete. Edit the maintained HTML pages and validate with scripts/qa_seo.py; publish with scripts/build_pages.py.")
     for old, (clean, title, _category, _summary) in CATALOG.items():
         (ROOT / clean).write_text(service_page(old), encoding="utf-8")
         if old != clean:
