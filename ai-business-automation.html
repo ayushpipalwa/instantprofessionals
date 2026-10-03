@@ -122,20 +122,31 @@
     payload.set('website','');
     return payload;
   }
-  function saveLead(data,route){
+  async function saveLead(data,route){
+    const payload=sheetPayload(data,route);
+    form.setAttribute('aria-busy','true');
+    form.querySelectorAll('input,select,textarea,button').forEach(function(field){field.disabled=true;});
     saveStatus.textContent='Recording your enquiry…';
-    fetch(sheetEndpoint,{method:'POST',mode:'no-cors',body:sheetPayload(data,route),keepalive:true})
-      .then(function(){
-        saveStatus.textContent='Your enquiry has been recorded for professional follow-up.';
-        track('generate_lead',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.href});
-      })
-      .catch(function(){
-        saveStatus.textContent='Recommendation generated. If online recording fails, continue on WhatsApp so the team receives your enquiry.';
-        track('lead_capture_error',{service_name:route.service,page_location:window.location.href});
-      });
+    const controller=new AbortController();
+    const timeout=window.setTimeout(function(){controller.abort();},20000);
+    try{
+      const response=await fetch(sheetEndpoint,{method:'POST',mode:'cors',body:payload,keepalive:true,signal:controller.signal});
+      const saved=response.ok&&await response.json();
+      if(!saved||saved.success!==true||(!saved.enquiryId&&saved.duplicate!==true))throw new Error('Enquiry was not acknowledged.');
+      saveStatus.textContent='Your enquiry has been recorded for professional follow-up.';
+      track('generate_lead',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.href});
+    }catch(error){
+      saveStatus.textContent='Recommendation generated, but we could not confirm your enquiry was recorded. Your answers are still here; try again or continue on WhatsApp.';
+      track('lead_capture_error',{service_name:route.service,page_location:window.location.href});
+    }finally{
+      window.clearTimeout(timeout);
+      form.setAttribute('aria-busy','false');
+      form.querySelectorAll('input,select,textarea,button').forEach(function(field){field.disabled=false;});
+    }
   }
   form.addEventListener('submit',function(e){
     e.preventDefault();
+    if(form.getAttribute('aria-busy')==='true')return;
     if(!form.checkValidity()){form.reportValidity();return;}
     const data=Object.fromEntries(new FormData(form).entries());
     const route=routes[data.need]||routes.consultation;
@@ -161,7 +172,7 @@
     result.scrollIntoView({behavior:'smooth',block:'center'});
     const waLink=document.getElementById('ipAutomationWhatsApp');
     const serviceLink=document.getElementById('ipAutomationService');
-    if(waLink)waLink.addEventListener('click',function(){track('whatsapp_click',{lead_method:'ai_readiness_form',service_name:route.service,link_url:wa,page_location:window.location.href});});
+    if(waLink)waLink.addEventListener('click',function(){track('whatsapp_click',{lead_method:'ai_readiness_form',service_name:route.service,link_url:'https://wa.me/918209785294',page_location:window.location.href});});
     if(serviceLink)serviceLink.addEventListener('click',function(){track('view_service_after_qualification',{service_name:route.service,destination:route.page,page_location:window.location.href});});
   });
 })();
