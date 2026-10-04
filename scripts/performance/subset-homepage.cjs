@@ -7,7 +7,7 @@ const root = path.resolve(__dirname, '../..');
 (async () => {
   const [result] = await new PurgeCSS().purge({
     content: [
-      path.join(root, 'index.html'),
+      { raw: fs.readFileSync(path.join(root, 'index.html'), 'utf8').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ''), extension: 'html' },
       path.join(root, 'assets/js/main.js'),
       path.join(root, 'assets/js/enquiry-home.js'),
     ],

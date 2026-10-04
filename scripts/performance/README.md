@@ -26,3 +26,9 @@ python scripts/build_service_icons.py from the repository root. Use --check in
 CI or --git-index to read exact staged paths on Windows. New icons must exist
 in the vendor stylesheet or have an explicit alias. The build rejects missing
 glyphs, and service icon validation runs on pull requests.
+
+The build also embeds the homepage-only bundle into index.html to remove its
+render-blocking stylesheet request. Relative asset URLs are rebased for HTML.
+The standalone bundle remains reproducible; CI checks both outputs. Rebuilding
+excludes inline style content from selector discovery. The HTML response is
+larger, and repeat visits cannot cache CSS separately from the document.
