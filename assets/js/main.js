@@ -8,7 +8,7 @@ const BRAND_LOGO="assets/img/instant-professionals-logo-2026.png";
 const LIFECYCLE_LOGO=`assets/img/favicon/ip-lifecycle-192.webp?v=${VERSION}`;
 
 function loadVisionStyles(){
-  if(!document.querySelector('link[data-ip-vision="2"]')){
+  if(!document.querySelector('[data-ip-vision="2"]')){
     const l=document.createElement("link");
     l.rel="stylesheet";
     l.href=`assets/css/vision-2.css?v=${VERSION}`;

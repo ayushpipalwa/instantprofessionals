@@ -96,6 +96,20 @@ html,body,button,input,select,textarea,h1,h2,h3,h4,h5,h6{font-family:var(--ip-fo
         input="\n".join(parts), text=True, encoding="utf-8",
     )
     CSS_TARGET.write_text(minify_css(css) + "\n", encoding="utf-8", newline="\n")
+    # This bundle is homepage-only. Deliver it with the document to avoid a
+    # separate render-blocking round trip on a first visit.
+    home = ROOT / "index.html"
+    inline_css = minify_css(css).replace('../vendor/', 'assets/vendor/').replace('../img/', 'assets/img/')
+    if '</style' in inline_css.lower():
+        raise ValueError('Unsafe inline stylesheet content')
+    text, count = re.subn(
+        r'<link\b[^>]*data-ip-vision="2"[^>]*>|<style data-ip-vision="2">.*?</style>',
+        lambda _: '<style data-ip-vision="2">' + inline_css + '</style>',
+        home.read_text(encoding="utf-8"), count=1, flags=re.S,
+    )
+    if count != 1:
+        raise ValueError('Expected exactly one homepage stylesheet marker')
+    home.write_text(text, encoding="utf-8", newline="\n")
 
 
 def build_lifecycle_logo() -> None:

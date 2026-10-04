@@ -31,4 +31,4 @@ jobs:
         working-directory: scripts/performance
       - run: python scripts/build_homepage_assets.py --css-only
       - name: Require the committed bundle to match source
-        run: git diff --exit-code -- assets/css/homepage.min.css
+        run: git diff --exit-code -- assets/css/homepage.min.css index.html
