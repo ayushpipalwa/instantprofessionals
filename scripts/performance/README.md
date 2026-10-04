@@ -1,8 +1,7 @@
 # Homepage CSS build
 
-The homepage bundle subsets Bootstrap and the legacy style.css using its HTML and
-both homepage scripts, including dynamically rendered sections. The other design
-styles are retained in full. Icon rules, keyframes, variables, form-validation,
+The homepage bundle subsets its combined CSS using its HTML and both homepage
+scripts, including dynamically rendered sections. Icon rules, keyframes, variables, form-validation,
 navigation and interactive states are explicitly retained. Shared CSS source files,
 Bootstrap and service-page styles are not modified.
 
