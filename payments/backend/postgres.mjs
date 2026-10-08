@@ -6,12 +6,24 @@ import { resolve } from 'node:path';
 export function postgresConfig(env = process.env) {
   // Reuse the merchant/origin gates; the SQLite path is not used by this adapter.
   const cfg = config({ ...env, PAYMENT_DB_PATH: resolve('unused-postgres-adapter') });
+  const testBilling = {};
+  if (cfg.mode === 'test') {
+    const fields = ['name','address','city','state','zip','country','email','tel'];
+    if (fields.some(field => env['PAYMENT_TEST_BILLING_' + field.toUpperCase()])) {
+      for (const field of fields) {
+        const value = env['PAYMENT_TEST_BILLING_' + field.toUpperCase()];
+        if (typeof value !== 'string' || !value.trim() || value.length > 300 || /[\r\n\x00]/.test(value))
+          fail(503, 'TEST billing details are incomplete or invalid.');
+        testBilling['billing_' + field] = value.trim();
+      }
+    }
+  }
   if (!env.PAYMENT_SQL_HOST || !env.PAYMENT_SQL_USER || !env.PAYMENT_SQL_DATABASE || !env.PAYMENT_SQL_PASSWORD)
     fail(503, 'Payment database is not configured.');
   const socket = env.PAYMENT_SQL_HOST.startsWith('/');
   const localTest = cfg.mode === 'test' && ['127.0.0.1', 'localhost'].includes(env.PAYMENT_SQL_HOST);
   if (!socket && !localTest && env.PAYMENT_SQL_SSL !== 'true') fail(503, 'Payment database requires verified TLS or a Cloud SQL socket.');
-  return { ...cfg, sql: { host: env.PAYMENT_SQL_HOST, user: env.PAYMENT_SQL_USER,
+  return { ...cfg, testBilling, sql: { host: env.PAYMENT_SQL_HOST, user: env.PAYMENT_SQL_USER,
     password: env.PAYMENT_SQL_PASSWORD, database: env.PAYMENT_SQL_DATABASE,
     port: Number(env.PAYMENT_SQL_PORT || 5432), max: 3, connectionTimeoutMillis: 10000,
     statement_timeout: 15000, ssl: socket || localTest ? false : { rejectUnauthorized: true } } };
@@ -47,7 +59,8 @@ export async function findQuote(db, cfg, token) {
 export async function beginCheckout(db, cfg, q) {
   const encrypted = encrypt(new URLSearchParams({ merchant_id: cfg.merchantId, order_id: q.id,
     currency: 'INR', amount: rupees(q.amount), redirect_url: cfg.backend + '/callback',
-    cancel_url: cfg.backend + '/cancel', language: 'EN', merchant_param1: q.nonce, tid: q.tid }).toString(), cfg.workingKey);
+    cancel_url: cfg.backend + '/cancel', language: 'EN', merchant_param1: q.nonce, tid: q.tid,
+    ...(cfg.mode === 'test' ? cfg.testBilling : {}) }).toString(), cfg.workingKey);
   const now = Date.now();
   if (q.expires <= now) fail(410, 'This quote has expired. Contact the team.');
   const claimed = await db.query(`UPDATE ip_payments.quotes SET state='pending', initiated_at=$1,
