@@ -42,3 +42,31 @@ test('TEST entry rejects live quote and displays server-approved test quote', as
   assert.equal(valid.hidden, false);
   assert.match(valid.status, /Review your agreed scope/);
 });
+
+test('LIVE invoice entry sends invoice/email only and renders the server balance', async () => {
+  const nodes=new Map(),requests=[],stored=new Map();
+  const node=id=>{
+    if(!nodes.has(id)) nodes.set(id,{textContent:'',hidden:true,checked:false,value:'',handlers:{},
+      addEventListener(name,fn){this.handlers[name]=fn;},querySelector(){return node('submit');}});
+    return nodes.get(id);
+  };
+  node('invoice-number').value='IP/26/1';node('invoice-email').value='client@example.test';
+  const sandbox={URL,URLSearchParams,AbortSignal,Intl,Date,
+    location:{origin:'https://www.instantprofessionals.in',pathname:'/payments/',hash:'?amt=1'},
+    history:{replaceState(){}},sessionStorage:{getItem:k=>stored.get(k),setItem:(k,v)=>stored.set(k,v),removeItem:k=>stored.delete(k)},
+    document:{getElementById:node,createElement(){return {};},head:{append(){}}},
+    window:{IP_PAYMENT_CONFIG:{apiBase:'https://live-backend.example'},addEventListener(){}},
+    fetch:async(url,options)=>{requests.push({url,body:JSON.parse(options.body)});return {ok:true,json:async()=>({
+      quoteToken:'a'.repeat(64),reference:'synthetic',invoiceNumber:'IP/26/1',label:'Invoice IP/26/1',scope:'Invoice balance',amount:123400,
+      expires:Date.now()+60000,status:'new',mode:'live'})};}};
+  vm.runInNewContext(source,sandbox);
+  assert.match(node('status').textContent,/IPREPORT invoice number/);
+  await node('quote-form').handlers.submit({preventDefault(){}});
+  assert.equal(requests[0].url,'https://live-backend.example/invoice');
+  assert.deepEqual(requests[0].body,{invoiceNumber:'IP/26/1',email:'client@example.test'});
+  assert.match(node('amount').textContent,/1,234\.00/);
+  assert.equal(node('invoice-email').value,'');assert.equal(node('pay').disabled,true);
+  assert.equal(node('quote-form').hidden,true);
+  node('another-invoice').handlers.click();
+  assert.equal(node('quote-form').hidden,false);assert.equal(node('quote').hidden,true);
+});
