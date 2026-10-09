@@ -1,8 +1,7 @@
 # Homepage CSS build
 
-The homepage bundle subsets Bootstrap and the legacy style.css using its HTML and
-both homepage scripts, including dynamically rendered sections. The other design
-styles are retained in full. Icon rules, keyframes, variables, form-validation,
+The homepage bundle subsets its combined CSS using its HTML and both homepage
+scripts, including dynamically rendered sections. Icon rules, keyframes, variables, form-validation,
 navigation and interactive states are explicitly retained. Shared CSS source files,
 Bootstrap and service-page styles are not modified.
 
@@ -27,3 +26,9 @@ python scripts/build_service_icons.py from the repository root. Use --check in
 CI or --git-index to read exact staged paths on Windows. New icons must exist
 in the vendor stylesheet or have an explicit alias. The build rejects missing
 glyphs, and service icon validation runs on pull requests.
+
+The build also embeds the homepage-only bundle into index.html to remove its
+render-blocking stylesheet request. Relative asset URLs are rebased for HTML.
+The standalone bundle remains reproducible; CI checks both outputs. Rebuilding
+excludes inline style content from selector discovery. The HTML response is
+larger, and repeat visits cannot cache CSS separately from the document.

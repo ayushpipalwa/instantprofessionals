@@ -22,7 +22,7 @@ This control covers the active Instant Professionals service pages in the search
 | Income Tax & TDS | Income Tax Department, CBDT, India Budget, e-Gazette | Income-tax Act 2025/Rules 2026 for TY 2026–27 onward; 1961 Act/1962 Rules for earlier periods and transitions |
 | GST & indirect tax | CBIC, GST Council, GST portal, e-Gazette | CGST/IGST and applicable State/UT GST Acts, rules, notifications and circulars |
 | Corporate & secretarial | MCA, e-Gazette | Companies Act 2013, LLP Act 2008 and applicable rules/forms |
-| Workforce compliance | EPFO, ESIC, Ministry of Labour, e-Gazette | EPF & MP Act/schemes; ESI Act/regulations; applicable notified changes |
+| Workforce compliance | EPFO, ESIC, Ministry of Labour, e-Gazette | Code on Social Security 2020; EPF/ESI schemes, current rules and transitional provisions |
 | Intellectual property | IP India, Copyright Office, DPIIT, e-Gazette | Trade Marks, Copyright and Patents Acts and Rules |
 | Import & export | DGFT, CBIC Customs, e-Gazette | FTDR Act, FTP 2023, HBP, notifications and product restrictions |
 | Business registrations | Ministry of MSME, Income Tax Department, CCA and relevant government portals | Registration-specific Central, State and local law |

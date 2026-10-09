@@ -1,0 +1,1910 @@
+{
+  "review_date": "2026-10-04",
+  "policy": "At least 25% above the median of documented comparable regular professional fees, rounded up to the next INR 100. Retain existing higher fees. Single-source comparisons are reference floors, not market averages. Statutory fees/GST are excluded from our published professional fees; comparator tax treatment is recorded where known. This sample is not an all-market average. No fabricated benchmark for unmatched bundles.",
+  "packages": [
+    {
+      "file": "accounting-bookkeeping.html",
+      "package_index": 0,
+      "scope": "Focused ₹3,700 Accounting for one month up to 100 entries Select package",
+      "old_price": 3700,
+      "new_price": 4400,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Accounting for one month up to 100 entries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/book-keeping-and-accounting/",
+          "regular_fee_inr": 3499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 3499,
+      "minimum_premium_price": 4400
+    },
+    {
+      "file": "accounting-bookkeeping.html",
+      "package_index": 1,
+      "scope": "Plus ₹8,200 Accounting for one month up to 300 entries Select package",
+      "old_price": 8200,
+      "new_price": 10000,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Accounting for one month up to 300 entries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/book-keeping-and-accounting/",
+          "regular_fee_inr": 7999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 7999,
+      "minimum_premium_price": 10000
+    },
+    {
+      "file": "accounting-bookkeeping.html",
+      "package_index": 2,
+      "scope": "Complete ₹10,200 Accounting for one month up to 700 entries Select package",
+      "old_price": 10200,
+      "new_price": 12500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Accounting for one month up to 700 entries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/book-keeping-and-accounting/",
+          "regular_fee_inr": 9999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 9999,
+      "minimum_premium_price": 12500
+    },
+    {
+      "file": "add-a-director.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,500 Required document drafting DIR 12 form filing for one director Select package",
+      "old_price": 2500,
+      "new_price": 2500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "add-a-director.html",
+      "package_index": 1,
+      "scope": "Plus ₹4,500 Digital Signature Certificate Director Identification Number Required document drafting DIR 12 form filing for one director Select package",
+      "old_price": 4500,
+      "new_price": 4500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "add-a-director.html",
+      "package_index": 2,
+      "scope": "Complete ₹5,500 Digital Signature Certificate Director Identification Number Required document drafting DIR 12 form filing for one director Director Regularisation for one director Select package",
+      "old_price": 5500,
+      "new_price": 5500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "add-remove-llp-partner.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,500 Preparation of Supplementary deed (Applicable for Partnership Firm) Execution of deed (Applicable for Partnership Firm) Select package",
+      "old_price": 1500,
+      "new_price": 1500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "add-remove-llp-partner.html",
+      "package_index": 1,
+      "scope": "Plus ₹2,500 Preparation of Supplementary deed Execution of deed Required document drafting for filing Filing of Form 3 and Form 4 with Department Select package",
+      "old_price": 2500,
+      "new_price": 2500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "add-remove-llp-partner.html",
+      "package_index": 2,
+      "scope": "Complete ₹4,500 Preparation of Supplementary deed Execution of deed DSC of Incoming Partner DIN of Incoming Partner Required document drafting for filing Filing of Form 3 and Form 4 with Department Select package",
+      "old_price": 4500,
+      "new_price": 4500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "appointment-of-auditor.html",
+      "package_index": 0,
+      "scope": "Focused ₹3,200 Required document drafting Appointment or Resignation of Auditor Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "change-din-particulars.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,700 Changes in DIN Select package",
+      "old_price": 1700,
+      "new_price": 1700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "change-din-particulars.html",
+      "package_index": 1,
+      "scope": "Extended ₹3,200 Changes in DIN Digital Signature Class 2 Individual having two-year validity Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "change-llp-agreement.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,500 Preparation of supplementary deed Change in LLP Agreement Select package",
+      "old_price": 2500,
+      "new_price": 4000,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Supplementary LLP agreement and Form 3 filing; government fees/stamp duty separate",
+      "sources": [
+        {
+          "provider": "LegalWiz",
+          "url": "https://www.legalwiz.in/change-in-llp-agreement-india",
+          "regular_fee_inr": 2399,
+          "notes": "Starting professional fee, government fees extra; no explicit discount."
+        },
+        {
+          "provider": "Bhargav Rajurkar & Co.",
+          "url": "https://www.csbhargav.com/services/llp-agreement-change",
+          "regular_fee_inr": 4000,
+          "notes": "Per amendment including supplementary agreement, Form 3, certification and follow-up; statutory costs separate."
+        }
+      ],
+      "source_count": 2,
+      "benchmark_basis": "Multi-provider median",
+      "median_inr": 3199.5,
+      "minimum_premium_price": 4000
+    },
+    {
+      "file": "change-registered-office.html",
+      "package_index": 0,
+      "scope": "Focused ₹4,500 Required document drafting Change in registered-office address on MCA database PAN record amendment TAN record amendment Select package",
+      "old_price": 4500,
+      "new_price": 4500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "change-registered-office.html",
+      "package_index": 1,
+      "scope": "Plus ₹5,500 Required document drafting Change in registered-office address on MCA database PAN record amendment TAN record amendment Filing MGT 14 Select package",
+      "old_price": 5500,
+      "new_price": 5500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "change-registered-office.html",
+      "package_index": 2,
+      "scope": "Complete ₹19,500 Required resolutions and supporting document set Form MGT-14 and INC-22 filing support Regional Director application and connected MCA filings for an inter-state shift PAN and TAN record amendments after approval Select package",
+      "old_price": 19500,
+      "new_price": 19500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "cma-project-report.html",
+      "package_index": 0,
+      "scope": "Focused ₹6,200 Preparation of CMA Report for working capital limit up to ₹25 Lakh Two responses to bank queries Select package",
+      "old_price": 6200,
+      "new_price": 7500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Preparation of CMA Report for working capital limit up to INR 25 Lakh; two responses to bank queries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/project-report-cma-report/",
+          "regular_fee_inr": 5999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 5999,
+      "minimum_premium_price": 7500
+    },
+    {
+      "file": "cma-project-report.html",
+      "package_index": 1,
+      "scope": "Plus ₹10,200 Preparation of CMA Report for working capital limit up to ₹200 Lakh up to Three responses to bank queries Select package",
+      "old_price": 10200,
+      "new_price": 12500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Preparation of CMA Report for working capital limit up to INR 200 Lakh; up to three responses to bank queries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/project-report-cma-report/",
+          "regular_fee_inr": 9999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 9999,
+      "minimum_premium_price": 12500
+    },
+    {
+      "file": "cma-project-report.html",
+      "package_index": 2,
+      "scope": "Complete ₹15,200 Preparation of CMA Report for working capital limit up to ₹500 Lakh up to Four responses to bank queries Select package",
+      "old_price": 15200,
+      "new_price": 18800,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Preparation of CMA Report for working capital limit up to INR 500 Lakh; up to four responses to bank queries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/project-report-cma-report/",
+          "regular_fee_inr": 14999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 14999,
+      "minimum_premium_price": 18800
+    },
+    {
+      "file": "commencement-of-business.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,200 Filing INC 20A for capital up to ₹1 lakh Select package",
+      "old_price": 2200,
+      "new_price": 2200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "commencement-of-business.html",
+      "package_index": 1,
+      "scope": "Plus ₹3,200 Filing INC 20A for capital up to ₹25 Lakh Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "commencement-of-business.html",
+      "package_index": 2,
+      "scope": "Complete ₹4,200 Filing INC 20A for capital up to ₹50 Lakh Select package",
+      "old_price": 4200,
+      "new_price": 4200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-annual-filing.html",
+      "package_index": 0,
+      "scope": "Focused ₹4,200 Annual Filings for Company having Authorized Capital of Rs 1 Lakhs and turnover up to ₹20 Lakhs Directors Report List of Shareholders List of Directors Consent and Appointment of Auditor Drafting resolution for Auditor appointment AGM notice and resolution Form MBP-1 (Notice of Interest by Director) Form DIR-8 (Intimation by Director about disqualification) AOC 4 Filing MGT 7 Filing ADT 1 Filing Select package",
+      "old_price": 4200,
+      "new_price": 4200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-annual-filing.html",
+      "package_index": 1,
+      "scope": "Plus ₹16,500 Annual Filings for Company having Authorized Capital of Rs 1 Lakhs and turnover up to ₹20 Lakhs Bookkeeping (up to 100 accounting transactions) Income-tax return filing Directors Report List of Shareholders List of Directors Consent and Appointment of Auditor Drafting resolution for Auditor appointment AGM notice and resolution Form MBP-1 (Notice of Interest by Director) Form DIR-8 (Intimation by Director about disqualification) AOC 4 Filing MGT 7 Filing ADT 1 Filing DIR – 3 e-KYC of 2 Director Select package",
+      "old_price": 16500,
+      "new_price": 16500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-annual-filing.html",
+      "package_index": 2,
+      "scope": "Complete ₹28,800 Annual Filings for Company having Authorized Capital of Rs 5 Lakhs and turnover up to ₹100 Lakhs Bookkeeping (up to 300 accounting transactions) Income-tax return filing Directors Report List of Shareholders List of Directors Consent and Appointment of Auditor Drafting resolution for Auditor appointment AGM notice and resolution Form MBP-1 (Notice of Interest by Director) Form DIR-8 (Intimation by Director about disqualification) AOC 4 Filing MGT 7 Filing ADT 1 Filing DIR – 3 e-KYC of 2 Director Select package",
+      "old_price": 28800,
+      "new_price": 28800,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-name-change.html",
+      "package_index": 0,
+      "scope": "Focused ₹13,500 Company Name Change(Private Limited) Required document drafting Name Approval Application for Name Change of the Company Change in MOA & AOA PAN Modification TAN Modification Select package",
+      "old_price": 13500,
+      "new_price": 13500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-name-change.html",
+      "package_index": 1,
+      "scope": "Extended ₹25,200 Company Name Change (Private limited) Required document drafting Name Approval Application for Name Change of the Company Change in MOA & AOA PAN record amendment TAN record amendment GST Modification MSME Modification Select package",
+      "old_price": 25200,
+      "new_price": 25200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-strike-off.html",
+      "package_index": 0,
+      "scope": "Focused ₹16,200 Wind up a company with no transactions since incorporation Preparation of Statement of Accounts Preparation of Indemnity Bond Preparation of Affidavits Required document drafting Select package",
+      "old_price": 16200,
+      "new_price": 16200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-strike-off.html",
+      "package_index": 1,
+      "scope": "Plus ₹19,200 Wind up a company with no transactions since incorporation 2 Directors' DIR 3 KYC Form 20A Filing for capital up to ₹1 Lakh Preparation of Statement of Accounts Preparation of Indemnity Bond Preparation of Affidavits Required document drafting Select package",
+      "old_price": 19200,
+      "new_price": 19200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "company-strike-off.html",
+      "package_index": 2,
+      "scope": "Complete ₹25,200 Wind up a company with no transactions since incorporation 2 Directors' DIR 3 KYC Form 20A Filing for capital up to ₹1 Lakh 2 DSC Application Class 3 Individual two-year validity GST Cancellation Application Preparation of Statement of Accounts Preparation of Indemnity Bond Preparation of Affidavits Required document drafting Filing of GSTR-10 (Final Return) Select package",
+      "old_price": 25200,
+      "new_price": 25200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "copyright-application.html",
+      "package_index": 0,
+      "scope": "Focused ₹12,200 Copyright Registration Application for Literary Works Select package",
+      "old_price": 12200,
+      "new_price": 12200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "copyright-application.html",
+      "package_index": 1,
+      "scope": "Plus ₹14,700 Copyright Registration Application for Artistic Works Select package",
+      "old_price": 14700,
+      "new_price": 14700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "copyright-application.html",
+      "package_index": 2,
+      "scope": "Complete ₹18,700 Copyright Registration Application for Artistic Works Copyright Registration Application for Literary Works Select package",
+      "old_price": 18700,
+      "new_price": 18700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "digital-marketing.html",
+      "package_index": 0,
+      "scope": "Focused ₹5,200 6 posts 1 blog content(1000 words) 3 platforms setup of your choice 1 revision per blog Select package",
+      "old_price": 5200,
+      "new_price": 5200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "digital-marketing.html",
+      "package_index": 1,
+      "scope": "Plus ₹8,200 12 posts 2 blog content(1000 words each) 5 platforms of your choice 1 revision per blog Select package",
+      "old_price": 8200,
+      "new_price": 8200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "digital-marketing.html",
+      "package_index": 2,
+      "scope": "Complete ₹16,200 26 posts 4 blog content(1000 words each) 6 platforms 1 Animated Video - 30 secs 2 revision for videos Additional ₹1000 + 3rd party charges for paid Social Media Promotion 2 revision per blog In blog creatives up to 2 (Additional Rs 199/- per image) Select package",
+      "old_price": 16200,
+      "new_price": 16200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "digital-signature-certificate.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,700 Class 3 DSC - MCA, Income-tax and GST purpose (duration 2 years) Select package",
+      "old_price": 1700,
+      "new_price": 1700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "digital-signature-certificate.html",
+      "package_index": 1,
+      "scope": "Plus ₹2,200 Class 3 Organisation DSC Select package",
+      "old_price": 2200,
+      "new_price": 2200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "digital-signature-certificate.html",
+      "package_index": 2,
+      "scope": "Complete ₹2,700 DSC For use with DGFT/Tenders (2 Years) Select package",
+      "old_price": 2700,
+      "new_price": 2700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "din-application.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,700 DIN Application Select package",
+      "old_price": 2700,
+      "new_price": 2700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "din-application.html",
+      "package_index": 1,
+      "scope": "Plus ₹3,200 Priority DIN Application (within 24 hours) Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "din-application.html",
+      "package_index": 2,
+      "scope": "Complete ₹4,200 DIN Application 1 DSC Class 3 having two-year validity Select package",
+      "old_price": 4200,
+      "new_price": 4200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "din-surrender.html",
+      "package_index": 0,
+      "scope": "Focused ₹3,200 Surrender of one DIN Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "dir-3-kyc.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,200 DIR-3 KYC for one Director Select package",
+      "old_price": 1200,
+      "new_price": 1200,
+      "status": "Existing price retained above premium floor",
+      "comparison_scope": "DIR-3 KYC for one Director",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/dir-3-kyc/",
+          "regular_fee_inr": 999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        },
+        {
+          "provider": "LegalWiz",
+          "url": "https://www.legalwiz.in/file-dir-3-kyc-mca",
+          "regular_fee_inr": 699,
+          "notes": "One director filing. Use current legal filing cycle, not obsolete annual wording."
+        }
+      ],
+      "source_count": 2,
+      "benchmark_basis": "Multi-provider median",
+      "median_inr": 849.0,
+      "minimum_premium_price": 1100
+    },
+    {
+      "file": "dir-3-kyc.html",
+      "package_index": 1,
+      "scope": "Plus ₹1,700 2 DIR – 3 e-KYC of 2 Director Select package",
+      "old_price": 1700,
+      "new_price": 1900,
+      "status": "Raised to premium floor",
+      "comparison_scope": "2 DIR – 3 e-KYC of 2 Director",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/dir-3-kyc/",
+          "regular_fee_inr": 1499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1499,
+      "minimum_premium_price": 1900
+    },
+    {
+      "file": "dir-3-kyc.html",
+      "package_index": 2,
+      "scope": "Complete ₹3,000 DIR 3 KYC for 1 Director 1 DSC Application Class 3 - MCA, Income-tax and GST purpose (duration 2 years) Select package",
+      "old_price": 3000,
+      "new_price": 3500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "DIR 3 KYC for 1 Director; 1 DSC Application Class 3 - MCA, Income-tax and GST purpose (duration 2 years)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/dir-3-kyc/",
+          "regular_fee_inr": 2799,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 2799,
+      "minimum_premium_price": 3500
+    },
+    {
+      "file": "director-resignation-removal.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,500 Required document drafting DIR 12/ DIR 11 Filing for One director resignation Select package",
+      "old_price": 2500,
+      "new_price": 2500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "director-resignation-removal.html",
+      "package_index": 1,
+      "scope": "Extended ₹4,000 Required document drafting DIR 11 Filing for One director Resignation/Removal (with consent) DIR 12 Filing for One director Resignation/Removal (with consent) Select package",
+      "old_price": 4000,
+      "new_price": 4000,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "dissolution-of-firm.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,200 Drafting of Dissolution Deed Execution of Dissolution Deed Select package",
+      "old_price": 2200,
+      "new_price": 2200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "dissolution-of-firm.html",
+      "package_index": 1,
+      "scope": "Plus ₹3,200 Drafting of Dissolution Deed Execution of Dissolution Deed PAN cancellation application TAN cancellation application Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "dissolution-of-firm.html",
+      "package_index": 2,
+      "scope": "Complete ₹8,200 Drafting of Dissolution Deed Execution of Dissolution Deed PAN cancellation application TAN cancellation application Bookkeeping (up to 20 transactions) Income-tax return filing of entity for NIL turnover GST Cancellation Application Filing of GSTR-10 (Final Return) Select package",
+      "old_price": 8200,
+      "new_price": 8200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "epf-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹6,200 PF Registration (employees less than 20) Select package",
+      "old_price": 6200,
+      "new_price": 6200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "epf-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹13,200 PF Registration (employees less than 20) PF Return (ECR) for 12 months Select package",
+      "old_price": 13200,
+      "new_price": 13200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "epf-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹20,200 PF Registration (employees less than 50) PF Return (ECR) for 12 months Select package",
+      "old_price": 20200,
+      "new_price": 20200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "esi-returns.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,200 1 ESI Return up to 10 employees Select package",
+      "old_price": 1200,
+      "new_price": 1300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "1 ESI Return upto 10 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/esi-returns/",
+          "regular_fee_inr": 999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 999,
+      "minimum_premium_price": 1300
+    },
+    {
+      "file": "esi-returns.html",
+      "package_index": 1,
+      "scope": "Plus ₹9,200 12 months of ESI Returns up to 20 employees Select package",
+      "old_price": 9200,
+      "new_price": 11300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "One Year ESI Returns upto 20 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/esi-returns/",
+          "regular_fee_inr": 8999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 8999,
+      "minimum_premium_price": 11300
+    },
+    {
+      "file": "esi-returns.html",
+      "package_index": 2,
+      "scope": "Complete ₹14,200 12 months of ESI Returns up to 50 employees Select package",
+      "old_price": 14200,
+      "new_price": 17500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "One Year ESI Returns upto 50 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/esi-returns/",
+          "regular_fee_inr": 13999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 13999,
+      "minimum_premium_price": 17500
+    },
+    {
+      "file": "esic-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹6,200 ESIC Registration (employees less than 20) Select package",
+      "old_price": 6200,
+      "new_price": 7500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "ESIC Registration (employees less than 20)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/esi-registration/",
+          "regular_fee_inr": 5999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 5999,
+      "minimum_premium_price": 7500
+    },
+    {
+      "file": "esic-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹13,200 ESIC Registration (employees less than 20) ESIC Return for 12 months Select package",
+      "old_price": 13200,
+      "new_price": 16300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "ESIC Registration (employees less than 20); ESIC Return for 1 year",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/esi-registration/",
+          "regular_fee_inr": 12999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 12999,
+      "minimum_premium_price": 16300
+    },
+    {
+      "file": "esic-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹20,200 ESIC Registration (employees less than 50) ESIC Return for 12 months Select package",
+      "old_price": 20200,
+      "new_price": 25000,
+      "status": "Raised to premium floor",
+      "comparison_scope": "ESIC Registration (employees less than 50); ESIC Return for 1 year",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/esi-registration/",
+          "regular_fee_inr": 19999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 19999,
+      "minimum_premium_price": 25000
+    },
+    {
+      "file": "gst-cancellation.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,200 GST Cancellation Application Filing of GSTR-10 (Final Return) Select package",
+      "old_price": 2200,
+      "new_price": 2500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "GST Cancellation Application; Filing of GSTR-10 (Final Return)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-cancellation/",
+          "regular_fee_inr": 1999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1999,
+      "minimum_premium_price": 2500
+    },
+    {
+      "file": "gst-lut.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,700 Filing of One Letter of Undertaking with GST authorities Select package",
+      "old_price": 1700,
+      "new_price": 2600,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Filing of One Letter of Undertaking with GST authorities",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-lut-letter-of-undertaking-filing/",
+          "regular_fee_inr": 1499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        },
+        {
+          "provider": "LegalWiz",
+          "url": "https://www.legalwiz.in/letter-of-undertaking-under-gst",
+          "regular_fee_inr": 2600,
+          "notes": "One LUT filing; published professional fee."
+        }
+      ],
+      "source_count": 2,
+      "benchmark_basis": "Multi-provider median",
+      "median_inr": 2049.5,
+      "minimum_premium_price": 2600
+    },
+    {
+      "file": "gst-registration-amendment.html",
+      "package_index": 0,
+      "scope": "Focused ₹700 GST Modification in Non-Core Fields like email ID, Phone number, any minor changes Select package",
+      "old_price": 700,
+      "new_price": 700,
+      "status": "Existing price retained above premium floor",
+      "comparison_scope": "GST Modification in Non-Core Fields like email ID, Phone number, any minor changes",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-migration/",
+          "regular_fee_inr": 499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 499,
+      "minimum_premium_price": 700
+    },
+    {
+      "file": "gst-registration-amendment.html",
+      "package_index": 1,
+      "scope": "Plus ₹1,700 GST Modification in Core Fields like Change in Address, Add a place of Business Select package",
+      "old_price": 1700,
+      "new_price": 1900,
+      "status": "Raised to premium floor",
+      "comparison_scope": "GST Modification in Core Fields like Change in Address, Add a place of Business",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-migration/",
+          "regular_fee_inr": 1499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1499,
+      "minimum_premium_price": 1900
+    },
+    {
+      "file": "gst-registration-amendment.html",
+      "package_index": 2,
+      "scope": "Complete ₹2,000 Any other GST Modification involving approvals Select package",
+      "old_price": 2000,
+      "new_price": 2300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Any other GST Modification involving approvals",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-migration/",
+          "regular_fee_inr": 1799,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1799,
+      "minimum_premium_price": 2300
+    },
+    {
+      "file": "gst-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,200 GST Registration for Proprietorship or Partnership or LLP or Private Limited Company Select package",
+      "old_price": 2200,
+      "new_price": 2500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "One standard GST registration application, professional assistance only",
+      "sources": [
+        {
+          "provider": "LegalWiz",
+          "url": "https://www.legalwiz.in/gst-registration-india",
+          "regular_fee_inr": 1999,
+          "notes": "Advertised starting fee; no explicit discount; government fee excluded. GST not stated."
+        },
+        {
+          "provider": "TaxBuddy",
+          "url": "https://www.taxbuddy.com/income-tax-efiling",
+          "regular_fee_inr": 1695,
+          "notes": "One registration application; taxes extra."
+        },
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-registration/",
+          "regular_fee_inr": 1999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 3,
+      "benchmark_basis": "Multi-provider median",
+      "median_inr": 1999,
+      "minimum_premium_price": 2500
+    },
+    {
+      "file": "gst-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹3,500 GST Registration for Proprietorship or Partnership or LLP or Private Limited Company GST Returns for first three months (up to 10 entries) Select package",
+      "old_price": 3500,
+      "new_price": 4200,
+      "status": "Raised to premium floor",
+      "comparison_scope": "GST Registration for Proprietorship or Partnership or LLP or Private Limited Company; GST Returns for first three months (upto 10 entries)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-registration/",
+          "regular_fee_inr": 3299,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 3299,
+      "minimum_premium_price": 4200
+    },
+    {
+      "file": "gst-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹8,300 GST Registration for Proprietorship or Partnership or LLP or Private Limited Company GST Returns for 12 months of (up to 100 entries) Select package",
+      "old_price": 8300,
+      "new_price": 10200,
+      "status": "Raised to premium floor",
+      "comparison_scope": "GST Registration for Proprietorship or Partnership or LLP or Private Limited Company; GST Returns for one year (upto 100 entries)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-registration/",
+          "regular_fee_inr": 8099,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 8099,
+      "minimum_premium_price": 10200
+    },
+    {
+      "file": "gst-returns.html",
+      "package_index": 0,
+      "scope": "Focused ₹800 Filing of one NIL GST return (GSTR 3B or GSTR 1) Select package",
+      "old_price": 800,
+      "new_price": 800,
+      "status": "Existing price retained above premium floor",
+      "comparison_scope": "Filing of one NIL GST return (GSTR 3B or GSTR 1)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-returns/",
+          "regular_fee_inr": 599,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 599,
+      "minimum_premium_price": 800
+    },
+    {
+      "file": "gst-returns.html",
+      "package_index": 1,
+      "scope": "Plus ₹8,200 Annual Package for 12 months (For yearly entries - NIL B2B & 150 B2C entries) Return filing on Monthly basis (GSTR – 3B) Return filing on Monthly basis (GSTR – 1/GSTR -4) Computation of GST Payable Assistance in online payment of GST challan Total 24 Returns during the year Select package",
+      "old_price": 8200,
+      "new_price": 10000,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Annual Package for 12 months (For yearly entries - NIL B2B & 150 B2C entries); Return filing on Monthly basis (GSTR – 3B); Return filing on Monthly basis (GSTR – 1/GSTR -4); Computation of GST Payable; Assistance in online payment of GST challan; Total 24 Returns during the year",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-returns/",
+          "regular_fee_inr": 7999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 7999,
+      "minimum_premium_price": 10000
+    },
+    {
+      "file": "gst-returns.html",
+      "package_index": 2,
+      "scope": "Complete ₹10,200 Annual Package for 12 months (For yearly entries- 50 B2B and 250 B2C entries) Return filing on Monthly basis (GSTR – 3B) Return filing on Monthly basis(GSTR – 1/GSTR -4) Computation of GST Payable Assistance in online payment of GST challan Total 24 Returns during the year Select package",
+      "old_price": 10200,
+      "new_price": 12500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Annual Package for 12 months (For yearly entries- 50 B2B and 250 B2C entries); Return filing on Monthly basis (GSTR – 3B); Return filing on Monthly basis(GSTR – 1/GSTR -4); Computation of GST Payable; Assistance in online payment of GST challan; Total 24 Returns during the year",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/gst-returns/",
+          "regular_fee_inr": 9999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 9999,
+      "minimum_premium_price": 12500
+    },
+    {
+      "file": "iec-modification.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,600 Modification in IEC Registration Select package",
+      "old_price": 2600,
+      "new_price": 2600,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "iec-modification.html",
+      "package_index": 1,
+      "scope": "Plus ₹4,200 Modification in IEC Registration Digital Signature- Class 3- Individual(Resident Indian) having two-year validity Select package",
+      "old_price": 4200,
+      "new_price": 4200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "iec-modification.html",
+      "package_index": 2,
+      "scope": "Complete ₹4,700 Modification in IEC Registration Class 3 Organisation DSC Select package",
+      "old_price": 4700,
+      "new_price": 4700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "iec-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹3,500 Import Export Code Select package",
+      "old_price": 3500,
+      "new_price": 3500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "iec-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹5,200 Import Export Code Digital Signature Class 3 Individual having two-year validity Select package",
+      "old_price": 5200,
+      "new_price": 5200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "iec-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹7,200 Import Export Code Digital Signature Class 3 Individual having two-year validity GST Registration Select package",
+      "old_price": 7200,
+      "new_price": 7200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "income-tax-return-filing.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,400 Income-tax return filing of 12 months of Salaried Individual Select package",
+      "old_price": 1400,
+      "new_price": 1500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Assisted salary ITR for one year; simple resident salary return",
+      "sources": [
+        {
+          "provider": "TaxBuddy",
+          "url": "https://www.taxbuddy.com/itr-price",
+          "regular_fee_inr": 999,
+          "notes": "Assisted salary and one-house-property plan; taxes extra; self-filing excluded."
+        },
+        {
+          "provider": "IndiaFilings",
+          "url": "https://www.indiafilings.com/itr-1-sahaj-form",
+          "regular_fee_inr": 2899,
+          "notes": "Current expert-assisted ITR-1 banner; starting fee; no explicit discount. GST not specified."
+        },
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/income-tax-returns/",
+          "regular_fee_inr": 1199,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 3,
+      "benchmark_basis": "Multi-provider median",
+      "median_inr": 1199,
+      "minimum_premium_price": 1500
+    },
+    {
+      "file": "income-tax-return-filing.html",
+      "package_index": 1,
+      "scope": "Plus ₹2,200 Income-tax return filing of 12 months for non- audit assessee Select package",
+      "old_price": 2200,
+      "new_price": 2500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Income Tax filing of 1 year for non- audit assessee",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/income-tax-returns/",
+          "regular_fee_inr": 1999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1999,
+      "minimum_premium_price": 2500
+    },
+    {
+      "file": "income-tax-return-filing.html",
+      "package_index": 2,
+      "scope": "Complete ₹3,700 Income-tax return filing of 12 months for audit assessee up to a turnover of ₹2 Cr Select package",
+      "old_price": 3700,
+      "new_price": 4400,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Income Tax filing of 1 year for audit assessee upto a turnover of Rs. 2 Cr",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/income-tax-returns/",
+          "regular_fee_inr": 3499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 3499,
+      "minimum_premium_price": 4400
+    },
+    {
+      "file": "increase-authorised-capital.html",
+      "package_index": 0,
+      "scope": "Focused ₹3,700 Increase in authorised capital of up to ₹10 lakhs. Select package",
+      "old_price": 3700,
+      "new_price": 3700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "increase-authorised-capital.html",
+      "package_index": 1,
+      "scope": "Plus ₹4,700 Increase in authorised capital of up to ₹25 lakhs. Select package",
+      "old_price": 4700,
+      "new_price": 4700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "increase-authorised-capital.html",
+      "package_index": 2,
+      "scope": "Complete ₹5,700 Increase in authorised capital of up to ₹100 lakhs. Select package",
+      "old_price": 5700,
+      "new_price": 5700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "international-trademark-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹35,700 one class application for one country Select package",
+      "old_price": 35700,
+      "new_price": 35700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-annual-filing.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,600 Form 11 Filing Select package",
+      "old_price": 2600,
+      "new_price": 2600,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-annual-filing.html",
+      "package_index": 1,
+      "scope": "Plus ₹3,700 Form 8 Filing Select package",
+      "old_price": 3700,
+      "new_price": 3700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-annual-filing.html",
+      "package_index": 2,
+      "scope": "Complete ₹5,000 Form 11 Filing Form 8 Filing Select package",
+      "old_price": 5000,
+      "new_price": 5000,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-name-change.html",
+      "package_index": 0,
+      "scope": "Focused ₹4,500 Required document drafting 1 Name Approval application with ministry under LLP RUN Revised Certificate of Incorporation with new name Revision of LLP Agreement Filing of New LLP Agreement with ministry PAN record amendment TAN record amendment Select package",
+      "old_price": 4500,
+      "new_price": 4500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-name-change.html",
+      "package_index": 1,
+      "scope": "Extended ₹8,500 Required document drafting 1 Name Approval application with ministry under LLP RUN Revised Certificate of Incorporation with new name Revision of LLP Agreement (stamp duty and notary not included) Filing of New LLP Agreement with ministry PAN record amendment TAN record amendment GST registration amendment Udyam registration amendment Select package",
+      "old_price": 8500,
+      "new_price": 8500,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-strike-off.html",
+      "package_index": 0,
+      "scope": "Focused ₹10,200 Wind up an LLP with no transactions since incorporation Preparation of Statement of Accounts Preparation of Indemnity Bond Preparation of Affidavits Required document drafting Select package",
+      "old_price": 10200,
+      "new_price": 10200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-strike-off.html",
+      "package_index": 1,
+      "scope": "Plus ₹11,200 Wind up an LLP with no transactions since incorporation 2 Directors' DIR 3 KYC Preparation of Statement of Accounts Preparation of Indemnity Bond Preparation of Affidavits Required document drafting Select package",
+      "old_price": 11200,
+      "new_price": 11200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "llp-strike-off.html",
+      "package_index": 2,
+      "scope": "Complete ₹22,800 Closure support for an LLP with no transactions since incorporation 2 Directors' DIR 3 KYC Form 8 and Form 11 Filing for 1 Financial year Nil ITR filing 2 DSC Application Class 3 Individual two-year validity GST Cancellation Application Preparation of Statement of Accounts Preparation of Indemnity Bond Preparation of Affidavits Required document drafting Filing of GSTR-10 (Final Return) Select package",
+      "old_price": 22800,
+      "new_price": 22800,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "logo-design.html",
+      "package_index": 0,
+      "scope": "Focused ₹4,700 Logo Design(2 concepts) - 3 iterations in the selected Logo Select package",
+      "old_price": 4700,
+      "new_price": 5700,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Logo Design (2 concepts) - 3 iterations in the selected logo",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/logo-design-services/",
+          "regular_fee_inr": 4499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 4499,
+      "minimum_premium_price": 5700
+    },
+    {
+      "file": "logo-design.html",
+      "package_index": 1,
+      "scope": "Plus ₹5,800 Logo Design(3 concepts) - 3 iterations in the selected Logo Visiting Card Envelope/Postcard Letterhead 2 Stamp Select package",
+      "old_price": 5800,
+      "new_price": 7000,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Logo Design (3 concepts) - 3 iterations in the selected logo; Visiting Card; Envelope/Postcard; Letterhead; 2 Stamp",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/logo-design-services/",
+          "regular_fee_inr": 5599,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 5599,
+      "minimum_premium_price": 7000
+    },
+    {
+      "file": "logo-design.html",
+      "package_index": 2,
+      "scope": "Complete ₹11,200 Logo Design(4 concepts) unlimited iterations in the Selected Logo Visiting Card Envelope/Postcard Letterhead 2 Stamp Trademark Application (1 Application 1 Class Small Enterprise) Xpress SSI/MSME Application (within 24 hours) Select package",
+      "old_price": 11200,
+      "new_price": 11200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "mca-name-reservation-search-approval.html",
+      "package_index": 0,
+      "scope": "Professional fees — starting from ₹25,000 Detailed name, MCA-record and trademark-risk screening Business-activity and name-rule review Written shortlist observations MCA name-reservation application coordination Clear exclusions and next-step advice Discuss this scope",
+      "old_price": 25000,
+      "new_price": 25000,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "moa-aoa-amendment.html",
+      "package_index": 0,
+      "scope": "Focused ₹6,200 Notice of EGM+ Explanatory Statement Board Resolution Special Resolution Revised MOA Form MGT 14 filing for Special resolution Amendment MOM/AOA of Private Limited Company (Authorized capital up to 1 lakh) Select package",
+      "old_price": 6200,
+      "new_price": 6200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "moa-aoa-amendment.html",
+      "package_index": 1,
+      "scope": "Extended ₹11,200 Notice of EGM+ Explanatory Statement Board Resolution Special Resolution Revised MOA Form MGT 14 filing for Special resolution Amendment MOM/AOA of Private Limited Company (Authorized capital up to 40 lakhs) Select package",
+      "old_price": 11200,
+      "new_price": 11200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "moa-aoa-printing.html",
+      "package_index": 0,
+      "scope": "Focused ₹3,200 25 copies of MOA and AOA AOA-25 Copies Select package",
+      "old_price": 3200,
+      "new_price": 3200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "moa-aoa-printing.html",
+      "package_index": 1,
+      "scope": "Plus ₹5,200 50 copies of MOA and AOA Select package",
+      "old_price": 5200,
+      "new_price": 5200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "moa-aoa-printing.html",
+      "package_index": 2,
+      "scope": "Complete ₹8,200 100 copies of MOA and AOA Select package",
+      "old_price": 8200,
+      "new_price": 8200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "opc-annual-filing.html",
+      "package_index": 0,
+      "scope": "Focused ₹4,200 Annual Filings for Company having Authorized Capital of Rs 1 Lakhs and turnover up to ₹20 Lakhs Directors Report List of Shareholders List of Directors Consent and Appointment of Auditor Drafting resolution for Auditor appointment Form MBP-1 (Notice of Interest by Director) Form DIR-8 (Intimation by Director about disqualification) AOC 4 Filing MGT 7 Filing ADT 1 Filing Select package",
+      "old_price": 4200,
+      "new_price": 4200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "opc-annual-filing.html",
+      "package_index": 1,
+      "scope": "Plus ₹16,200 Annual Filings for Company having Authorized Capital of Rs 1 Lakhs and turnover up to ₹20 Lakhs Bookkeeping (up to 100 accounting transactions) Income-tax return filing Directors Report List of Shareholders List of Directors Consent and Appointment of Auditor Drafting resolution for Auditor appointment Form MBP-1 (Notice of Interest by Director) Form DIR-8 (Intimation by Director about disqualification) AOC 4 Filing MGT 7 Filing ADT 1 Filing DIR – 3 e-KYC of 1 Director Select package",
+      "old_price": 16200,
+      "new_price": 16200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "opc-annual-filing.html",
+      "package_index": 2,
+      "scope": "Complete ₹26,200 Annual Compliance having turnover up to ₹100 Lakhs and up to authorized capital of ₹5 Lakh Bookkeeping (up to 300 accounting transactions) Income-tax return filing Directors Report List of Shareholders List of Directors Consent and Appointment of Auditor Drafting resolution for Auditor appointment Form MBP-1 (Notice of Interest by Director) Form DIR-8 (Intimation by Director about disqualification) AOC 4 Filing MGT 7 Filing ADT 1 Filing DIR – 3 e-KYC of 1 Director Select package",
+      "old_price": 26200,
+      "new_price": 26200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "pan-application.html",
+      "package_index": 0,
+      "scope": "Focused ₹700 PAN Application Select package",
+      "old_price": 700,
+      "new_price": 700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "pan-application.html",
+      "package_index": 1,
+      "scope": "Plus ₹1,200 PAN Application TAN Application Select package",
+      "old_price": 1200,
+      "new_price": 1200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "pan-application.html",
+      "package_index": 2,
+      "scope": "Complete ₹2,700 PAN Application TAN Application First income-tax return filing for non-assessee Select package",
+      "old_price": 2700,
+      "new_price": 2700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "patent-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹30,100 Complete-specification filing support for one device or engineering invention in India Select package",
+      "old_price": 30100,
+      "new_price": 30100,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "patent-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹40,090 Complete-specification filing support for one design-led or medical invention in India Select package",
+      "old_price": 40090,
+      "new_price": 40090,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "patent-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹50,090 Complete-specification filing support for one device, design-led or medical invention in India Select package",
+      "old_price": 50090,
+      "new_price": 50090,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "pf-returns.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,200 1 PF Return (ECR) up to 10 employees Select package",
+      "old_price": 1200,
+      "new_price": 1300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "1 PF Return (ECR) upto 10 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/pf-returns/",
+          "regular_fee_inr": 999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 999,
+      "minimum_premium_price": 1300
+    },
+    {
+      "file": "pf-returns.html",
+      "package_index": 1,
+      "scope": "Plus ₹9,200 12 months of PF Returns (ECR) up to 20 employees Select package",
+      "old_price": 9200,
+      "new_price": 11300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "One Year PF Returns (ECR) upto 20 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/pf-returns/",
+          "regular_fee_inr": 8999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 8999,
+      "minimum_premium_price": 11300
+    },
+    {
+      "file": "pf-returns.html",
+      "package_index": 2,
+      "scope": "Complete ₹14,200 12 months of PF Returns (ECR) up to 50 employees Select package",
+      "old_price": 14200,
+      "new_price": 17500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "One Year PF Returns (ECR) upto 50 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/pf-returns/",
+          "regular_fee_inr": 13999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 13999,
+      "minimum_premium_price": 17500
+    },
+    {
+      "file": "roc-search-report.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,700 Inspection of Documents with ROC for one company Downloading of requisite documents for one company Select package",
+      "old_price": 2700,
+      "new_price": 2700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "roc-search-report.html",
+      "package_index": 1,
+      "scope": "Extended ₹5,200 Inspection of Documents with ROC Downloading of requisite documents Preparation of Search Report Select package",
+      "old_price": 5200,
+      "new_price": 5200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "share-transfer-transmission.html",
+      "package_index": 0,
+      "scope": "Focused ₹4,200 Required document drafting Execution of form SH-4 Share transfer/transmission Select package",
+      "old_price": 4200,
+      "new_price": 4200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "share-transfer-transmission.html",
+      "package_index": 1,
+      "scope": "Plus ₹6,200 Share transfer from one person to another, wherein transferor or transferee is corporate Select package",
+      "old_price": 6200,
+      "new_price": 6200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "share-transfer-transmission.html",
+      "package_index": 2,
+      "scope": "Complete ₹9,200 Share transfer from one person to another, wherein transferor or transferee is a foreign national or foreign company Select package",
+      "old_price": 9200,
+      "new_price": 9200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "tan-application.html",
+      "package_index": 0,
+      "scope": "Focused ₹700 TAN Application Select package",
+      "old_price": 700,
+      "new_price": 700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "tan-application.html",
+      "package_index": 1,
+      "scope": "Plus ₹2,200 TAN Application One TDS Return up to 10 entries Issue of Form 16A(131) Select package",
+      "old_price": 2200,
+      "new_price": 2200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "tan-application.html",
+      "package_index": 2,
+      "scope": "Complete ₹6,700 TAN Application TDS Returns for 12 months of up to 500 entries Form 24Q(138), 26Q(140) and 27Q(144) Form 16A(131) on a quarterly basis Form 16(130) on an annual basis for up to 5 employees Select package",
+      "old_price": 6700,
+      "new_price": 6700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "tax-notice-response.html",
+      "package_index": 0,
+      "scope": "Notice Response ₹5,200 Review of one income-tax notice or intimation and the applicable response deadline One consultation to explain the issue, records required and proposed response Preparation and online submission support for one standard response Revised returns, appeals, hearings and additional proceedings are separately scoped Select package",
+      "old_price": 5200,
+      "new_price": 5200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "tds-return-revision.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,200 Download of Justification File One TDS Return Revision up to 10 entries Select package",
+      "old_price": 1200,
+      "new_price": 1300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Download of Justification File; One TDS Return Revision upto 10 entries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/tds-returns-revision/",
+          "regular_fee_inr": 999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 999,
+      "minimum_premium_price": 1300
+    },
+    {
+      "file": "tds-return-revision.html",
+      "package_index": 1,
+      "scope": "Plus ₹1,700 Download of Justification File One TDS Return Revision up to 10 entries Reply to Income Tax Notice Select package",
+      "old_price": 1700,
+      "new_price": 1900,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Download of Justification File; One TDS Return Revision upto 10 entries; Reply to Income Tax Notice",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/tds-returns-revision/",
+          "regular_fee_inr": 1499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1499,
+      "minimum_premium_price": 1900
+    },
+    {
+      "file": "tds-return-revision.html",
+      "package_index": 2,
+      "scope": "Complete ₹2,700 Download of Justification File One TDS Return Revision up to 50 entries Issue of Form 16A(131) Reply to Income Tax Notice Select package",
+      "old_price": 2700,
+      "new_price": 3200,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Download of Justification File; One TDS Return Revision upto 50 entries; Issue of Form 16A(131); Reply to Income Tax Notice",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/tds-returns-revision/",
+          "regular_fee_inr": 2499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 2499,
+      "minimum_premium_price": 3200
+    },
+    {
+      "file": "tds-returns.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,200 One TDS Return up to 20 entries Select package",
+      "old_price": 1200,
+      "new_price": 1300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "One TDS Return upto 20 entries",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/tds-return/",
+          "regular_fee_inr": 999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 999,
+      "minimum_premium_price": 1300
+    },
+    {
+      "file": "tds-returns.html",
+      "package_index": 1,
+      "scope": "Plus ₹6,200 TDS Returns for 1st Quarter TDS Returns for 2nd Quarter TDS Returns for 3rd Quarter TDS Returns for 4th Quarter Form 24Q(138), 26Q(140) and 27Q(144) [as applicable] up to 500 entries for 12 months Form 16A(131) on a quarterly basis Form 16(130) on an annual basis for up to 5 employees Select package",
+      "old_price": 6200,
+      "new_price": 7500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "TDS Returns for 1st Quarter; TDS Returns for 2nd Quarter; TDS Returns for 3rd Quarter; TDS Returns for 4th Quarter; Form 24Q(138), 26Q(140) and 27Q(144) [as applicable] up to 500 entries for 1 year; Form 16A(131) on a quarterly basis; Form 16(130) on an annual basis for up to 5 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/tds-return/",
+          "regular_fee_inr": 5999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 5999,
+      "minimum_premium_price": 7500
+    },
+    {
+      "file": "tds-returns.html",
+      "package_index": 2,
+      "scope": "Complete ₹9,200 TDS Returns for 1st Quarter TDS Returns for 2nd Quarter TDS Returns for 3rd Quarter TDS Returns for 4th Quarter Form 24Q(138), 26Q(140) and 27Q(144) [as applicable] up to 1000 entries for 12 months Form 16A(131) on a quarterly basis Form 16(130) on an annual basis for up to 10 employees Select package",
+      "old_price": 9200,
+      "new_price": 11300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "TDS Returns for 1st Quarter; TDS Returns for 2nd Quarter; TDS Returns for 3rd Quarter; TDS Returns for 4th Quarter; Form 24Q(138), 26Q(140) and 27Q(144) [as applicable] up to 1000 entries for 1 year; Form 16A(131) on a quarterly basis; Form 16(130) on an annual basis for up to 10 employees",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/tds-return/",
+          "regular_fee_inr": 8999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 8999,
+      "minimum_premium_price": 11300
+    },
+    {
+      "file": "trademark-assignment.html",
+      "package_index": 0,
+      "scope": "Focused ₹15,200 Trademark assignment (1 Assignment 1 Class Small Enterprise) Select package",
+      "old_price": 15200,
+      "new_price": 15200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-objection-reply.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,200 Reply to Examination Report (1 Objection 1 Class Small Enterprise), where the original application was filed through Instant Professionals Select package",
+      "old_price": 2200,
+      "new_price": 3800,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Reply to Examination Report (1 Objection 1 Class Small Enterprise), where Trademark Application done by ebizfiling",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-objections/",
+          "regular_fee_inr": 2999,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 2999,
+      "minimum_premium_price": 3800
+    },
+    {
+      "file": "trademark-objection-reply.html",
+      "package_index": 1,
+      "scope": "Plus ₹2,700 Reply to Examination Report (1 Objection 1 Class Small Enterprise), where Trademark Application is not done by ebizfili Select package",
+      "old_price": 2700,
+      "new_price": 4400,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Reply to Examination Report (1 Objection 1 Class Small Enterprise), where Trademark Application is not done by ebizfilig",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-objections/",
+          "regular_fee_inr": 3499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 3499,
+      "minimum_premium_price": 4400
+    },
+    {
+      "file": "trademark-objection-reply.html",
+      "package_index": 2,
+      "scope": "Complete ₹9,600 SSI/MSME Registration Trademark Application (1 Application 1 Class Small Enterprise) Reply to Examination Report (1 Objection 1 Class Small Enterprise) Select package",
+      "old_price": 9600,
+      "new_price": 9600,
+      "status": "Existing price retained above premium floor",
+      "comparison_scope": "SSI/MSME Registration; Trademark Application (1 Application 1 Class Small Enterprise); Reply to Examination Report (1 Objection 1 Class Small Enterprise)",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-objections/",
+          "regular_fee_inr": 6399,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 6399,
+      "minimum_premium_price": 8000
+    },
+    {
+      "file": "trademark-opposition.html",
+      "package_index": 0,
+      "scope": "Focused ₹15,701 Reply to Trademark Opposition Select package",
+      "old_price": 15701,
+      "new_price": 15701,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-opposition.html",
+      "package_index": 1,
+      "scope": "Plus ₹15,701 Evidence Submission Select package",
+      "old_price": 15701,
+      "new_price": 15701,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-opposition.html",
+      "package_index": 2,
+      "scope": "Complete ₹15,701 Hearing Select package",
+      "old_price": 15701,
+      "new_price": 15701,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-rectification.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,700 Filing of form TM-M Select package",
+      "old_price": 2700,
+      "new_price": 2700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,100 Trademark Application (1 Application 1 Class Small Enterprise) Select package",
+      "old_price": 2100,
+      "new_price": 2500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Standard trademark filing for one mark in one class; government fees excluded",
+      "sources": [
+        {
+          "provider": "LegalWiz",
+          "url": "https://www.legalwiz.in/trademark-registration",
+          "regular_fee_inr": 1999,
+          "notes": "Starting professional fee; no discount shown."
+        },
+        {
+          "provider": "Vakilsearch",
+          "url": "https://vakilsearch.com/trademark-registration",
+          "regular_fee_inr": 1999,
+          "notes": "Regular standard-plan price before explicit 25% promotional discount to 1499; government fees and GST extra."
+        },
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-registration/",
+          "regular_fee_inr": 1899,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 3,
+      "benchmark_basis": "Multi-provider median",
+      "median_inr": 1999,
+      "minimum_premium_price": 2500
+    },
+    {
+      "file": "trademark-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹5,000 Trademark Application (1 Application 1 Class Other than Small Enterprise) End to end watch of 1 TM application till last stage Select package",
+      "old_price": 5000,
+      "new_price": 6000,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Trademark Application (1 Application 1 Class Other than Small Enterprise); End to end watch of 1 TM application till last stage",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-registration/",
+          "regular_fee_inr": 4799,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 4799,
+      "minimum_premium_price": 6000
+    },
+    {
+      "file": "trademark-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹5,400 Trademark Application (1 Application 1 Class Small Enterprise) SSI/MSME Registration End to end watch of 1 TM application till last stage Select package",
+      "old_price": 5400,
+      "new_price": 6500,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Trademark Application (1 Application 1 Class Small Enterprise); SSI/MSME Registration; End to end watch of 1 TM application till last stage",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-registration/",
+          "regular_fee_inr": 5199,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 5199,
+      "minimum_premium_price": 6500
+    },
+    {
+      "file": "trademark-renewal.html",
+      "package_index": 0,
+      "scope": "Focused ₹12,700 Drafting and filing of trademark renewal application. For individuals, proprietorships, registered SMEs and Startups Select package",
+      "old_price": 12700,
+      "new_price": 12700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-renewal.html",
+      "package_index": 1,
+      "scope": "Plus ₹13,700 Drafting and filing of trademark renewal application along with MSME registration certificate Select package",
+      "old_price": 13700,
+      "new_price": 13700,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-renewal.html",
+      "package_index": 2,
+      "scope": "Complete ₹14,200 Drafting and filing of trademark restoration application, if trademark renewal date has passed Select package",
+      "old_price": 14200,
+      "new_price": 14200,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "trademark-watch-service.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,000 End to end watch of TM application till last stage Select package",
+      "old_price": 2000,
+      "new_price": 2300,
+      "status": "Raised to premium floor",
+      "comparison_scope": "End to end watch of TM application till last stage",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-watch-services/",
+          "regular_fee_inr": 1799,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1799,
+      "minimum_premium_price": 2300
+    },
+    {
+      "file": "trademark-withdrawal.html",
+      "package_index": 0,
+      "scope": "Focused ₹2,700 Online Application to Trademark registry Written Application to Trademark registry Select package",
+      "old_price": 2700,
+      "new_price": 3200,
+      "status": "Raised to premium floor",
+      "comparison_scope": "Withdrawal of Trademark Application; Online Application to Trademark registry; Written Application to Trademark registry",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/trademark-withdrawal/",
+          "regular_fee_inr": 2499,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 2499,
+      "minimum_premium_price": 3200
+    },
+    {
+      "file": "udyam-registration.html",
+      "package_index": 0,
+      "scope": "Focused ₹1,900 SSI/MSME Registration Select package",
+      "old_price": 1900,
+      "new_price": 2200,
+      "status": "Raised to premium floor",
+      "comparison_scope": "SSI/MSME Registration",
+      "sources": [
+        {
+          "provider": "Ebizfiling",
+          "url": "https://ebizfiling.com/service/ssi-msme-registration/",
+          "regular_fee_inr": 1699,
+          "notes": "Published package card; no explicit promotional reduction shown. Tax inclusion is not specified. Scope matched; late fees and statutory charges are not part of our professional fee. Single-source evidence where no other source is listed."
+        }
+      ],
+      "source_count": 1,
+      "benchmark_basis": "Single-provider reference (limited evidence)",
+      "median_inr": 1699,
+      "minimum_premium_price": 2200
+    },
+    {
+      "file": "udyam-registration.html",
+      "package_index": 1,
+      "scope": "Plus ₹2,400 Priority SSI/MSME Registration (within 24 hours) Select package",
+      "old_price": 2400,
+      "new_price": 2400,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "udyam-registration.html",
+      "package_index": 2,
+      "scope": "Complete ₹9,400 Priority SSI/MSME Registration (within 24 hours) Priority Trademark (1 application 1 class) (start ups, proprietorship & small business) Select package",
+      "old_price": 9400,
+      "new_price": 9400,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "virtual-cfo.html",
+      "package_index": 0,
+      "scope": "Finance Essentials ₹15,201 / month Monthly finance-close and MIS review Cash-flow and working-capital snapshot One monthly management review call Action tracker for agreed finance priorities Select package",
+      "old_price": 15201,
+      "new_price": 15201,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "virtual-cfo.html",
+      "package_index": 1,
+      "scope": "Growth Finance ₹40,201 / month Everything in Finance Essentials Budget-versus-actual and rolling forecast review Receivables, payables and margin analysis Two management review meetings each month Select package",
+      "old_price": 40201,
+      "new_price": 40201,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    },
+    {
+      "file": "virtual-cfo.html",
+      "package_index": 2,
+      "scope": "Strategic CFO ₹50,201 / month Everything in Growth Finance Board, lender or investor reporting support Scenario analysis and strategic finance review Weekly leadership cadence and finance-team coordination Select package",
+      "old_price": 50201,
+      "new_price": 50201,
+      "status": "Unchanged: comparable regular professional fees not verified for this exact scope."
+    }
+  ]
+}

@@ -6,6 +6,7 @@
   let token = new URLSearchParams(location.hash.slice(1)).get('quote') || '';
   history.replaceState(null, '', location.pathname);
   const testOnly = window.IP_PAYMENT_CONFIG?.testOnly === true;
+  const invoiceEntry = !testOnly && !!$('invoice-number');
   const storageKey = testOnly ? 'ip-ccavenue-test-quote' : 'ip-ccavenue-quote';
   try { if (token) sessionStorage.setItem(storageKey, token); else token = sessionStorage.getItem(storageKey) || ''; } catch {}
   const base = (window.IP_PAYMENT_CONFIG?.apiBase || '').replace(/\/$/, '');
@@ -30,7 +31,7 @@
     $('refresh').disabled = busy;
     $('quote-form').querySelector('button').disabled = busy;
   }
-  async function api(path) {
+  async function api(path, body = { quoteToken: token }) {
     if (testOnly) {
       const health = await fetch(base + '/health', { credentials: 'omit', signal: AbortSignal.timeout(20000) });
       const ready = await health.json();
@@ -39,7 +40,7 @@
       }
     }
     const response = await fetch(base + path, { method: 'POST', credentials: 'omit',
-      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ quoteToken: token }), signal: AbortSignal.timeout(20000) });
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(20000) });
     let result;
     try { result = await response.json(); } catch { throw new Error('Payment service unavailable. Check status before retrying.'); }
     if (!response.ok) throw new Error(result.error || 'Payment service unavailable.');
@@ -65,7 +66,7 @@
         try { sessionStorage.setItem(key, 'yes'); } catch {}
       }
     } else if (quote.status === 'review') {
-      status('This payment needs review by our team. Please contact us with your quote reference; do not pay again.');
+      status('This payment needs review by our team. Please contact us with your payment reference; do not pay again.');
       track('payment_review_required');
     } else if (quote.status === 'failed') {
       status('The payment was unsuccessful or cancelled. Contact the team to arrange a new attempt after reconciliation.');
@@ -73,8 +74,8 @@
     } else if (quote.status === 'pending') {
       status('Payment is not yet confirmed. Check status shortly or contact the team. Do not start another payment if you were debited.');
       track('payment_verification_pending');
-    } else if (quote.expires <= Date.now()) status('This quote has expired. Contact our team for a new quote.');
-    else status('Review your agreed scope and total, then continue to CCAvenue.');
+    } else if (quote.expires <= Date.now()) status(invoiceEntry ? 'This payment review has expired. Enter your invoice details again.' : 'This quote has expired. Contact our team for a new quote.');
+    else status(invoiceEntry ? 'Review your invoice balance, then continue to CCAvenue.' : 'Review your agreed scope and total, then continue to CCAvenue.');
     controls();
   }
   async function checkStatus() {
@@ -85,6 +86,13 @@
     finally { busy = false; controls(); }
   }
   $('consent').addEventListener('change', controls);
+  if (invoiceEntry) $('another-invoice').addEventListener('click', () => {
+    if (busy) return;
+    quote = null; token = ''; $('quote').hidden = true; $('quote-form').hidden = false;
+    $('consent').checked = false;
+    try { sessionStorage.removeItem(storageKey); } catch {}
+    status('Enter your IPREPORT invoice number and registered client email.'); controls();
+  });
   $('refresh').addEventListener('click', checkStatus);
   $('pay').addEventListener('click', async () => {
     if (busy || !quote || quote.status !== 'new' || !$('consent').checked) return;
@@ -119,13 +127,29 @@
     } catch (error) { $('quote').hidden = true; $('quote-form').hidden = false; status(error.message); }
     finally { busy = false; controls(); }
   }
-  $('quote-form').addEventListener('submit', event => {
-    event.preventDefault(); token = $('quote-token').value.trim();
+  $('quote-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    if (invoiceEntry) {
+      if (busy) return;
+      busy = true; controls(); status('Finding your invoice…');
+      quote = null; $('quote').hidden = true; $('consent').checked = false;
+      try {
+        const result = await api('/invoice', { invoiceNumber: $('invoice-number').value.trim(), email: $('invoice-email').value.trim() });
+        token = result.quoteToken;
+        if (!/^[a-f0-9]{64}$/.test(token || '') || result.mode !== 'live') throw new Error('Invoice payment response could not be verified. Contact our team.');
+        try { sessionStorage.setItem(storageKey, token); } catch {}
+        $('consent').checked = false; render(result); $('quote-form').hidden = true;
+        $('invoice-email').value = '';
+      } catch (error) { status(error.message); }
+      finally { busy = false; controls(); }
+      return;
+    }
+    token = $('quote-token').value.trim();
     try { sessionStorage.setItem(storageKey, token); } catch {}
     $('quote-token').value = ''; review();
   });
   window.addEventListener('pageshow', event => { if (event.persisted && validBase && token) { busy = false; checkStatus(); } });
   if (!validBase) { status('Online payments are not enabled yet. Please contact our team to arrange your service.'); return; }
   if (token) review();
-  else { $('quote-form').hidden = false; status('Open your private quote link, or enter the quote code supplied by our team.'); }
+  else { $('quote-form').hidden = false; status(invoiceEntry ? 'Enter your IPREPORT invoice number and registered client email.' : 'Open your private quote link, or enter the quote code supplied by our team.'); }
 })();

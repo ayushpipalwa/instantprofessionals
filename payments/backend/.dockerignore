@@ -4,5 +4,6 @@
 !core.mjs
 !server.mjs
 !postgres.mjs
+!invoices.mjs
 !cloud-server.mjs
 !Dockerfile

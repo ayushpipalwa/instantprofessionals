@@ -19,7 +19,7 @@ export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote
         if (req.headers.origin === cfg.origin) res.setHeader('Access-Control-Allow-Origin', cfg.origin);
         return send(200, { ok: true, mode: cfg.mode, provider: 'ccavenue' });
       }
-      if (!notification && !['/quote', '/session', '/status'].includes(req.url)) fail(404, 'Not found.');
+      if (!notification && !['/quote', '/session', '/status', '/invoice'].includes(req.url)) fail(404, 'Not found.');
       if (!notification) {
         if (req.headers.origin !== cfg.origin) fail(403, 'Origin is not allowed.');
         res.setHeader('Access-Control-Allow-Origin', cfg.origin); res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -46,6 +46,11 @@ export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote
       let body;
       try { body = JSON.parse(raw); } catch { fail(400, 'Invalid JSON.'); }
       if (!body || typeof body !== 'object' || Array.isArray(body)) fail(400, 'Invalid request.');
+      if (req.url === '/invoice') {
+        if (!operations.lookupInvoice) fail(404, 'Invoice payments are unavailable.');
+        const result = await operations.lookupInvoice(db, cfg, body);
+        return send(200, { ...publicQuote(result.quote, cfg), quoteToken: result.token });
+      }
       let q = await operations.findQuote(db, cfg, body.quoteToken);
       if (req.url === '/session') return send(200, await operations.beginCheckout(db, cfg, q));
       if (req.url === '/status') q = await operations.refreshQuote(db, cfg, q, api);

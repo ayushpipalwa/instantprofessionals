@@ -79,11 +79,6 @@ def build_css(names: list[str], icon_map: dict[str, int]) -> None:
     parts = [icon_css(names, icon_map)]
     for path in sources:
         text = path.read_text(encoding="utf-8")
-        if path.name in {"bootstrap.min.css", "style.css"}:
-            text = subprocess.check_output(
-                ["node", str(ROOT / "scripts/performance/subset-homepage.cjs")],
-                input=text, text=True, encoding="utf-8",
-            )
         if path.name in {"service-hub.css", "vision-2.css"}:
             text = re.sub(r'@import\s+url\([^;]+\);\s*', "", text)
         parts.append(text)
@@ -96,7 +91,25 @@ html,body,button,input,select,textarea,h1,h2,h3,h4,h5,h6{font-family:var(--ip-fo
 @media(max-width:767px){#team{contain-intrinsic-size:auto 8200px}#contact{contain-intrinsic-size:auto 1700px}}
 """
     )
-    CSS_TARGET.write_text(minify_css("\n".join(parts)) + "\n", encoding="utf-8", newline="\n")
+    css = subprocess.check_output(
+        ["node", str(ROOT / "scripts/performance/subset-homepage.cjs")],
+        input="\n".join(parts), text=True, encoding="utf-8",
+    )
+    CSS_TARGET.write_text(minify_css(css) + "\n", encoding="utf-8", newline="\n")
+    # This bundle is homepage-only. Deliver it with the document to avoid a
+    # separate render-blocking round trip on a first visit.
+    home = ROOT / "index.html"
+    inline_css = minify_css(css).replace('../vendor/', 'assets/vendor/').replace('../img/', 'assets/img/')
+    if '</style' in inline_css.lower():
+        raise ValueError('Unsafe inline stylesheet content')
+    text, count = re.subn(
+        r'<link\b[^>]*data-ip-vision="2"[^>]*>|<style data-ip-vision="2">.*?</style>',
+        lambda _: '<style data-ip-vision="2">' + inline_css + '</style>',
+        home.read_text(encoding="utf-8"), count=1, flags=re.S,
+    )
+    if count != 1:
+        raise ValueError('Expected exactly one homepage stylesheet marker')
+    home.write_text(text, encoding="utf-8", newline="\n")
 
 
 def build_lifecycle_logo() -> None:

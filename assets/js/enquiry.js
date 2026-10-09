@@ -225,7 +225,7 @@
     ],
     "change-din-particulars.html": [
       ["Which DIN details can be updated?", "Permitted personal particulars such as name, address, contact or citizenship details may be updated with the prescribed proof. The exact form and verification depend on the change."],
-      ["Does a DIN update replace annual KYC?", "No. Updating particulars and completing the applicable DIN-holder KYC are separate obligations. Both statuses should be checked." ]
+      ["Can the KYC form also update DIN contact details?", "The revised KYC framework can cover mobile, email and residential-address updates. We check the changed field, DIN status and current MCA process before selecting the form." ]
     ],
     "company-annual-filing.html": [
       ["Which company records are needed for annual filing?", "Signed financial statements, audit and board reports where applicable, annual-return information, member and director data, meeting records and the year's event-based filings should be reconciled."],
@@ -240,7 +240,7 @@
       ["Can another person use my DSC and token?", "No. A DSC is linked to the subscriber and should remain under that person's control. Private keys, token PINs and authentication credentials must not be shared." ]
     ],
     "dir-3-kyc.html": [
-      ["Who needs to complete DIN-holder KYC?", "DIN holders covered by the applicable MCA KYC rules must complete the prescribed annual process, including the correct form or web verification based on their circumstances."],
+      ["Who needs to complete DIN-holder KYC?", "From 31 March 2026, the prescribed director KYC cycle is once every three years. Due dates, updates and reactivation depend on the DIN record and current MCA rules; check the last completed KYC before filing."],
       ["What happens if KYC is not completed?", "The DIN may be marked as deactivated for non-filing and a fee may apply for later activation. Current status and form eligibility should be checked on MCA before filing." ]
     ],
     "epf-registration.html": [
@@ -759,9 +759,9 @@
       caution: "Applicability depends on entity type, event date, capital, listing/status, approvals, registers and the version of the MCA form available on filing date."
     },
     "WORKFORCE COMPLIANCE": {
-      framework: "Employees’ Provident Funds and Miscellaneous Provisions Act, 1952 and schemes, or Employees’ State Insurance Act, 1948 and regulations, as applicable, together with current portal directions.",
+      framework: "Code on Social Security, 2020 and applicable notifications, schemes, rules and transitional provisions for EPF/ESI; verify current EPFO/ESIC portal directions for the contribution period.",
       authority: "EPFO / ESIC",
-      url: "https://www.epfindia.gov.in/site_en/Acts&Manuals.php",
+      url: "https://www.labour.gov.in/",
       caution: "Coverage, wage components, employee status, notified area, contribution period and portal records require fact-specific verification."
     },
     "INTELLECTUAL PROPERTY": {
@@ -811,11 +811,11 @@
     } else if (/trademark/i.test(filename)) {
       entry.framework = "Trade Marks Act, 1999 and Trade Marks Rules, 2017, as amended, together with current Trade Marks Registry practice and e-filing requirements.";
     } else if (/esic|esi-/.test(filename)) {
-      entry.framework = "Employees’ State Insurance Act, 1948 and applicable regulations, contribution rules and ESIC portal directions, as amended.";
+      entry.framework = "Code on Social Security, 2020; applicable ESI schemes, rules, transitional provisions and current ESIC contribution-period directions.";
       entry.authority = "Employees’ State Insurance Corporation";
       entry.url = "https://www.esic.gov.in/act";
     } else if (/epf|pf-/.test(filename)) {
-      entry.framework = "Employees’ Provident Funds and Miscellaneous Provisions Act, 1952 and applicable schemes, notifications and EPFO portal directions, as amended.";
+      entry.framework = "Code on Social Security, 2020; applicable EPF schemes, rules, transitional provisions and current EPFO contribution-period directions.";
     } else if (/udyam/.test(filename)) {
       entry.framework = "Micro, Small and Medium Enterprises Development Act, 2006 and the current Udyam Registration notification, classification criteria and official portal directions.";
       entry.authority = "Udyam Registration — Ministry of MSME";

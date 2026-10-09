@@ -678,11 +678,17 @@ def write_technical_files() -> None:
     (ROOT / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
     (ROOT / "404.html").write_text(f"""<!doctype html><html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><title>Page not found | Instant Professionals</title><meta name="robots" content="noindex"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1"></head><body>{header_markup()}<main id="main-content" class="ip-container ip-policy"><span class="ip-eyebrow">404</span><h1>Page not found</h1><p>The address may have changed during our website quality upgrade.</p><p><a class="ip-primary-button" href="index.html#services">Browse services</a></p></main>{footer_markup()}</body></html>""", encoding="utf-8")
+    # The 404 document is served at arbitrary, possibly nested paths.
+    not_found = ROOT / "404.html"
+    text = not_found.read_text(encoding="utf-8")
+    text = re.sub(r'(href|src)="(?![a-z]+:|/|#)([^"]+)"', r'\1="/\2"', text)
+    not_found.write_text(text, encoding="utf-8")
     for obsolete in ("form.html", "inner-page.html", "pdflist.html", "portfolio-details.html"):
         (ROOT / obsolete).write_text(redirect_page("index.html", "Instant Professionals"), encoding="utf-8")
 
 
 def main() -> None:
+    raise SystemExit("Retired generator: its historical prices and templates are obsolete. Edit the maintained HTML pages and validate with scripts/qa_seo.py; publish with scripts/build_pages.py.")
     for old, (clean, title, _category, _summary) in CATALOG.items():
         (ROOT / clean).write_text(service_page(old), encoding="utf-8")
         if old != clean:

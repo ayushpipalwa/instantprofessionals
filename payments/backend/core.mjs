@@ -84,7 +84,7 @@ export function findQuote(db, cfg, token) {
   if (!q) fail(404, 'Quote not found.');
   return q;
 }
-export const publicQuote = (q, cfg) => ({ reference: q.id, label: q.label, scope: q.scope, amount: q.amount,
+export const publicQuote = (q, cfg) => ({ reference: q.id, invoiceNumber: q.invoice_number || undefined, label: q.label, scope: q.scope, amount: q.amount,
   currency: 'INR', expires: q.expires, status: q.state, paymentId: q.payment_id, mode: cfg.mode });
 export const rupees = paise => Math.floor(paise / 100) + '.' + String(paise % 100).padStart(2, '0');
 export function paise(value) {
@@ -114,8 +114,12 @@ export function gateway(cfg, fetchImpl = fetch) {
     if (!response.ok) fail(502, 'Payment status is temporarily unavailable.');
     const text = await response.text();
     if (text.length > 131072) fail(502, 'Payment status is temporarily unavailable.');
-    const envelope = uniqueParams(text);
-    if (envelope.status !== '0') fail(502, 'Payment status is awaiting provider confirmation.');
+    const envelope = uniqueParams(text.trim());
+    if (envelope.status !== '0') {
+      if (/access[_ ]code.*invalid parameter/i.test(envelope.enc_response || ''))
+        fail(502, 'CCAvenue status API access code was rejected.');
+      fail(502, 'Payment status is awaiting provider confirmation.');
+    }
     let result;
     try { result = JSON.parse(decrypt(envelope.enc_response, cfg.apiKey)); }
     catch { fail(502, 'Payment status could not be verified.'); }
