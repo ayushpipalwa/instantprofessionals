@@ -8,7 +8,7 @@
   }
 
   function serviceName(values) {
-    return String(values.package || values.service || "General enquiry").slice(0, 100);
+    return [values.service || "General enquiry", values.package].filter(Boolean).join(" — ").slice(0, 120);
   }
 
   function formValues(form) {
@@ -36,8 +36,8 @@
 
   function setSubmitting(form, submitting) {
     form.setAttribute("aria-busy", String(submitting));
-    form.querySelectorAll("button").forEach(function (button) {
-      button.disabled = submitting;
+    form.querySelectorAll("button, input, select, textarea").forEach(function (field) {
+      field.disabled = submitting;
     });
   }
 
@@ -112,6 +112,7 @@
   }
 
   async function submitOnline(form) {
+    if (form.getAttribute("aria-busy") === "true") return;
     clearContactValidity(form);
     if (!form.checkValidity()) {
       form.reportValidity();
@@ -128,8 +129,14 @@
 
     setSubmitting(form, true);
     setStatus(form, "Submitting your enquiry securely…", "progress");
+    const controller = new AbortController();
+    const timeout = window.setTimeout(function () { controller.abort(); }, 20000);
     try {
-      await fetch(endpoint, { method: "POST", mode: "no-cors", body: sheetPayload(values), keepalive: true });
+      const response = await fetch(endpoint, { method: "POST", mode: "cors", body: sheetPayload(values), keepalive: true, signal: controller.signal });
+      const result = response.ok && await response.json();
+      if (!result || result.success !== true || (!result.enquiryId && result.duplicate !== true)) {
+        throw new Error("Enquiry was not acknowledged.");
+      }
       track("generate_lead", {
         lead_method: "website_form",
         service_name: serviceName(values),
@@ -139,13 +146,15 @@
       clearContactValidity(form);
       setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
     } catch (error) {
-      setStatus(form, "We could not submit the enquiry. Please try again or continue on WhatsApp.", "error");
+      setStatus(form, "We could not confirm your enquiry was recorded. Your details are still here; please try again or continue on WhatsApp.", "error");
     } finally {
+      window.clearTimeout(timeout);
       setSubmitting(form, false);
     }
   }
 
   function continueOnWhatsApp(form) {
+    if (form.getAttribute("aria-busy") === "true") return;
     clearContactValidity(form);
     if (!form.checkValidity()) {
       form.reportValidity();
@@ -155,11 +164,10 @@
     const values = formValues(form);
     if (!validateContact(form, values)) return;
     const url = whatsappUrl(values);
-    track("whatsapp_click", { link_url: url, service_name: serviceName(values), page_location: window.location.href });
-    track("generate_lead", { lead_method: "whatsapp", service_name: serviceName(values), page_location: window.location.href });
-    setStatus(form, "Opening WhatsApp with your enquiry…", "progress");
-    const popup = window.open(url, "_blank", "noopener,noreferrer");
-    if (!popup) window.location.href = url;
+    track("whatsapp_click", { link_url: "https://wa.me/" + WHATSAPP_NUMBER, service_name: serviceName(values), page_location: window.location.href });
+    setStatus(form, "Review and send your enquiry in WhatsApp. If it did not open, allow pop-ups and try again.", "progress");
+    // noopener returns null even when the new tab opens; do not also navigate this page.
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   function bindAnalyticsLinks() {
@@ -168,7 +176,7 @@
       if (!link) return;
       const href = String(link.getAttribute("href") || "");
       if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
-        track("whatsapp_click", { link_url: link.href, page_location: window.location.href });
+        track("whatsapp_click", { link_url: link.href.split("?")[0], page_location: window.location.href });
       } else if (/^tel:/i.test(href)) {
         track("phone_click", { page_location: window.location.href });
       } else if (/^mailto:/i.test(href)) {
@@ -186,6 +194,8 @@
       });
       const whatsappButton = form.querySelector("[data-whatsapp-submit]");
       if (whatsappButton) whatsappButton.addEventListener("click", function () { continueOnWhatsApp(form); });
+      const preferredContact = form.querySelector('[name="preferredContact"]');
+      if (preferredContact) preferredContact.addEventListener("change", function () { clearContactValidity(form); });
       ["email", "phone"].forEach(function (name) {
         const field = form.querySelector('[name="' + name + '"]');
         if (field) field.addEventListener("input", function () { clearContactValidity(form); });
