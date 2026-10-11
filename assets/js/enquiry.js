@@ -63,16 +63,16 @@
 
       if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
         trackAnalyticsEvent("whatsapp_click", {
-          link_url: link.href,
-          page_location: window.location.href
+          link_url: link.href.split(/[?#]/)[0],
+          page_location: window.location.origin + window.location.pathname
         });
       } else if (/^tel:/i.test(href)) {
         trackAnalyticsEvent("phone_click", {
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname
         });
       } else if (/^mailto:/i.test(href)) {
         trackAnalyticsEvent("email_click", {
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname
         });
       }
     });
@@ -534,14 +534,13 @@
         body: buildSheetPayload(values),
         keepalive: true
       });
-      trackAnalyticsEvent("generate_lead", {
+      trackAnalyticsEvent("enquiry_submit_attempt", {
         lead_method: "website_form",
         service_name: analyticsService(values),
-        page_location: window.location.href
+        page_location: window.location.origin + window.location.pathname
       });
-      form.reset();
       clearConditionalValidity(form);
-      setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
+      setStatus(form, "Your enquiry has been sent for processing, but receipt is not yet confirmed. You can keep these details or contact us on WhatsApp to confirm.", "success");
     } catch (error) {
       setStatus(form, "We could not submit the enquiry. Please try again or continue on WhatsApp.", "error");
     } finally {
@@ -561,14 +560,14 @@
     const values = formValues(form);
     const url = buildWhatsAppUrl(values);
     trackAnalyticsEvent("whatsapp_click", {
-      link_url: url,
+      link_url: "https://wa.me/" + WHATSAPP_NUMBER,
       service_name: analyticsService(values),
-      page_location: window.location.href
+      page_location: window.location.origin + window.location.pathname
     });
-    trackAnalyticsEvent("generate_lead", {
+    trackAnalyticsEvent("enquiry_handoff", {
       lead_method: "whatsapp",
       service_name: analyticsService(values),
-      page_location: window.location.href
+      page_location: window.location.origin + window.location.pathname
     });
     setStatus(form, "Opening WhatsApp with your enquiry…", "progress");
     const popup = window.open(url, "_blank", "noopener,noreferrer");
@@ -612,7 +611,7 @@
         trackAnalyticsEvent("select_content", {
           content_type: "service_package",
           item_id: String(button.getAttribute("data-package") || "Package enquiry").slice(0, 100),
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname
         });
         selectPackage(button);
       });
