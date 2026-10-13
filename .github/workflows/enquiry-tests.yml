@@ -1,0 +1,31 @@
+name: Enquiry capture tests
+on:
+  pull_request:
+    paths:
+      - 'assets/js/enquiry*.js'
+      - 'ai-business-automation.html'
+      - 'index.html'
+      - 'google-apps-script/**'
+      - 'scripts/test-enquiry*'
+      - '.github/workflows/enquiry-tests.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'assets/js/enquiry*.js'
+      - 'ai-business-automation.html'
+      - 'index.html'
+      - 'google-apps-script/**'
+      - 'scripts/test-enquiry*'
+      - '.github/workflows/enquiry-tests.yml'
+permissions:
+  contents: read
+jobs:
+  enquiry-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check assets/js/enquiry-home.js && node --check assets/js/enquiry.js
+      - run: node --test scripts/test-enquiry-*.cjs

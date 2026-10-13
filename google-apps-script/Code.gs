@@ -71,9 +71,16 @@ function doPost(e) {
     });
 
     const cache = CacheService.getScriptCache();
-    const duplicateKey = submissionKey(email, phone, service);
-    if (cache.get(duplicateKey)) {
-      return jsonResponse({ success: true, duplicate: true });
+    const duplicateKey = submissionKey([
+      name, email, phone, preferredContact, service, message, sourcePage
+    ]);
+    const recordedEnquiryId = cache.get(duplicateKey);
+    if (recordedEnquiryId) {
+      return jsonResponse({
+        success: true,
+        duplicate: true,
+        enquiryId: recordedEnquiryId
+      });
     }
 
     const submittedAt = new Date();
@@ -103,9 +110,9 @@ function doPost(e) {
       "",
       "",
       ""
-    ]);
+    ].map(sheetValue));
 
-    cache.put(duplicateKey, "1", 60);
+    cache.put(duplicateKey, enquiryId, 60);
     sendNotification({
       enquiryId: enquiryId,
       name: name,
@@ -190,12 +197,17 @@ function sendNotification(values) {
   }
 }
 
-function submissionKey(email, phone, service) {
+function submissionKey(values) {
   const digest = Utilities.computeDigest(
     Utilities.DigestAlgorithm.SHA_256,
-    [email, phone, service].join("|")
+    JSON.stringify(values)
   );
   return Utilities.base64EncodeWebSafe(digest).slice(0, 40);
+}
+
+function sheetValue(value) {
+  // Keep formula-like user input (including + prefixed phone numbers) as text.
+  return typeof value === "string" && /^[=+\-@]/.test(value) ? "'" + value : value;
 }
 
 function clean(value, maximumLength) {

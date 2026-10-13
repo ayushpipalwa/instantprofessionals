@@ -52,7 +52,7 @@
   }
 
   function analyticsService(values) {
-    return String((values && (values.package || values.service)) || "General enquiry").slice(0, 100);
+    return [values.service || "General enquiry", values.package].filter(Boolean).join(" — ").slice(0, 120);
   }
 
   function bindAnalyticsLinks() {
@@ -63,7 +63,7 @@
 
       if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
         trackAnalyticsEvent("whatsapp_click", {
-          link_url: link.href,
+          link_url: link.href.split("?")[0],
           page_location: window.location.href
         });
       } else if (/^tel:/i.test(href)) {
@@ -83,7 +83,7 @@
     const fields = [
       "Hello, I would like assistance from Instant Professionals.",
       "",
-      "Service: " + (values.package || values.service || "General enquiry"),
+      "Service: " + analyticsService(values),
       "Name: " + (values.name || ""),
       "Phone: " + (values.phone || "Not provided"),
       "Email: " + (values.email || "Not provided"),
@@ -408,7 +408,7 @@
 
   function selectPackage(button) {
     const form = document.querySelector(".ip-enquiry-form");
-    if (!form) return;
+    if (!form || form.getAttribute("aria-busy") === "true") return;
     const packageField = form.querySelector('[name="package"]');
     if (packageField) {
       const value = button.getAttribute("data-package") || "Professional support";
@@ -491,7 +491,7 @@
     payload.set("email", String(values.email || "").trim());
     payload.set("phone", String(values.phone || "").trim());
     payload.set("preferredContact", String(values.preferredContact || "No preference").trim());
-    payload.set("service", String(values.package || values.service || "General enquiry").trim());
+    payload.set("service", analyticsService(values));
     payload.set("message", String(values.message || "").trim());
     payload.set("consent", values.consent === "Yes" ? "Yes" : "No");
     payload.set("sourcePage", String(values.sourcePage || window.location.href));
@@ -501,12 +501,13 @@
 
   function setSubmitting(form, submitting) {
     form.setAttribute("aria-busy", String(submitting));
-    form.querySelectorAll("button").forEach(function (button) {
-      button.disabled = submitting;
+    form.querySelectorAll("button, input, select, textarea").forEach(function (field) {
+      field.disabled = submitting;
     });
   }
 
   async function submitOnline(form) {
+    if (form.getAttribute("aria-busy") === "true") return;
     clearConditionalValidity(form);
 
     if (!form.checkValidity()) {
@@ -527,13 +528,20 @@
     setSubmitting(form, true);
     setStatus(form, "Submitting your enquiry securely…", "progress");
 
+    const controller = new AbortController();
+    const timeout = window.setTimeout(function () { controller.abort(); }, 20000);
     try {
-      await fetch(endpoint, {
+      const response = await fetch(endpoint, {
         method: "POST",
-        mode: "no-cors",
+        mode: "cors",
         body: buildSheetPayload(values),
-        keepalive: true
+        keepalive: true,
+        signal: controller.signal
       });
+      const result = response.ok && await response.json();
+      if (!result || result.success !== true || (!result.enquiryId && result.duplicate !== true)) {
+        throw new Error("Enquiry was not acknowledged.");
+      }
       trackAnalyticsEvent("generate_lead", {
         lead_method: "website_form",
         service_name: analyticsService(values),
@@ -543,13 +551,15 @@
       clearConditionalValidity(form);
       setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
     } catch (error) {
-      setStatus(form, "We could not submit the enquiry. Please try again or continue on WhatsApp.", "error");
+      setStatus(form, "We could not confirm your enquiry was recorded. Your details are still here; please try again or continue on WhatsApp.", "error");
     } finally {
+      window.clearTimeout(timeout);
       setSubmitting(form, false);
     }
   }
 
   function continueOnWhatsApp(form) {
+    if (form.getAttribute("aria-busy") === "true") return;
     clearConditionalValidity(form);
 
     if (!form.checkValidity()) {
@@ -561,18 +571,13 @@
     const values = formValues(form);
     const url = buildWhatsAppUrl(values);
     trackAnalyticsEvent("whatsapp_click", {
-      link_url: url,
+      link_url: "https://wa.me/" + WHATSAPP_NUMBER,
       service_name: analyticsService(values),
       page_location: window.location.href
     });
-    trackAnalyticsEvent("generate_lead", {
-      lead_method: "whatsapp",
-      service_name: analyticsService(values),
-      page_location: window.location.href
-    });
-    setStatus(form, "Opening WhatsApp with your enquiry…", "progress");
-    const popup = window.open(url, "_blank", "noopener,noreferrer");
-    if (!popup) window.location.href = url;
+    setStatus(form, "Review and send your enquiry in WhatsApp. If it did not open, allow pop-ups and try again.", "progress");
+    // noopener returns null even when the new tab opens; do not also navigate this page.
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   function bindForms() {
@@ -595,6 +600,8 @@
         });
       }
 
+      const preferredContact = form.querySelector('[name="preferredContact"]');
+      if (preferredContact) preferredContact.addEventListener("change", function () { clearConditionalValidity(form); });
       ["email", "phone"].forEach(function (name) {
         const field = form.querySelector('[name="' + name + '"]');
         if (field) {
@@ -980,6 +987,7 @@
       const form = document.querySelector(".ip-enquiry-form");
       const message = "Document readiness — Ready: " + (ready.join(", ") || "none") + ". Pending: " + (pending.join(", ") || "none") + ".";
       if (form) {
+        if (form.getAttribute("aria-busy") === "true") return;
         const field = form.querySelector('[name="message"]');
         if (field) field.value = message;
         form.scrollIntoView({ behavior: "smooth", block: "start" });

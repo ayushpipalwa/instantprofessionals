@@ -1,0 +1,168 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Enquiry regression checks</title>
+<style>body{font:16px system-ui;margin:20px;color:#12233d}button{padding:12px;margin:4px}pre{white-space:pre-wrap}iframe{height:780px;border:1px solid #789;display:block;margin-top:20px}</style>
+<h1>Enquiry regression checks</h1>
+<p>Serve the repository root with <code>python3 -m http.server 8765</code>, then open this page. Offline checks replace submission, analytics and WhatsApp with local mocks. No leads or emails are created.</p>
+<button id="run">Run offline mobile regressions</button>
+<button id="cors">Check live CORS transport (honeypot only)</button>
+<pre id="log" role="status"></pre>
+<iframe id="preview" title="Mobile enquiry preview" width="390"></iframe>
+<script>
+const log = document.getElementById('log');
+const frame = document.getElementById('preview');
+const report = message => { log.textContent += message + '\n'; };
+const assert = (condition, message) => { if (!condition) throw new Error(message); };
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function waitFor(predicate) {
+  for (let i = 0; i < 100; i++) { if (predicate()) return; await pause(20); }
+  throw new Error('Timed out waiting for expected form state');
+}
+async function fixture(path, width) {
+  frame.width = width;
+  let html = await (await fetch('../' + path)).text();
+  // Keep actual application scripts/styles; suppress third-party analytics and fonts.
+  html = html.replace(/<script\b[^>]*src=["']https?:[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<link\b[^>]*href=["']https?:[^>]*>/gi, '');
+  const setup = function () {
+    window.__ipGoogleAnalyticsId = 'G-TG0272S260';
+    window.dataLayer = [];
+    window.__qa = { calls: [], opens: [], pending: [], timers: [] };
+    window.gtag = function () { window.dataLayer.push(Array.from(arguments)); };
+    window.open = function () { window.__qa.opens.push(Array.from(arguments)); return null; };
+    const originalTimeout = window.setTimeout;
+    window.setTimeout = function (callback, delay, ...args) {
+      if (delay === 20000) { window.__qa.timers.push(callback); return 0; }
+      return originalTimeout(callback, delay, ...args);
+    };
+    window.fetch = function (url, options) {
+      window.__qa.calls.push({ url, options });
+      return new Promise((resolve, reject) => {
+        window.__qa.pending.push({ resolve, reject });
+        options.signal.addEventListener('abort', () => reject(new DOMException('Timed out', 'AbortError')));
+      });
+    };
+  };
+  html = html.replace(/<head[^>]*>/i, '$&<base href="' + new URL('../', location.href).href + '"><script>(' + setup.toString() + ')();<\/script>');
+  await new Promise(resolve => { frame.onload = resolve; frame.srcdoc = html; });
+  const win = frame.contentWindow;
+  const form = win.document.querySelector('.ip-enquiry-form, #ipAutomationForm');
+  const status = win.document.querySelector('.ip-form-status, #ipAutomationSaveStatus');
+  return { win, form, status, qa: win.__qa };
+}
+function fill(form) {
+  for (const select of form.querySelectorAll('select[required]')) select.value = [...select.options].find(option => option.value).value;
+  for (const input of form.querySelectorAll('input[type=checkbox]')) input.checked = true;
+  for (const [name, value] of Object.entries({ name: 'QA TEST local only', email: 'qa@example.invalid', phone: '+1 202 555 0142', message: 'Private synthetic enquiry', details: 'Private synthetic context' })) {
+    const input = form.querySelector('[name="' + name + '"]'); if (input) input.value = value;
+  }
+}
+function submit(fixture) { fixture.form.requestSubmit(); }
+function respond(qa, result, status = 200) {
+  qa.pending.shift().resolve({ ok: status < 400, status, json: async () => result });
+}
+async function onlineChecks(path, width) {
+  const fixtureData = await fixture(path, width);
+  const { win, form, status, qa } = fixtureData;
+  const isAI = form.id === 'ipAutomationForm';
+  const name = form.querySelector('[name=name]');
+  assert(win.document.documentElement.scrollWidth <= width + 1, path + ': horizontal overflow at ' + width);
+  const formRect = form.getBoundingClientRect();
+  assert(formRect.left >= 0 && formRect.right <= width + 1, path + ': form clipped');
+  fill(form);
+  submit(fixtureData);
+  assert(qa.calls.length === 1, 'valid form must make one request');
+  assert(qa.calls[0].options.mode === 'cors', 'request must permit readable response');
+  assert(qa.calls[0].options.keepalive === true, 'navigation must preserve the submitted request');
+  assert(form.getAttribute('aria-busy') === 'true', 'pending state missing');
+  assert([...form.querySelectorAll('input,select,textarea,button')].every(field => field.disabled), 'pending controls must not allow draft replacement');
+  const submittedPackage = form.querySelector('[name=package]')?.value;
+  const submittedMessage = form.querySelector('[name=message]')?.value;
+  win.document.querySelector('.ip-package-button')?.click();
+  win.document.querySelector('[data-send-readiness]')?.click();
+  assert(form.querySelector('[name=package]')?.value === submittedPackage, 'external package button changed pending draft');
+  assert(form.querySelector('[name=message]')?.value === submittedMessage, 'readiness action changed pending draft');
+  // Exercise repeated submit events even when the button is disabled.
+  form.dispatchEvent(new win.Event('submit', { bubbles: true, cancelable: true }));
+  assert(qa.calls.length === 1, 'duplicate pending request');
+  respond(qa, { success: false, message: 'Synthetic receiver rejection' });
+  await waitFor(() => form.getAttribute('aria-busy') === 'false');
+  assert(status.textContent.includes('could not confirm'), 'receiver rejection reported as success');
+  assert(name.value === 'QA TEST local only', 'failed request lost draft');
+  assert(!win.dataLayer.some(event => event[1] === 'generate_lead'), 'failed request counted as lead');
+
+  for (const response of [null, { success: true }, { success: false }]) {
+    submit(fixtureData); respond(qa, response, response === null ? 503 : 200);
+    await waitFor(() => form.getAttribute('aria-busy') === 'false');
+    assert(status.textContent.includes('could not confirm') && name.value, 'invalid response lost draft or claimed success');
+  }
+  submit(fixtureData); qa.pending.shift().resolve({ ok: true, json: async () => { throw new SyntaxError('HTML instead of JSON'); } });
+  await waitFor(() => form.getAttribute('aria-busy') === 'false');
+  assert(status.textContent.includes('could not confirm') && name.value, 'non-JSON response lost draft');
+  submit(fixtureData); qa.pending.shift().reject(new TypeError('Offline'));
+  await waitFor(() => form.getAttribute('aria-busy') === 'false');
+  assert(name.value && status.textContent.includes('could not confirm'), 'offline request lost draft');
+  submit(fixtureData); qa.timers.at(-1)(); qa.pending.shift();
+  await waitFor(() => form.getAttribute('aria-busy') === 'false');
+  assert(name.value && status.textContent.includes('could not confirm'), 'timeout did not release form');
+  submit(fixtureData); respond(qa, { success: true, enquiryId: 'IP-QA-OFFLINE' });
+  await waitFor(() => form.getAttribute('aria-busy') === 'false');
+  assert(status.textContent.includes('has been recorded'), 'acknowledged request did not succeed');
+  assert(isAI ? name.value : !name.value, 'unexpected acknowledged reset behavior');
+  assert(win.dataLayer.filter(event => event[1] === 'generate_lead').length === 1, 'lead event must follow only acknowledgement');
+  fill(form); submit(fixtureData); respond(qa, { success: true, duplicate: true });
+  await waitFor(() => form.getAttribute('aria-busy') === 'false');
+  assert(status.textContent.includes('has been recorded'), 'legacy duplicate acknowledgement unsupported');
+
+  if (!isAI) {
+    fill(form);
+    const email = form.querySelector('[name=email]');
+    const preference = form.querySelector('[name=preferredContact]');
+    email.value = ''; preference.value = 'Email';
+    submit(fixtureData);
+    assert(email.validationMessage, 'missing preferred email not validated');
+    preference.value = 'No preference'; preference.dispatchEvent(new win.Event('change'));
+    assert(!email.validationMessage, 'changing preferred contact leaves stale validity');
+    const before = qa.calls.length;
+    form.querySelector('[data-whatsapp-submit]').click();
+    assert(qa.opens.length === 1 && qa.calls.length === before, 'WhatsApp should open once and not save online');
+    assert(win.location.href === 'about:srcdoc', 'noopener null incorrectly navigated original page');
+    assert(name.value === 'QA TEST local only', 'WhatsApp interruption lost form draft');
+    assert(!JSON.stringify(win.dataLayer).includes('Private synthetic'), 'analytics includes private message');
+    assert(!JSON.stringify(win.dataLayer).includes('qa@example.invalid'), 'analytics includes email');
+    assert(win.dataLayer.filter(event => event[1] === 'generate_lead').length === 2, 'WhatsApp review counted as a submitted lead');
+  }
+  form.scrollIntoView({ block: 'center' });
+  report('PASS ' + path + ' @ ' + width + 'px: layout, pending/repeat, rejection/503/non-JSON/offline/timeout, retry, acknowledgement' + (!isAI ? ', contact recovery and WhatsApp/privacy' : ''));
+}
+document.getElementById('run').onclick = async function () {
+  this.disabled = true; log.textContent = '';
+  try {
+    for (const width of [360, 390]) {
+      for (const path of ['index.html', 'accounting-bookkeeping.html', 'ai-business-automation.html']) await onlineChecks(path, width);
+    }
+    const { win, form, qa } = await fixture('gst-registration.html', 390);
+    fill(form); form.requestSubmit();
+    assert(qa.calls.length === 0 && qa.opens.length === 1, 'WhatsApp-only service must not record a lead before review');
+    assert(win.location.href === 'about:srcdoc', 'WhatsApp-only route replaced original page');
+    assert(!JSON.stringify(win.dataLayer).includes('Private synthetic'), 'WhatsApp-only analytics leaked message');
+    form.scrollIntoView({ block: 'center' });
+    report('PASS GST WhatsApp-only flow: single new tab, no online capture, original form retained');
+    report('ALL OFFLINE BROWSER CHECKS PASSED');
+  } catch (error) { report('FAIL ' + error.stack); }
+  finally { this.disabled = false; }
+};
+document.getElementById('cors').onclick = async function () {
+  this.disabled = true;
+  try {
+    const html = await (await fetch('../index.html')).text();
+    const endpoint = html.match(/data-sheet-endpoint="([^"]+)"/)[1];
+    const body = new FormData(); body.set('website', 'QA transport probe - honeypot skips lead and email');
+    const response = await fetch(endpoint, { method: 'POST', mode: 'cors', body, signal: AbortSignal.timeout(30000) });
+    const result = await response.json();
+    assert(response.ok && result.success === true, 'CORS probe did not return readable success');
+    report('LIVE CORS PASS: ' + response.type + ', HTTP ' + response.status + ', redirected=' + response.redirected + ', ' + JSON.stringify(result) + '. Honeypot only, no lead/contact payload.');
+  } catch (error) { report('LIVE CORS FAIL: ' + error.message); }
+  finally { this.disabled = false; }
+};
+</script>
