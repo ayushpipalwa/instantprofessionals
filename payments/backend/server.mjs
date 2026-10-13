@@ -1,12 +1,13 @@
 import { createServer } from 'node:http';
 import { pathToFileURL } from 'node:url';
 import { config, openStore, fail, findQuote, publicQuote, gateway, beginCheckout, refreshQuote, acceptNotification, uniqueParams } from './core.mjs';
+import { verifyBridge } from './bridge-auth.mjs';
 async function readBody(req, limit) {
   const chunks = []; let size = 0;
   for await (const chunk of req) { size += chunk.length; if (size > limit) fail(413, 'Request is too large.'); chunks.push(chunk); }
   return Buffer.concat(chunks).toString('utf8');
 }
-export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote, beginCheckout, refreshQuote, acceptNotification }) {
+export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote, beginCheckout, refreshQuote, acceptNotification }, native = null) {
   const buckets = new Map();
   const server = createServer(async (req, res) => {
     const send = (code, data) => { res.writeHead(code); res.end(data ? JSON.stringify(data) : undefined); };
@@ -14,13 +15,14 @@ export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote
     res.setHeader('Content-Type', 'application/json'); res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff'); res.setHeader('Referrer-Policy', 'no-referrer'); res.setHeader('Vary', 'Origin');
     const callback = ['/callback', '/cancel'].includes(req.url), notification = callback || req.url === '/webhook';
+    const internal = ['/internal/invoice-link','/internal/reconcile-invoices'].includes(req.url);
     try {
       if (req.url === '/health' && req.method === 'GET') {
         if (req.headers.origin === cfg.origin) res.setHeader('Access-Control-Allow-Origin', cfg.origin);
         return send(200, { ok: true, mode: cfg.mode, provider: 'ccavenue' });
       }
-      if (!notification && !['/quote', '/session', '/status', '/invoice'].includes(req.url)) fail(404, 'Not found.');
-      if (!notification) {
+      if (!notification && !internal && !['/quote', '/session', '/status', '/invoice'].includes(req.url)) fail(404, 'Not found.');
+      if (!notification && !internal) {
         if (req.headers.origin !== cfg.origin) fail(403, 'Origin is not allowed.');
         res.setHeader('Access-Control-Allow-Origin', cfg.origin); res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -38,14 +40,20 @@ export function makeServer(cfg, db, api = gateway(cfg), operations = { findQuote
       const type = notification ? /^application\/x-www-form-urlencoded(?:;|$)/i : /^application\/json(?:;|$)/i;
       if (!type.test(req.headers['content-type'] || '')) fail(415, 'Unsupported content type.');
       const raw = await readBody(req, notification ? 140000 : 8192);
+      if (internal && (!native || !verifyBridge(process.env.PAYMENT_BRIDGE_SECRET,req.url,req.headers,raw))) fail(401,'Unauthorised payment bridge request.');
       if (notification) {
         const body = uniqueParams(raw);
-        await operations.acceptNotification(db, cfg, body.encResp, api);
+        if(native && req.url==='/webhook') {
+          const result=await operations.notificationOrder(body.encResp);
+          if(result==='native') await native.notification(body.encResp);
+          else await operations.acceptNotification(db, cfg, body.encResp, api);
+        } else await operations.acceptNotification(db, cfg, body.encResp, api);
         return callback ? back() : send(200, { received: true });
       }
       let body;
       try { body = JSON.parse(raw); } catch { fail(400, 'Invalid JSON.'); }
       if (!body || typeof body !== 'object' || Array.isArray(body)) fail(400, 'Invalid request.');
+      if(internal) return send(200,req.url==='/internal/invoice-link' ? await native.create(body) : await native.reconcile());
       if (req.url === '/invoice') {
         if (!operations.lookupInvoice) fail(404, 'Invoice payments are unavailable.');
         const result = await operations.lookupInvoice(db, cfg, body);
