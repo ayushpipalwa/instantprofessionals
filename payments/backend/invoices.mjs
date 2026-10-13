@@ -29,6 +29,10 @@ export function invoiceOperations(invoiceDb) {
     // The lock covers lookup and checkout across all LIVE instances, including callers
     // with separate browser sessions. Unresolved provider attempts never expire silently.
     await client.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))', [cfg.account + ':' + invoice.invoice_id]);
+    if(process.env.PAYMENT_NATIVE_LINKS_ENABLED==='true') {
+      const native=await client.query('SELECT 1 FROM ip_payments.invoice_links WHERE account=$1 AND invoice_id=$2 LIMIT 1',[cfg.account,invoice.invoice_id]);
+      if(native.rowCount) fail(409,'This invoice uses a CCAvenue payment link. Contact our team for its payment status before paying again.');
+    }
     const blocked = await client.query(`SELECT id FROM ip_payments.quotes WHERE account=$1 AND invoice_id=$2
       AND state IN ('pending','review') AND ($3::text IS NULL OR id<>$3) LIMIT 1`, [cfg.account, invoice.invoice_id, excludeId || null]);
     if (blocked.rowCount) fail(409, 'An invoice payment is awaiting verification or review. Check its payment status or contact our team before paying again.');
