@@ -7,3 +7,8 @@
 !invoices.mjs
 !cloud-server.mjs
 !Dockerfile
+
+!native-api.mjs
+!native-links.mjs
+!bridge-auth.mjs
+!cloud-reconcile.mjs
