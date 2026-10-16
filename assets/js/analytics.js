@@ -2,6 +2,7 @@
   "use strict";
 
   // Lightweight GA4 bootstrap for informational pages without enquiry.js.
+  if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname)) return;
   const measurementId = "G-TG0272S260";
   // Informational pages also need contact and guide-to-service attribution.
   if (!window.__ipGuideContactTracking) {

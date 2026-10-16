@@ -20,6 +20,7 @@
   const GA_MEASUREMENT_ID = "G-TG0272S260";
 
   function loadGoogleAnalytics() {
+    if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname)) return;
     if (window.__ipGoogleAnalyticsId === GA_MEASUREMENT_ID) return;
 
     const existingTag = document.querySelector(
@@ -47,7 +48,7 @@
   }
 
   function trackAnalyticsEvent(name, parameters) {
-    if (typeof window.gtag !== "function") return;
+    if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) || typeof window.gtag !== "function") return;
     window.gtag("event", name, parameters || {});
   }
 

@@ -4,7 +4,7 @@
   const WHATSAPP_NUMBER = "918209785294";
 
   function track(name, parameters) {
-    if (typeof window.gtag === "function") window.gtag("event", name, parameters || {});
+    if (["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) && typeof window.gtag === "function") window.gtag("event", name, parameters || {});
   }
 
   function serviceName(values) {

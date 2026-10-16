@@ -7,7 +7,7 @@ async function scenario(file, fails=false) {
   const events=[], status={dataset:{}}, fields={}; let reset=false;
   const form={getAttribute:n=>n==='data-sheet-endpoint'?'https://script.google.com/macros/s/test/exec':'ROC Search Report',checkValidity:()=>true,reportValidity(){},setAttribute(){},querySelectorAll:()=>[],reset(){reset=true},querySelector:s=>s==='.ip-form-status'?status:(fields[s]||={setCustomValidity(){},focus(){}})};
   class FormData {constructor(){this.data={name:'PRIVATE_NAME',phone:'1234567890',email:'private@example.com',consent:'yes',service:'ROC Search Report'}}get(k){return this.data[k]||''}set(k,v){this.data[k]=v}}
-  const window={location:{origin:'https://www.instantprofessionals.in',pathname:'/roc-search-report.html',href:'https://www.instantprofessionals.in/roc-search-report.html?email=private@example.com'},gtag:(...a)=>events.push(a),open:()=>({})};
+  const window={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/roc-search-report.html',href:'https://www.instantprofessionals.in/roc-search-report.html?email=private@example.com'},gtag:(...a)=>events.push(a),open:()=>({})};
   const document={readyState:'loading',querySelector:()=>null,addEventListener(){},createElement:()=>({}),head:{appendChild(){}}};
   let code=readFileSync(path.join(root,'assets/js',file),'utf8');
   const i=code.lastIndexOf('})();');
@@ -27,7 +27,7 @@ async function scenario(file, fails=false) {
 (async()=>{
   for(const file of ['enquiry.js','enquiry-home.js']){await scenario(file);await scenario(file,true)}
   const events=[],listeners=[];
-  const window={location:{origin:'https://www.instantprofessionals.in',pathname:'/guide.html'},gtag:(...a)=>events.push(a),__ipGoogleAnalyticsId:'G-TG0272S260'};
+  const window={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/guide.html'},gtag:(...a)=>events.push(a),__ipGoogleAnalyticsId:'G-TG0272S260'};
   const document={title:'Guide',addEventListener:(n,f)=>listeners.push(f)};
   const code=readFileSync(path.join(root,'assets/js/analytics.js'),'utf8');
   vm.runInNewContext(code,{window,document});vm.runInNewContext(code,{window,document});
@@ -38,5 +38,11 @@ async function scenario(file, fails=false) {
   }
   assert.deepEqual(events.map(e=>e[1]),['phone_click','whatsapp_click','enquiry_cta_click']);
   assert(!JSON.stringify(events).includes('PRIVATE_NAME'));
+  for (const hostname of ['localhost', '127.0.0.1', 'preview.example.com', '']) {
+    const previewWindow={location:{hostname},gtag:()=>{throw Error('Preview must not track')}};
+    const previewDocument={readyState:'loading',addEventListener(){},querySelector(){throw Error('Preview must not load GA')}};
+    vm.runInNewContext(code,{window:previewWindow,document:previewDocument});
+    vm.runInNewContext(readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8'),{window:previewWindow,document:previewDocument});
+  }
   console.log('PASS: both enquiry flows, network failures, receipt wording, contact privacy, guide contact events and duplicate binding');
 })().catch(e=>{console.error(e);process.exit(1)});
