@@ -4,7 +4,7 @@
   const WHATSAPP_NUMBER = "918209785294";
 
   function track(name, parameters) {
-    if (typeof window.gtag === "function") window.gtag("event", name, parameters || {});
+    if (["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) && typeof window.gtag === "function") window.gtag("event", name, parameters || {});
   }
 
   function serviceName(values) {
@@ -130,14 +130,13 @@
     setStatus(form, "Submitting your enquiry securely…", "progress");
     try {
       await fetch(endpoint, { method: "POST", mode: "no-cors", body: sheetPayload(values), keepalive: true });
-      track("generate_lead", {
+      track("enquiry_submit_attempt", {
         lead_method: "website_form",
         service_name: serviceName(values),
-        page_location: window.location.href
+        page_location: window.location.origin + window.location.pathname
       });
-      form.reset();
       clearContactValidity(form);
-      setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
+      setStatus(form, "Your enquiry has been sent for processing, but receipt is not yet confirmed. You can keep these details or contact us on WhatsApp to confirm.", "success");
     } catch (error) {
       setStatus(form, "We could not submit the enquiry. Please try again or continue on WhatsApp.", "error");
     } finally {
@@ -155,8 +154,8 @@
     const values = formValues(form);
     if (!validateContact(form, values)) return;
     const url = whatsappUrl(values);
-    track("whatsapp_click", { link_url: url, service_name: serviceName(values), page_location: window.location.href });
-    track("generate_lead", { lead_method: "whatsapp", service_name: serviceName(values), page_location: window.location.href });
+    track("whatsapp_click", { link_url: "https://wa.me/" + WHATSAPP_NUMBER, service_name: serviceName(values), page_location: window.location.origin + window.location.pathname });
+    track("enquiry_handoff", { lead_method: "whatsapp", service_name: serviceName(values), page_location: window.location.origin + window.location.pathname });
     setStatus(form, "Opening WhatsApp with your enquiry…", "progress");
     const popup = window.open(url, "_blank", "noopener,noreferrer");
     if (!popup) window.location.href = url;
@@ -168,11 +167,11 @@
       if (!link) return;
       const href = String(link.getAttribute("href") || "");
       if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
-        track("whatsapp_click", { link_url: link.href, page_location: window.location.href });
+        track("whatsapp_click", { link_url: link.href.split(/[?#]/)[0], page_location: window.location.origin + window.location.pathname });
       } else if (/^tel:/i.test(href)) {
-        track("phone_click", { page_location: window.location.href });
+        track("phone_click", { page_location: window.location.origin + window.location.pathname });
       } else if (/^mailto:/i.test(href)) {
-        track("email_click", { page_location: window.location.href });
+        track("email_click", { page_location: window.location.origin + window.location.pathname });
       }
     });
   }
