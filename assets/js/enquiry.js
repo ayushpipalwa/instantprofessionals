@@ -939,6 +939,8 @@
     const categoryText = categoryElement.textContent.toUpperCase();
     let category = Object.keys(SERVICE_AUTOMATION_CHECKLISTS).find(function (key) { return categoryText.indexOf(key) !== -1; });
     const filename = window.location.pathname.split("/").pop() || "";
+    // This records-search service has a dedicated static checklist, not a filing deadline.
+    if (filename === "roc-search-report.html") return;
     if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
     if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
     if (!category) return;
