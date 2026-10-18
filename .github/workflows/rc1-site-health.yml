@@ -58,7 +58,10 @@ jobs:
           page="$(curl --fail --silent --show-error --location --max-time 30 https://www.instantprofessionals.in/ai-business-automation.html)"
           grep -Fq 'Human review remains mandatory' <<<"$page" || { echo 'Human-review safeguard missing'; exit 1; }
           grep -Fq 'does not replace professional advice' <<<"$page" || { echo 'Preliminary-routing disclaimer missing'; exit 1; }
-          grep -Fq 'G-TG0272S260' <<<"$page" || { echo 'GA4 missing from AI funnel'; exit 1; }
+          analytics_src="$(grep -Eo '<script[^>]+src="assets/js/analytics\.js(\?[^" ]*)?"' <<<"$page" | sed -E 's/.*src="([^"]+)"/\1/' | head -n 1)" || true
+          test -n "$analytics_src" || { echo 'Shared analytics script missing from AI funnel'; exit 1; }
+          analytics="$(curl --fail --silent --show-error --location --retry 3 --retry-delay 2 --connect-timeout 10 --max-time 30 "https://www.instantprofessionals.in/$analytics_src")"
+          grep -Fq 'G-TG0272S260' <<<"$analytics" || { echo 'GA4 measurement ID missing from shared analytics script'; exit 1; }
           grep -Fq 'script.google.com/macros/s/' <<<"$page" || { echo 'Lead-capture endpoint missing from AI funnel'; exit 1; }
           grep -Fq 'mca-name-reservation-search-approval.html' <<<"$page" || { echo 'Incorporation route is not wired to the MCA setup path'; exit 1; }
 
