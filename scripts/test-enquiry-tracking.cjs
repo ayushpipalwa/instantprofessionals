@@ -3,20 +3,21 @@ const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const path=require('node:path');
 const root=path.join(__dirname,'..');
-async function scenario(file, fails=false) {
+async function scenario(file, outcome='acknowledged') {
   const events=[], status={dataset:{}}, fields={}; let reset=false;
   const form={getAttribute:n=>n==='data-sheet-endpoint'?'https://script.google.com/macros/s/test/exec':'ROC Search Report',checkValidity:()=>true,reportValidity(){},setAttribute(){},querySelectorAll:()=>[],reset(){reset=true},querySelector:s=>s==='.ip-form-status'?status:(fields[s]||={setCustomValidity(){},focus(){}})};
   class FormData {constructor(){this.data={name:'PRIVATE_NAME',phone:'1234567890',email:'private@example.com',consent:'yes',service:'ROC Search Report'}}get(k){return this.data[k]||''}set(k,v){this.data[k]=v}}
-  const window={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/roc-search-report.html',href:'https://www.instantprofessionals.in/roc-search-report.html?email=private@example.com'},gtag:(...a)=>events.push(a),open:()=>({})};
+  const window={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/roc-search-report.html',href:'https://www.instantprofessionals.in/roc-search-report.html?email=private@example.com'},gtag:(...a)=>events.push(a),open:()=>null,setTimeout:()=>1,clearTimeout(){}};
   const document={readyState:'loading',querySelector:()=>null,addEventListener(){},createElement:()=>({}),head:{appendChild(){}}};
   let code=readFileSync(path.join(root,'assets/js',file),'utf8');
   const i=code.lastIndexOf('})();');
   code=code.slice(0,i)+'window.testFunctions={submitOnline,continueOnWhatsApp};'+code.slice(i);
-  vm.runInNewContext(code,{window,document,FormData,fetch:async()=>{if(fails)throw Error('offline');return {type:'opaque'}},URLSearchParams,console});
+  vm.runInNewContext(code,{window,document,FormData,fetch:async()=>{if(outcome==='offline')throw Error('offline');return outcome==='opaque'?{type:'opaque'}:{ok:true,json:async()=>({success:true,enquiryId:'IP-QA-TRACKING'})}},AbortController,URLSearchParams,console});
   await window.testFunctions.submitOnline(form);
   assert(!reset,'Keep form values when receipt is unknown');
-  if(fails){assert.equal(events.filter(e=>e[0]==='event').length,0);assert.equal(status.dataset.state,'error');}
-  else {assert(events.some(e=>e[1]==='enquiry_submit_attempt'));assert.match(status.textContent,/receipt is not yet confirmed/);}
+  assert.equal(events.filter(e=>e[1]==='enquiry_submit_attempt').length,1);
+  if(outcome==='acknowledged'){assert.equal(events.filter(e=>e[1]==='generate_lead').length,1);assert.match(status.textContent,/has been recorded/);}
+  else {assert(!events.some(e=>e[1]==='generate_lead'));assert.equal(status.dataset.state,'error');}
   events.length=0;
   window.testFunctions.continueOnWhatsApp(form);
   assert(events.some(e=>e[1]==='enquiry_handoff'));
@@ -25,7 +26,7 @@ async function scenario(file, fails=false) {
   assert(!JSON.stringify(events).includes('PRIVATE_NAME'));
 }
 (async()=>{
-  for(const file of ['enquiry.js','enquiry-home.js']){await scenario(file);await scenario(file,true)}
+  for(const file of ['enquiry.js','enquiry-home.js']){for(const outcome of ['acknowledged','opaque','offline'])await scenario(file,outcome)}
   const events=[],listeners=[];
   const window={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/guide.html'},gtag:(...a)=>events.push(a),__ipGoogleAnalyticsId:'G-TG0272S260'};
   const document={title:'Guide',addEventListener:(n,f)=>listeners.push(f)};

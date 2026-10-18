@@ -1,6 +1,12 @@
 # Google Sheet enquiry receiver
 
-This Apps Script receiver writes website submissions to the private Google Sheet with ID `1d4ae7SK4p9utA3ALzlGsoOdJHacK5U3x`.
+This Apps Script receiver writes website submissions to the private Google Sheet with ID `1ojMZhcoe4ZU9ULWALxqMTUgbSMne7vlQi4rJowwNQSs` (the `SPREADSHEET_ID` in `Code.gs`).
+
+## Offline regression tests
+
+Run `node --test scripts/test-enquiry-receiver.cjs` from the repository root. The tests mock Google services; they do not submit enquiries, write to the live Sheet, or send email.
+
+Exact retries of the normalized lead fields are deduplicated for up to 60 seconds while cached and return the original enquiry ID. Changes to the message or other lead fields are recorded separately. Formula-like cell values are escaped as text before writing; notification emails retain the original text.
 
 ## Deploy
 
@@ -13,3 +19,5 @@ This Apps Script receiver writes website submissions to the private Google Sheet
 7. Add that URL to the homepage form's `data-sheet-endpoint` attribute.
 
 The Sheet itself must remain private. Only the deployed web app accepts public form submissions.
+
+To update an existing receiver without changing its `/exec` URL, save `Code.gs`, open **Deploy → Manage deployments**, edit the existing deployment, select **New version**, and deploy. Publishing the website alone does not update Apps Script.
