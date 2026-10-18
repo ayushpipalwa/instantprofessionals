@@ -1,0 +1,16 @@
+name: AI preview tests
+on:
+  pull_request:
+    paths: ['ai/**', 'ai-service/**', '.github/workflows/ai-preview-tests.yml']
+permissions:
+  contents: read
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check ai/app.js
+      - run: node --test ai-service/test.mjs
