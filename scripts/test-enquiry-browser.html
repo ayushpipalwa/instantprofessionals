@@ -108,8 +108,8 @@ async function onlineChecks(path, width) {
   submit(fixtureData); respond(qa, { success: true, enquiryId: 'IP-QA-OFFLINE' });
   await waitFor(() => form.getAttribute('aria-busy') === 'false');
   assert(status.textContent.includes('has been recorded'), 'acknowledged request did not succeed');
-  assert(isAI ? name.value : !name.value, 'unexpected acknowledged reset behavior');
-  assert(win.dataLayer.filter(event => event[1] === 'generate_lead').length === 1, 'lead event must follow only acknowledgement');
+  assert(name.value, 'acknowledged enquiry should retain visitor details');
+  assert(win.dataLayer.length === 0, 'local preview must not send production Analytics events');
   fill(form); submit(fixtureData); respond(qa, { success: true, duplicate: true });
   await waitFor(() => form.getAttribute('aria-busy') === 'false');
   assert(status.textContent.includes('has been recorded'), 'legacy duplicate acknowledgement unsupported');
@@ -130,7 +130,7 @@ async function onlineChecks(path, width) {
     assert(name.value === 'QA TEST local only', 'WhatsApp interruption lost form draft');
     assert(!JSON.stringify(win.dataLayer).includes('Private synthetic'), 'analytics includes private message');
     assert(!JSON.stringify(win.dataLayer).includes('qa@example.invalid'), 'analytics includes email');
-    assert(win.dataLayer.filter(event => event[1] === 'generate_lead').length === 2, 'WhatsApp review counted as a submitted lead');
+    assert(win.dataLayer.length === 0, 'local preview must not send production Analytics events');
   }
   form.scrollIntoView({ block: 'center' });
   report('PASS ' + path + ' @ ' + width + 'px: layout, pending/repeat, rejection/503/non-JSON/offline/timeout, retry, acknowledgement' + (!isAI ? ', contact recovery and WhatsApp/privacy' : ''));

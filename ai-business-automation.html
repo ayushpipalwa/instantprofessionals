@@ -20,13 +20,7 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
   <link href="assets/css/style.css" rel="stylesheet" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TG0272S260"></script>
-  <script>
-    window.dataLayer=window.dataLayer||[];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js',new Date());
-    gtag('config','G-TG0272S260');
-  </script>
+  <script src="assets/js/analytics.js?v=20261019-enquiry" defer></script>
   <style>
     :root{--ip-navy:#0b2341;--ip-green:#00a651;--ip-ink:#18283c;--ip-muted:#667487;--ip-soft:#f5f8fb;--ip-line:#dfe7ef}
     body{font-family:"Open Sans",Arial,sans-serif;color:var(--ip-ink);background:#fff}
@@ -110,7 +104,7 @@
     automation:{title:'Business workflow automation',page:'ai-business-automation.html',service:'Website / workflow automation'},
     consultation:{title:'Professional consultation',page:'services.html',service:'Consultation required'}
   };
-  function track(name,params){if(typeof window.gtag==='function')window.gtag('event',name,params||{});}
+  function track(name,params){if(['instantprofessionals.in','www.instantprofessionals.in'].includes(window.location.hostname)&&typeof window.gtag==='function')window.gtag('event',name,params||{});}
   function sheetPayload(data,route){
     const payload=new FormData();
     payload.set('name',String(data.name||'').trim());
@@ -137,6 +131,7 @@
     form.setAttribute('aria-busy','true');
     form.querySelectorAll('input,select,textarea,button').forEach(function(field){field.disabled=true;});
     saveStatus.textContent='Recording your enquiry…';
+    track('enquiry_submit_attempt',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.origin+window.location.pathname});
     const controller=new AbortController();
     const timeout=window.setTimeout(function(){controller.abort();},20000);
     try{
@@ -144,10 +139,10 @@
       const saved=response.ok&&await response.json();
       if(!saved||saved.success!==true||(!saved.enquiryId&&saved.duplicate!==true))throw new Error('Enquiry was not acknowledged.');
       saveStatus.textContent='Your enquiry has been recorded for professional follow-up.';
-      track('generate_lead',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.href});
+      track('generate_lead',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.origin+window.location.pathname});
     }catch(error){
       saveStatus.textContent='Recommendation generated, but we could not confirm your enquiry was recorded. Your answers are still here; try again or continue on WhatsApp.';
-      track('lead_capture_error',{service_name:route.service,page_location:window.location.href});
+      track('lead_capture_error',{service_name:route.service,page_location:window.location.origin+window.location.pathname});
     }finally{
       window.clearTimeout(timeout);
       form.setAttribute('aria-busy','false');
@@ -182,8 +177,8 @@
     result.scrollIntoView({behavior:'smooth',block:'center'});
     const waLink=document.getElementById('ipAutomationWhatsApp');
     const serviceLink=document.getElementById('ipAutomationService');
-    if(waLink)waLink.addEventListener('click',function(){track('whatsapp_click',{lead_method:'ai_readiness_form',service_name:route.service,link_url:'https://wa.me/918209785294',page_location:window.location.href});});
-    if(serviceLink)serviceLink.addEventListener('click',function(){track('view_service_after_qualification',{service_name:route.service,destination:route.page,page_location:window.location.href});});
+    if(waLink)waLink.addEventListener('click',function(){track('whatsapp_click',{lead_method:'ai_readiness_form',service_name:route.service,link_url:'https://wa.me/918209785294',page_location:window.location.origin+window.location.pathname});});
+    if(serviceLink)serviceLink.addEventListener('click',function(){track('view_service_after_qualification',{service_name:route.service,destination:route.page,page_location:window.location.origin+window.location.pathname});});
   });
 })();
 </script>

@@ -4,7 +4,7 @@
   const WHATSAPP_NUMBER = "918209785294";
 
   function track(name, parameters) {
-    if (typeof window.gtag === "function") window.gtag("event", name, parameters || {});
+    if (["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) && typeof window.gtag === "function") window.gtag("event", name, parameters || {});
   }
 
   function serviceName(values) {
@@ -129,6 +129,7 @@
 
     setSubmitting(form, true);
     setStatus(form, "Submitting your enquiry securely…", "progress");
+    track("enquiry_submit_attempt", { lead_method: "website_form", service_name: serviceName(values), page_location: window.location.origin + window.location.pathname });
     const controller = new AbortController();
     const timeout = window.setTimeout(function () { controller.abort(); }, 20000);
     try {
@@ -140,9 +141,8 @@
       track("generate_lead", {
         lead_method: "website_form",
         service_name: serviceName(values),
-        page_location: window.location.href
+        page_location: window.location.origin + window.location.pathname
       });
-      form.reset();
       clearContactValidity(form);
       setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
     } catch (error) {
@@ -164,7 +164,8 @@
     const values = formValues(form);
     if (!validateContact(form, values)) return;
     const url = whatsappUrl(values);
-    track("whatsapp_click", { link_url: "https://wa.me/" + WHATSAPP_NUMBER, service_name: serviceName(values), page_location: window.location.href });
+    track("enquiry_handoff", { lead_method: "whatsapp", service_name: serviceName(values), page_location: window.location.origin + window.location.pathname });
+    track("whatsapp_click", { link_url: "https://wa.me/" + WHATSAPP_NUMBER, service_name: serviceName(values), page_location: window.location.origin + window.location.pathname });
     setStatus(form, "Review and send your enquiry in WhatsApp. If it did not open, allow pop-ups and try again.", "progress");
     // noopener returns null even when the new tab opens; do not also navigate this page.
     window.open(url, "_blank", "noopener,noreferrer");
@@ -176,11 +177,11 @@
       if (!link) return;
       const href = String(link.getAttribute("href") || "");
       if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
-        track("whatsapp_click", { link_url: link.href.split("?")[0], page_location: window.location.href });
+        track("whatsapp_click", { link_url: link.href.split(/[?#]/)[0], page_location: window.location.origin + window.location.pathname });
       } else if (/^tel:/i.test(href)) {
-        track("phone_click", { page_location: window.location.href });
+        track("phone_click", { page_location: window.location.origin + window.location.pathname });
       } else if (/^mailto:/i.test(href)) {
-        track("email_click", { page_location: window.location.href });
+        track("email_click", { page_location: window.location.origin + window.location.pathname });
       }
     });
   }

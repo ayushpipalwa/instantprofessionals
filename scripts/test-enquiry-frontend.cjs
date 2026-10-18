@@ -4,7 +4,7 @@ const { join } = require('node:path');
 const test = require('node:test');
 const vm = require('node:vm');
 
-function app(kind) {
+function app(kind, hostname = 'www.instantprofessionals.in') {
   const events = [], requests = [], opens = [], timers = [];
   const status = { textContent: '', dataset: {} };
   const fields = Object.fromEntries(Object.entries({
@@ -36,7 +36,7 @@ function app(kind) {
     constructor(form) { super(form ? Object.entries(fields).filter(([,field]) => !field.disabled).map(([name,field]) => [name,field.value]) : []); }
   }
   const window = {
-    __ipGoogleAnalyticsId: 'G-TG0272S260', location: { href: 'https://example.invalid/enquiry' },
+    __ipGoogleAnalyticsId: 'G-TG0272S260', location: { hostname, origin: 'https://' + hostname, pathname: '/enquiry', href: 'https://' + hostname + '/enquiry?email=private@example.invalid' },
     gtag: (...args) => events.push(args), open: (...args) => { opens.push(args); return null; },
     setTimeout: callback => { timers.push(callback); return timers.length; }, clearTimeout() {}
   };
@@ -114,7 +114,7 @@ for (const kind of ['home', 'service']) {
   test(kind + ': WhatsApp noopener null keeps original page and excludes private analytics', () => {
     const instance = app(kind); instance.whatsapp();
     assert.equal(instance.requests.length, 0); assert.equal(instance.opens.length, 1);
-    assert.equal(instance.window.location.href, 'https://example.invalid/enquiry');
+    assert.equal(instance.window.location.href, 'https://www.instantprofessionals.in/enquiry?email=private@example.invalid');
     assert.match(instance.opens[0][0], /Private%20QA%20message/);
     assert.match(instance.opens[0][0], /Accounting/);
     assert.match(instance.opens[0][0], /Bookkeeping/);
@@ -139,3 +139,13 @@ test('service: external package action cannot mutate a pending enquiry', async (
   assert.equal(instance.fields.package.value, 'Bookkeeping');
   respond(instance.requests[0], { success: true, enquiryId: 'IP-QA' }); await pending;
 });
+
+for (const kind of ['home', 'service', 'ai']) {
+  test(kind + ': preview acknowledgements do not send production Analytics', async () => {
+    const instance = app(kind, 'localhost'), pending = instance.submit();
+    respond(instance.requests[0], { success: true, enquiryId: 'IP-PREVIEW-QA' });
+    await pending;
+    assert.match(instance.status.textContent, /has been recorded/);
+    assert.equal(instance.events.length, 0);
+  });
+}

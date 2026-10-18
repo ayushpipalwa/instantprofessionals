@@ -20,6 +20,7 @@
   const GA_MEASUREMENT_ID = "G-TG0272S260";
 
   function loadGoogleAnalytics() {
+    if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname)) return;
     if (window.__ipGoogleAnalyticsId === GA_MEASUREMENT_ID) return;
 
     const existingTag = document.querySelector(
@@ -47,7 +48,7 @@
   }
 
   function trackAnalyticsEvent(name, parameters) {
-    if (typeof window.gtag !== "function") return;
+    if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) || typeof window.gtag !== "function") return;
     window.gtag("event", name, parameters || {});
   }
 
@@ -63,16 +64,16 @@
 
       if (/^(?:https?:\/\/)?(?:api\.)?wa\.me\//i.test(href) || /whatsapp\.com/i.test(href)) {
         trackAnalyticsEvent("whatsapp_click", {
-          link_url: link.href.split("?")[0],
-          page_location: window.location.href
+          link_url: link.href.split(/[?#]/)[0],
+          page_location: window.location.origin + window.location.pathname
         });
       } else if (/^tel:/i.test(href)) {
         trackAnalyticsEvent("phone_click", {
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname
         });
       } else if (/^mailto:/i.test(href)) {
         trackAnalyticsEvent("email_click", {
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname
         });
       }
     });
@@ -528,6 +529,7 @@
     setSubmitting(form, true);
     setStatus(form, "Submitting your enquiry securely…", "progress");
 
+    trackAnalyticsEvent("enquiry_submit_attempt", { lead_method: "website_form", service_name: analyticsService(values), page_location: window.location.origin + window.location.pathname });
     const controller = new AbortController();
     const timeout = window.setTimeout(function () { controller.abort(); }, 20000);
     try {
@@ -545,9 +547,8 @@
       trackAnalyticsEvent("generate_lead", {
         lead_method: "website_form",
         service_name: analyticsService(values),
-        page_location: window.location.href
+        page_location: window.location.origin + window.location.pathname
       });
-      form.reset();
       clearConditionalValidity(form);
       setStatus(form, "Thank you. Your enquiry has been recorded and our team will contact you shortly.", "success");
     } catch (error) {
@@ -573,8 +574,9 @@
     trackAnalyticsEvent("whatsapp_click", {
       link_url: "https://wa.me/" + WHATSAPP_NUMBER,
       service_name: analyticsService(values),
-      page_location: window.location.href
+      page_location: window.location.origin + window.location.pathname
     });
+    trackAnalyticsEvent("enquiry_handoff", { lead_method: "whatsapp", service_name: analyticsService(values), page_location: window.location.origin + window.location.pathname });
     setStatus(form, "Review and send your enquiry in WhatsApp. If it did not open, allow pop-ups and try again.", "progress");
     // noopener returns null even when the new tab opens; do not also navigate this page.
     window.open(url, "_blank", "noopener,noreferrer");
@@ -619,7 +621,7 @@
         trackAnalyticsEvent("select_content", {
           content_type: "service_package",
           item_id: String(button.getAttribute("data-package") || "Package enquiry").slice(0, 100),
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname
         });
         selectPackage(button);
       });
@@ -946,6 +948,8 @@
     const categoryText = categoryElement.textContent.toUpperCase();
     let category = Object.keys(SERVICE_AUTOMATION_CHECKLISTS).find(function (key) { return categoryText.indexOf(key) !== -1; });
     const filename = window.location.pathname.split("/").pop() || "";
+    // This records-search service has a dedicated static checklist, not a filing deadline.
+    if (filename === "roc-search-report.html") return;
     if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
     if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
     if (!category) return;
