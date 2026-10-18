@@ -101,6 +101,7 @@ for (const kind of ['home', 'service', 'ai']) {
       assert.equal(instance.events.filter(event => event[1] === 'generate_lead').length, 0);
       const retry = instance.submit(); respond(instance.requests[1], { success: true, duplicate: true }); await retry;
       assert.match(instance.status.textContent, /has been recorded/);
+      assert.equal(instance.events.filter(event => event[1] === 'generate_lead').length, 0, 'duplicate acknowledgement must not count a new lead');
     }
   });
 }

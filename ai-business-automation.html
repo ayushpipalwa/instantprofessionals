@@ -139,7 +139,7 @@
       const saved=response.ok&&await response.json();
       if(!saved||saved.success!==true||(!saved.enquiryId&&saved.duplicate!==true))throw new Error('Enquiry was not acknowledged.');
       saveStatus.textContent='Your enquiry has been recorded for professional follow-up.';
-      track('generate_lead',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.origin+window.location.pathname});
+      if(!saved.duplicate)track('generate_lead',{lead_method:'ai_readiness_form',service_name:route.service,page_location:window.location.origin+window.location.pathname});
     }catch(error){
       saveStatus.textContent='Recommendation generated, but we could not confirm your enquiry was recorded. Your answers are still here; try again or continue on WhatsApp.';
       track('lead_capture_error',{service_name:route.service,page_location:window.location.origin+window.location.pathname});

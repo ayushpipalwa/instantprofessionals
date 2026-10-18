@@ -138,7 +138,7 @@
       if (!result || result.success !== true || (!result.enquiryId && result.duplicate !== true)) {
         throw new Error("Enquiry was not acknowledged.");
       }
-      track("generate_lead", {
+      if (!result.duplicate) track("generate_lead", {
         lead_method: "website_form",
         service_name: serviceName(values),
         page_location: window.location.origin + window.location.pathname
