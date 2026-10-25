@@ -1,5 +1,5 @@
 import { fail, decrypt, uniqueParams, paise } from './core.mjs';
-import { transaction } from './postgres.mjs';
+import { transaction, refreshQuote } from './postgres.mjs';
 import { nativeApi, quickInvoiceRequest, invoiceLinkResult } from './native-api.mjs';
 import { bridgeSignature } from './bridge-auth.mjs';
 
@@ -116,6 +116,20 @@ export function nativeLinkOperations(invoiceDb, cfg, db, statusApi, env=process.
     return {posted:posted+legacyPosted,pending:rows.length-posted+legacy.length-legacyPosted};
   }
   async function reconcile() {
+    // A lost browser callback must not leave an initiated website payment pending forever.
+    // Reuse the same provider verification and transactional, idempotent receipt creation.
+    const quotes=(await db.query(`SELECT * FROM ip_payments.quotes WHERE account=$1
+      AND state='pending' AND initiated_at IS NOT NULL AND invoice_id IS NOT NULL
+      ORDER BY updated_at,id LIMIT 100`,[cfg.account])).rows;
+    let websiteReviewed=0,websiteFailed=0;
+    for(const q of quotes) {
+      try { await refreshQuote(db,cfg,q,statusApi); websiteReviewed++; }
+      catch { websiteFailed++; } // Retry independently; never log provider payloads.
+      finally {
+        // Rotate unresolved orders through the bounded batch, including lookup failures.
+        await db.query("UPDATE ip_payments.quotes SET updated_at=now() WHERE id=$1 AND account=$2 AND state='pending'",[q.id,cfg.account]);
+      }
+    }
     const links=(await db.query(`SELECT provider_invoice_id FROM ip_payments.invoice_links l WHERE account=$1 AND
       (state='active' OR (state='paid' AND EXISTS(SELECT 1 FROM ip_payments.invoice_link_receipts r WHERE r.invoice_id=l.invoice_id AND r.posted_at IS NULL))) ORDER BY created_at`,[cfg.account])).rows;
     let reviewed=0;
@@ -133,7 +147,7 @@ export function nativeLinkOperations(invoiceDb, cfg, db, statusApi, env=process.
         page++;
       } while(page<=pages);
     }
-    return {reviewed,...await flushReceipts()};
+    return {reviewed,websiteReviewed,websiteFailed,...await flushReceipts()};
   }
   return {create,notification,verifyPayment,flushReceipts,reconcile};
 }
