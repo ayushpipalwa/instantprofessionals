@@ -6,7 +6,7 @@ if(cfg.mode!=='live' || process.env.PAYMENT_NATIVE_LINKS_ENABLED!=='true') throw
 const db=openPostgres(cfg);
 try {
   const result=await nativeLinkOperations(null,cfg,db,gateway(cfg)).reconcile();
-  console.log(JSON.stringify({reviewed:result.reviewed,posted:result.posted,pending:result.pending}));
+ console.log(JSON.stringify({reviewed:result.reviewed,websiteReviewed:result.websiteReviewed,websiteFailed:result.websiteFailed,posted:result.posted,pending:result.pending}));
 } catch {
   console.error('Invoice reconciliation requires review. No credentials or provider payloads are logged.');
   process.exitCode=1;

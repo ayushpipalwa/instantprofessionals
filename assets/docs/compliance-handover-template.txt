@@ -1,0 +1,46 @@
+# Compliance handover brief
+
+An original working template for finance teams and professional advisers. This is a coordination aid, not a statutory form, legal checklist or substitute for engagement-specific advice.
+
+## Define the assignment
+- Entity or client reference:
+- Service or assignment:
+- Reporting period:
+- Purpose and intended recipient:
+- Preparer:
+- Reviewer:
+- Client approver:
+- Agreed delivery date:
+- Applicable statutory deadline, if verified:
+- Official source and date last checked:
+
+## Record what is ready
+For each item, record its location, version/date, responsible person and review state. Keep confidential documents in the agreed secure workspace; do not place access credentials or client documents in a public copy of this template.
+
+| Item | Location/version | Owner | Status | Reviewer note |
+|---|---|---|---|---|
+| Engagement scope and exclusions | | | | |
+| Source records for the period | | | | |
+| Reconciliations and exceptions | | | | |
+| Prior submissions and acknowledgements | | | | |
+| Draft deliverable | | | | |
+| Approval evidence | | | | |
+| Final deliverable and submission evidence | | | | |
+
+## Resolve open issues before handover
+For every unresolved question, identify the missing information, the person who can resolve it, the effect on the deliverable and the next review date. Mark assumptions explicitly. Do not silently treat an unavailable record as a clean result.
+
+## Close the handover
+The receiving professional should confirm the scope, records received, unresolved items and next action. Record completion only when the agreed evidence is available. An internal status of complete does not by itself establish statutory compliance or government acceptance.
+
+## Optional service-specific preparation
+- ITR: agree the taxpayer, period, income categories and reconciliation scope with the adviser.
+- Company annual filing: agree the entity, financial period, relevant approvals and records to review.
+- Trademark: agree the applicant, mark representation, intended goods/services and search or filing scope.
+
+These prompts identify the brief; they do not determine form selection, eligibility, deadlines or legal conclusions.
+
+Prepared by Instant Professionals. Reuse this template with an attribution to the original source when sharing it; attribution is appreciated, not a condition for using it. No endorsement or professional relationship is implied.
+
+Original resource: https://www.instantprofessionals.in/compliance-handover-checklist.html
+Published: 26 October 2026
