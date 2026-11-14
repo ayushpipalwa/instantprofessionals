@@ -333,7 +333,7 @@
       ["Is rectification a routine portal correction?", "No. Many rectification matters are contested and evidence-driven. Standing, grounds, limitation, forum and connected infringement or opposition proceedings require legal review." ]
     ],
     "trademark-watch-service.html": [
-      ["What does a trademark watch monitor?", "The agreed watch may monitor newly published applications for identical or similar marks in selected classes or expressions and flag potentially relevant results."],
+      ["What does a trademark watch monitor?", "The published ₹2,300 package covers watching a trademark application through its stages. Broader searches for potentially conflicting marks need a separately agreed scope and quote."],
       ["Does an alert automatically stop the later mark?", "No. Monitoring creates an opportunity to assess risk. Any opposition, notice, negotiation or court action is a separate decision and engagement." ]
     ],
     "trademark-withdrawal.html": [
