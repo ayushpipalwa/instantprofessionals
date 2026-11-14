@@ -39,6 +39,30 @@ async function scenario(file, outcome='acknowledged') {
   }
   assert.deepEqual(events.map(e=>e[1]),['phone_click','whatsapp_click','enquiry_cta_click']);
   assert(!JSON.stringify(events).includes('PRIVATE_NAME'));
+
+  // Exercise the actual informational-page CTAs, not only synthetic attributes.
+  for (const [file, service, expectedCount] of [
+    ['din-application-documents-process.html', 'DIN Application', 1],
+    ['llp-name-change-procedure.html', 'LLP Name Change', 1],
+    ['trademark-watch-service-cost.html', 'Trademark Watch Service', 1],
+    ['online-ca-services.html', 'Online CA Services', 2]
+  ]) {
+    const html=readFileSync(path.join(root,file),'utf8');
+    const ctas=[...html.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
+    assert.equal(ctas.length,expectedCount,file+' CTA coverage');
+    window.location.pathname='/'+file;
+    for (const [tag] of ctas) {
+      const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
+      const link={getAttribute:n=>attrs[n]||null,hasAttribute:n=>n==='data-enquiry-cta'};
+      const before=events.length;
+      listeners[0]({target:{closest:()=>link}});
+      assert.equal(events.length,before+1,file+' must track once');
+      assert.equal(events.at(-1)[1],'enquiry_cta_click');
+      assert.equal(events.at(-1)[2].service_name,service);
+      assert.equal(events.at(-1)[2].page_location,'https://www.instantprofessionals.in/'+file);
+      assert(!events.slice(before).some(e=>e[1]==='generate_lead'),'CTA is not a received lead');
+    }
+  }
   for (const hostname of ['localhost', '127.0.0.1', 'preview.example.com', '']) {
     const previewWindow={location:{hostname},gtag:()=>{throw Error('Preview must not track')}};
     const previewDocument={readyState:'loading',addEventListener(){},querySelector(){throw Error('Preview must not load GA')}};
