@@ -28,10 +28,10 @@ async function scenario(file, outcome='acknowledged') {
 (async()=>{
   for(const file of ['enquiry.js','enquiry-home.js']){for(const outcome of ['acknowledged','opaque','offline'])await scenario(file,outcome)}
   const events=[],listeners=[];
-  const window={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/guide.html'},gtag:(...a)=>events.push(a),__ipGoogleAnalyticsId:'G-TG0272S260'};
+  const window={addEventListener(){},location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/guide.html',href:'https://www.instantprofessionals.in/guide.html'},gtag:(...a)=>events.push(a),__ipGoogleAnalyticsId:'G-TG0272S260'};
   const document={title:'Guide',addEventListener:(n,f)=>listeners.push(f)};
   const code=readFileSync(path.join(root,'assets/js/analytics.js'),'utf8');
-  vm.runInNewContext(code,{window,document});vm.runInNewContext(code,{window,document});
+  vm.runInNewContext(code,{window,document,URL});vm.runInNewContext(code,{window,document,URL});
   assert.equal(listeners.length,1);
   for(const href of ['tel:+918209785294','https://wa.me/918209785294?text=PRIVATE_NAME','roc-search-report.html#enquiry-title']){
     const link={getAttribute:n=>n==='href'?href:'ROC Search Report',hasAttribute:()=>href.startsWith('roc-')};
