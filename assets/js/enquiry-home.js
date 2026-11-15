@@ -180,6 +180,11 @@
         track("whatsapp_click", { link_url: link.href.split(/[?#]/)[0], page_location: window.location.origin + window.location.pathname });
       } else if (/^tel:/i.test(href)) {
         track("phone_click", { page_location: window.location.origin + window.location.pathname });
+      } else if (link.hasAttribute("data-enquiry-cta")) {
+        track("enquiry_cta_click", {
+          service_name: link.getAttribute("data-service") || "General enquiry",
+          page_location: window.location.origin + window.location.pathname
+        });
       } else if (/^mailto:/i.test(href)) {
         track("email_click", { page_location: window.location.origin + window.location.pathname });
       }
