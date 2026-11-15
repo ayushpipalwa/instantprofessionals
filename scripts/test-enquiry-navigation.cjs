@@ -7,9 +7,11 @@ const code=readFileSync(path.join(root,'assets/js/analytics.js'),'utf8');
 const guides=[
   ['din-application-documents-process.html','DIN Application'],
   ['llp-name-change-procedure.html','LLP Name Change'],
-  ['trademark-watch-service-cost.html','Trademark Watch Service']
+  ['trademark-watch-service-cost.html','Trademark Watch Service'],
+  ['online-ca-services.html','Online CA Services',0],
+  ['online-ca-services.html','Online CA Services',1]
 ];
-function setup(file, mode='callback') {
+function setup(file, mode='callback', ctaIndex=0) {
   const events=[], navigations=[], timers=new Map(), handlers={};
   let nextTimer=0;
   const window={
@@ -25,7 +27,7 @@ function setup(file, mode='callback') {
   const document={title:'Guide',addEventListener:(name,fn)=>{handlers[name]=fn}};
   vm.runInNewContext(code,{window,document,URL});
   vm.runInNewContext(code,{window,document,URL});
-  const tag=readFileSync(path.join(root,file),'utf8').match(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/)[0];
+  const tag=readFileSync(path.join(root,file),'utf8').match(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)[ctaIndex];
   const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
   assert.match(readFileSync(path.join(root,file),'utf8'),/analytics\.js\?v=20261115-1/);
   const click=(overrides={},extraAttrs={})=>{
@@ -38,9 +40,9 @@ function setup(file, mode='callback') {
   };
   return {events,navigations,timers,handlers,click,attrs,window};
 }
-for(const [file,service] of guides) {
+for(const [file,service,ctaIndex=0] of guides) {
   for(const mode of ['callback','timeout','throw']) {
-    const s=setup(file,mode);
+    const s=setup(file,mode,ctaIndex);
     assert(s.click().defaultPrevented,file+' must defer native navigation');
     assert.equal(s.events.length,1);
     assert.equal(s.events[0][1],'enquiry_cta_click');
@@ -62,16 +64,16 @@ for(const [file,service] of guides) {
     assert.equal(s.timers.size,0);
   }
   for(const overrides of [{ctrlKey:true},{metaKey:true},{shiftKey:true},{altKey:true},{button:1}]) {
-    const s=setup(file);assert(!s.click(overrides).defaultPrevented);
+    const s=setup(file,'callback',ctaIndex);assert(!s.click(overrides).defaultPrevented);
     assert.equal(s.events.length,1);assert.equal(s.timers.size,0);assert.equal(s.navigations.length,0);
   }
   for(const attrs of [{target:'_blank'},{download:''},{href:'#details'},{href:'https://example.com/service'}]) {
-    const s=setup(file);assert(!s.click({},attrs).defaultPrevented);
+    const s=setup(file,'callback',ctaIndex);assert(!s.click({},attrs).defaultPrevented);
     assert.equal(s.timers.size,0);assert.equal(s.navigations.length,0);
   }
-  const prevented=setup(file);prevented.click({defaultPrevented:true});assert.equal(prevented.events.length,0);
-  const missing=setup(file);delete missing.window.gtag;assert(!missing.click().defaultPrevented);
-  const restored=setup(file);restored.click();restored.events[0][2].event_callback();
+  const prevented=setup(file,'callback',ctaIndex);prevented.click({defaultPrevented:true});assert.equal(prevented.events.length,0);
+  const missing=setup(file,'callback',ctaIndex);delete missing.window.gtag;assert(!missing.click().defaultPrevented);
+  const restored=setup(file,'callback',ctaIndex);restored.click();restored.events[0][2].event_callback();
   restored.handlers.pageshow();restored.click();assert.equal(restored.events.length,2,'Back navigation remains usable');
   console.log('PASS: '+service+' callback, timeout, failure, modifiers, privacy, repeat clicks and history restore');
 }
