@@ -9,7 +9,9 @@ const guides=[
   ['llp-name-change-procedure.html','LLP Name Change'],
   ['trademark-watch-service-cost.html','Trademark Watch Service'],
   ['online-ca-services.html','Online CA Services',0],
-  ['online-ca-services.html','Online CA Services',1]
+  ['online-ca-services.html','Online CA Services',1],
+  ['roc-search-report-fees-format.html','ROC Search Report',0],
+  ['roc-search-report-fees-format.html','ROC Search Report',1]
 ];
 function setup(file, mode='callback', ctaIndex=0) {
   const events=[], navigations=[], timers=new Map(), handlers={};
