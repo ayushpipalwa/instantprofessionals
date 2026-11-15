@@ -21,6 +21,7 @@ class Page(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.titles, self.descriptions, self.canonicals = [], [], []
         self.links, self.directory_links, self.schemas = [], [], []
+        self.anchors, self.assets = set(), []
         self.robots, self.h1, self.refresh = [], 0, False
         self.capture = None
         self.buffer = []
@@ -28,6 +29,18 @@ class Page(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
+        if a.get("id"):
+            self.anchors.add(a["id"])
+        if tag == "a" and a.get("name"):
+            self.anchors.add(a["name"])
+        if tag in {"script", "img", "source", "video", "audio", "iframe"} and a.get("src"):
+            self.assets.append(a["src"])
+        if tag == "video" and a.get("poster"):
+            self.assets.append(a["poster"])
+        if tag == "link" and set(a.get("rel", "").lower().split()) & {
+            "stylesheet", "icon", "apple-touch-icon", "manifest", "preload", "modulepreload"
+        } and a.get("href"):
+            self.assets.append(a["href"])
         if tag == "title" or (tag == "script" and a.get("type") == "application/ld+json"):
             self.capture, self.buffer = tag, []
         if tag == "h1":
@@ -66,6 +79,34 @@ def nodes(value):
     elif isinstance(value, list):
         for child in value:
             yield from nodes(child)
+
+
+def reference_errors(pages, paths, read):
+    """Check local HTML fragments and directly referenced resources, case-sensitively."""
+    errors = []
+    targets = dict(pages)
+    for name, page in pages.items():
+        for kind, references in (("link", page.links), ("asset", page.assets)):
+            for href in references:
+                url = urlsplit(urljoin(SITE + name, href))
+                if url.scheme not in {"http", "https"} or url.netloc != urlsplit(SITE).netloc:
+                    continue
+                target = unquote(url.path).lstrip("/") or "index.html"
+                if target.endswith("/"):
+                    target += "index.html"
+                if target not in paths:
+                    errors.append(f"{name}: missing internal {kind} target: {href}")
+                    continue
+                # Text directives do not name HTML anchors; # and #top are valid
+                # browser top-of-document links. File fragments (e.g. PDF) differ.
+                fragment = unquote(url.fragment.split(":~:", 1)[0])
+                if kind != "link" or not fragment or not target.endswith(".html"):
+                    continue
+                if target not in targets:
+                    targets[target] = Page(read(target))
+                if fragment not in targets[target].anchors and fragment.lower() != "top":
+                    errors.append(f"{name}: missing internal link fragment: {href}")
+    return errors
 
 
 def main():
@@ -146,6 +187,7 @@ def main():
         if f"Sitemap: {SITE}{sitemap}" not in robots:
             errors.append(f"robots.txt: missing {sitemap} declaration")
     inbound = Counter()
+    errors.extend(reference_errors(indexable, paths, read))
     for name, page in indexable.items():
         for href in page.links:
             url = urlsplit(urljoin(SITE + name, href))
@@ -154,8 +196,6 @@ def main():
             target = unquote(url.path).lstrip("/") or "index.html"
             if target.endswith("/"):
                 target += "index.html"
-            if target not in paths:
-                errors.append(f"{name}: missing internal link target: {href}")
             if target != name and target in indexable:
                 inbound[target] += 1
     for name in indexable:

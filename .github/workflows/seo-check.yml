@@ -23,7 +23,9 @@ jobs:
       - name: Validate enquiry event meaning and privacy
         run: node scripts/test-enquiry-tracking.cjs
       - name: Validate metadata, structured data, sitemap and links
-        run: python scripts/qa_seo.py
+        run: |
+          python -m unittest discover -s scripts -p 'test_qa_seo.py'
+          python scripts/qa_seo.py
       - name: Validate reviewed prices and enquiry selections
         run: python scripts/qa_pricing.py
       - name: Stage public site
