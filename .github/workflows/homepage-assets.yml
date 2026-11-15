@@ -11,6 +11,7 @@ on:
       - 'scripts/build_homepage_assets.py'
       - 'scripts/performance/**'
       - '.github/workflows/homepage-assets.yml'
+      - 'scripts/test-homepage-scroll.cjs'
   workflow_dispatch:
 
 permissions:
@@ -27,6 +28,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Validate homepage anchor positioning
+        run: node scripts/test-homepage-scroll.cjs
       - run: npm ci --ignore-scripts
         working-directory: scripts/performance
       - run: python scripts/build_homepage_assets.py --css-only

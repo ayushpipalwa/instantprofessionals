@@ -51,7 +51,21 @@ function initNavigationObserver(){
   },{rootMargin:"-20% 0px -60% 0px",threshold:[0,.2,.5]});
   targets.forEach(target=>observer.observe(target));
 }
-function scrollto(sel){const h=$("#header"),e=$(sel);if(e)window.scrollTo({top:e.offsetTop-(h?h.offsetHeight:0),behavior:"smooth"})}
+function scrollto(sel){
+  const target=$(sel);
+  if(!target)return;
+  // Off-screen sections use estimated heights until rendered. Materialize the
+  // sections before this anchor before measuring its final document position.
+  document.querySelectorAll("#about,#services,#team,#social-presence,#contact,#footer").forEach(section=>{
+    if(section===target||section.contains(target)||
+       (section.compareDocumentPosition(target)&Node.DOCUMENT_POSITION_FOLLOWING)){
+      section.style.contentVisibility="visible";
+    }
+  });
+  const h=$("#header");
+  const top=target.getBoundingClientRect().top+window.scrollY-(h?h.offsetHeight:0);
+  window.scrollTo({top:Math.max(0,top),behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+}
 on("click",".mobile-nav-toggle",function(){const n=$("#navbar");if(!n)return;n.classList.toggle("navbar-mobile");this.classList.toggle("bi-list");this.classList.toggle("bi-x")});
 on("click",".navbar .dropdown > a",function(e){const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){e.preventDefault();if(this.nextElementSibling)this.nextElementSibling.classList.toggle("dropdown-active")}},true);
 on("click",".scrollto",function(e){if(!this.hash||!$(this.hash))return;e.preventDefault();const n=$("#navbar");if(n&&n.classList.contains("navbar-mobile")){n.classList.remove("navbar-mobile");const b=$(".mobile-nav-toggle");if(b){b.classList.toggle("bi-list");b.classList.toggle("bi-x")}}scrollto(this.hash)},true);
