@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "tds-returns.html") return [
+      "Deductor TAN and authorised-signatory details",
+      "Filing year, quarter and payment categories",
+      "Deductee PANs and payment/deduction workings",
+      "Challans and deductee-wise allocation",
+      "Prior statements, certificates and unresolved items"
+    ];
     if (filename === "gst-returns.html") return [
       "GSTIN, filing scheme and return periods",
       "Sales invoices and credit/debit notes",
