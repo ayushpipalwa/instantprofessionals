@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -42,6 +42,11 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     if(hostname!=='localhost') assert.equal(events.at(-1)[1],eventName);
   }
   assert(!JSON.stringify(events).includes('PRIVATE'));
+  const correction=window.testFunctions.readinessItems('INCOME TAX & TDS','tds-return-revision.html');
+  assert.equal(correction.length,5);
+  assert(correction.some(x=>x.includes('Original token')));
+  assert(correction.some(x=>x.includes('proposed changes')));
+  assert(!correction.some(x=>x.includes('residential status')));
   const tds=window.testFunctions.readinessItems('INCOME TAX & TDS','tds-returns.html');
   assert.equal(tds.length,5);
   assert(tds.some(x=>x.includes('Deductor TAN')));
@@ -55,4 +60,4 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(registration.some(x=>x.includes('place address')),'Registration retains its own checklist');
 }
 }
-console.log('PASS: both GST and TDS enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
+console.log('PASS: GST, TDS filing and TDS revision enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');

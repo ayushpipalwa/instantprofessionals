@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "tds-return-revision.html") return [
+      "Deductor TAN, filing period and statement form",
+      "Original token and prior correction references",
+      "Latest statement file and available default details",
+      "Challans, deductee records and proposed changes",
+      "Notice, deadline and certificate requirements"
+    ];
     if (filename === "tds-returns.html") return [
       "Deductor TAN and authorised-signatory details",
       "Filing year, quarter and payment categories",
