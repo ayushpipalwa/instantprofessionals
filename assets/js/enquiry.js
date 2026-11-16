@@ -71,6 +71,11 @@
         trackAnalyticsEvent("phone_click", {
           page_location: window.location.origin + window.location.pathname
         });
+      } else if (link.hasAttribute("data-enquiry-cta")) {
+        trackAnalyticsEvent("enquiry_cta_click", {
+          service_name: link.getAttribute("data-service") || "General enquiry",
+          page_location: window.location.origin + window.location.pathname
+        });
       } else if (/^mailto:/i.test(href)) {
         trackAnalyticsEvent("email_click", {
           page_location: window.location.origin + window.location.pathname
@@ -941,6 +946,17 @@
     result.textContent = textValue;
   }
 
+  function readinessItems(category, filename) {
+    if (filename === "gst-returns.html") return [
+      "GSTIN, filing scheme and return periods",
+      "Sales invoices and credit/debit notes",
+      "Purchase records and GSTR-2B for reconciliation",
+      "Previous returns, tax payments and unresolved items",
+      "Authorised signatory and filing approval"
+    ];
+    return SERVICE_AUTOMATION_CHECKLISTS[category];
+  }
+
   function serviceAutomation() {
     if (document.querySelector("[data-ip-service-tool]")) return;
     const categoryElement = document.querySelector(".ip-hero .ip-eyebrow");
@@ -962,7 +978,7 @@
     section.className = "ip-service-tool";
     section.dataset.ipServiceTool = "true";
     section.setAttribute("aria-label", "Service calculator and document readiness");
-    const checks = SERVICE_AUTOMATION_CHECKLISTS[category].map(function (item, index) {
+    const checks = readinessItems(category, filename).map(function (item, index) {
       return '<label><input type="checkbox" data-readiness value="' + index + '"> <span>' + item + '</span></label>';
     }).join("");
     section.innerHTML = '<div class="ip-tool-heading"><span>FREE SERVICE TOOL</span><h2>Estimate and prepare before you enquire</h2><p>No data entered here leaves your browser.</p></div>' +
