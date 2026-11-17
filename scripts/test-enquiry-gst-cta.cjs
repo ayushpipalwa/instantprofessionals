@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -42,6 +42,11 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     if(hostname!=='localhost') assert.equal(events.at(-1)[1],eventName);
   }
   assert(!JSON.stringify(events).includes('PRIVATE'));
+  const pf=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','pf-returns.html');
+  assert.equal(pf.length,5);
+  assert(pf.some(x=>x.includes('UANs')));
+  assert(pf.some(x=>x.includes('non-contributory')));
+  assert(window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','epf-registration.html').some(x=>x.includes('Entity PAN')));
   const correction=window.testFunctions.readinessItems('INCOME TAX & TDS','tds-return-revision.html');
   assert.equal(correction.length,5);
   assert(correction.some(x=>x.includes('Original token')));
@@ -60,4 +65,4 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(registration.some(x=>x.includes('place address')),'Registration retains its own checklist');
 }
 }
-console.log('PASS: GST, TDS filing and TDS revision enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
+console.log('PASS: GST, TDS filing/revision and PF enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
