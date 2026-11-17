@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "pf-returns.html") return [
+      "Establishment PF code and wage months",
+      "Employee UANs, joining and leaving dates",
+      "Wages, attendance and non-contributory days",
+      "Contribution workings and payroll reconciliation",
+      "Prior ECRs, challans and unresolved items"
+    ];
     if (filename === "tds-return-revision.html") return [
       "Deductor TAN, filing period and statement form",
       "Original token and prior correction references",
