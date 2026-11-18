@@ -820,7 +820,7 @@
     } else if (/esic|esi-/.test(filename)) {
       entry.framework = "Code on Social Security, 2020; applicable ESI schemes, rules, transitional provisions and current ESIC contribution-period directions.";
       entry.authority = "Employees’ State Insurance Corporation";
-      entry.url = "https://www.esic.gov.in/act";
+      entry.url = "https://www.esic.gov.in/";
     } else if (/epf|pf-/.test(filename)) {
       entry.framework = "Code on Social Security, 2020; applicable EPF schemes, rules, transitional provisions and current EPFO contribution-period directions.";
     } else if (/udyam/.test(filename)) {
