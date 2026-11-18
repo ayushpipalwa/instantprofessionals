@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "llp-annual-filing.html") return [
+      "LLPIN, master data and LLP agreement",
+      "Partners, changes and signing arrangements",
+      "Contribution records and reconciliations",
+      "Financial statements and audit or certification questions",
+      "Earlier Form 11/Form 8 filings and pending years"
+    ];
     if (filename === "esi-returns.html") return [
       "ESIC employer code and contribution months",
       "Employee insurance numbers, joining and leaving dates",
