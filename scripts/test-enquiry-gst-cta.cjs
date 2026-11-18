@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -47,11 +47,16 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(llp.some(x=>x.includes('Form 11/Form 8')));
   assert(!llp.some(x=>x.includes('Event date')));
   assert(window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','company-annual-filing.html').some(x=>x.includes('CIN/LLPIN')));
+  const esic=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','esic-registration.html');
+  assert.equal(esic.length,5);
+  assert(esic.some(x=>x.includes('Principal employer')));
+  assert(esic.some(x=>x.includes('existing insurance numbers')));
+  assert(!esic.some(x=>x.includes('UAN')));
   const esi=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','esi-returns.html');
   assert.equal(esi.length,5);
   assert(esi.some(x=>x.includes('insurance numbers')));
   assert(!esi.some(x=>x.includes('UAN')));
-  if(file==='esi-returns.html') {
+  if(file==='esi-returns.html'||file==='esic-registration.html') {
     const source=html.match(/<div class="ip-source-note">[\s\S]*?<a href="([^"]+)"[^>]*>([^<]+)<\/a>/);
     assert.equal(source[1],'https://www.esic.gov.in/');
     assert.equal(source[2],'ESIC');
@@ -80,4 +85,4 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(registration.some(x=>x.includes('place address')),'Registration retains its own checklist');
 }
 }
-console.log('PASS: GST, TDS filing/revision and PF/ESI/LLP enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
+console.log('PASS: GST, TDS filing/revision and PF/ESI/LLP and ESIC registration enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
