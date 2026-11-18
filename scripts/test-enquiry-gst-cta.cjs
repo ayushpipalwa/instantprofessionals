@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -42,6 +42,11 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     if(hostname!=='localhost') assert.equal(events.at(-1)[1],eventName);
   }
   assert(!JSON.stringify(events).includes('PRIVATE'));
+  const llp=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','llp-annual-filing.html');
+  assert.equal(llp.length,5);
+  assert(llp.some(x=>x.includes('Form 11/Form 8')));
+  assert(!llp.some(x=>x.includes('Event date')));
+  assert(window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','company-annual-filing.html').some(x=>x.includes('CIN/LLPIN')));
   const esi=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','esi-returns.html');
   assert.equal(esi.length,5);
   assert(esi.some(x=>x.includes('insurance numbers')));
@@ -75,4 +80,4 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(registration.some(x=>x.includes('place address')),'Registration retains its own checklist');
 }
 }
-console.log('PASS: GST, TDS filing/revision and PF/ESI enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
+console.log('PASS: GST, TDS filing/revision and PF/ESI/LLP enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
