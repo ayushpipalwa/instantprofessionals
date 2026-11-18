@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "esic-registration.html") return [
+      "Entity PAN, establishment and premises records",
+      "Activities, commencement details and branches",
+      "Principal employer, authorised contact and bank details",
+      "Employee wages, joining dates and existing insurance numbers",
+      "Existing employer code, applications or notices if any"
+    ];
     if (filename === "llp-annual-filing.html") return [
       "LLPIN, master data and LLP agreement",
       "Partners, changes and signing arrangements",
