@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -42,6 +42,16 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     if(hostname!=='localhost') assert.equal(events.at(-1)[1],eventName);
   }
   assert(!JSON.stringify(events).includes('PRIVATE'));
+  const esi=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','esi-returns.html');
+  assert.equal(esi.length,5);
+  assert(esi.some(x=>x.includes('insurance numbers')));
+  assert(!esi.some(x=>x.includes('UAN')));
+  if(file==='esi-returns.html') {
+    const source=html.match(/<div class="ip-source-note">[\s\S]*?<a href="([^"]+)"[^>]*>([^<]+)<\/a>/);
+    assert.equal(source[1],'https://www.esic.gov.in/');
+    assert.equal(source[2],'ESIC');
+    assert(!html.includes('https://www.epfindia.gov.in/'));
+  }
   const pf=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','pf-returns.html');
   assert.equal(pf.length,5);
   assert(pf.some(x=>x.includes('UANs')));
@@ -65,4 +75,4 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(registration.some(x=>x.includes('place address')),'Registration retains its own checklist');
 }
 }
-console.log('PASS: GST, TDS filing/revision and PF enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
+console.log('PASS: GST, TDS filing/revision and PF/ESI enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');

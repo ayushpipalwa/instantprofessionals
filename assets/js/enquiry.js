@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "esi-returns.html") return [
+      "ESIC employer code and contribution months",
+      "Employee insurance numbers, joining and leaving dates",
+      "Monthly wages and days paid or payable",
+      "Contribution workings and coverage questions",
+      "Prior filings, challans and unresolved items"
+    ];
     if (filename === "pf-returns.html") return [
       "Establishment PF code and wage months",
       "Employee UANs, joining and leaving dates",
