@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -17,7 +17,7 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   window.testFunctions.bindAnalyticsLinks();
   assert.equal(handlers.length,1);
   const ctas=[...html.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
-  assert.equal(ctas.length,2);
+  assert.equal(ctas.length,file==='company-annual-filing.html'?3:2);
   for(const [tag] of ctas) {
     const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
     assert.equal(attrs.href,'#enquiry-title');
@@ -46,7 +46,12 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert.equal(llp.length,5);
   assert(llp.some(x=>x.includes('Form 11/Form 8')));
   assert(!llp.some(x=>x.includes('Event date')));
-  assert(window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','company-annual-filing.html').some(x=>x.includes('CIN/LLPIN')));
+  const company=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','company-annual-filing.html');
+  assert.equal(company.length,5);
+  assert(company.some(x=>x.includes('financial year')));
+  assert(company.some(x=>x.includes('shareholder')));
+  assert(company.some(x=>x.includes('Meeting dates')));
+  assert(!company.some(x=>x.includes('LLPIN')||x.includes('Event date')));
   const epf=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','epf-registration.html');
   assert.equal(epf.length,5);
   assert(epf.some(x=>x.includes('existing UANs')));
