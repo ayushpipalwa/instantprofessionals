@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "income-tax-return-filing.html") return [
+      "PAN, residential status and applicable filing year",
+      "Salary, interest, rental and other income records",
+      "Available Form 16, AIS, Form 26AS and tax-payment records",
+      "Investment, business, foreign-income and loss details where applicable",
+      "Deduction evidence, bank details, earlier returns and notices"
+    ];
     if (filename === "company-annual-filing.html") return [
       "Company CIN, financial year and earlier filing acknowledgements",
       "Financial statements and applicable audit and board reports",
