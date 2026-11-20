@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -17,7 +17,7 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   window.testFunctions.bindAnalyticsLinks();
   assert.equal(handlers.length,1);
   const ctas=[...html.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
-  assert.equal(ctas.length,file==='company-annual-filing.html'?3:2);
+  assert.equal(ctas.length,['company-annual-filing.html','income-tax-return-filing.html'].includes(file)?3:2);
   for(const [tag] of ctas) {
     const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
     assert.equal(attrs.href,'#enquiry-title');
@@ -46,6 +46,12 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert.equal(llp.length,5);
   assert(llp.some(x=>x.includes('Form 11/Form 8')));
   assert(!llp.some(x=>x.includes('Event date')));
+  const itr=window.testFunctions.readinessItems('INCOME TAX & TDS','income-tax-return-filing.html');
+  assert.equal(itr.length,5);
+  assert(itr.some(x=>x.includes('Form 26AS')));
+  assert(itr.some(x=>x.includes('foreign-income')));
+  assert(itr.some(x=>x.includes('residential status')));
+  assert(!itr.some(x=>x.includes('Deductor TAN')));
   const company=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','company-annual-filing.html');
   assert.equal(company.length,5);
   assert(company.some(x=>x.includes('financial year')));
