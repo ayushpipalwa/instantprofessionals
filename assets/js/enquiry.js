@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "company-annual-filing.html") return [
+      "Company CIN, financial year and earlier filing acknowledgements",
+      "Financial statements and applicable audit and board reports",
+      "Director, shareholder and share-capital records",
+      "Meeting dates, notices, resolutions and signing arrangements",
+      "Pending years, portal notices and unresolved record differences"
+    ];
     if (filename === "epf-registration.html") return [
       "Entity PAN, constitution and address evidence",
       "Ownership, authorised signatory and bank records",
