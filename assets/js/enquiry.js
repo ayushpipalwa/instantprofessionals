@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "epf-registration.html") return [
+      "Entity PAN, constitution and address evidence",
+      "Ownership, authorised signatory and bank records",
+      "Activities, licences and branch workforce details",
+      "Employee wages, joining dates and existing UANs",
+      "Existing PF code, applications and coverage questions"
+    ];
     if (filename === "esic-registration.html") return [
       "Entity PAN, establishment and premises records",
       "Activities, commencement details and branches",

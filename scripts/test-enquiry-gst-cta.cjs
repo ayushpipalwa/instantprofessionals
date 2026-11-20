@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -47,6 +47,11 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(llp.some(x=>x.includes('Form 11/Form 8')));
   assert(!llp.some(x=>x.includes('Event date')));
   assert(window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','company-annual-filing.html').some(x=>x.includes('CIN/LLPIN')));
+  const epf=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','epf-registration.html');
+  assert.equal(epf.length,5);
+  assert(epf.some(x=>x.includes('existing UANs')));
+  assert(epf.some(x=>x.includes('Ownership')));
+  assert(!epf.some(x=>x.includes('insurance numbers')));
   const esic=window.testFunctions.readinessItems('WORKFORCE COMPLIANCE','esic-registration.html');
   assert.equal(esic.length,5);
   assert(esic.some(x=>x.includes('Principal employer')));
@@ -85,4 +90,4 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(registration.some(x=>x.includes('place address')),'Registration retains its own checklist');
 }
 }
-console.log('PASS: GST, TDS filing/revision and PF/ESI/LLP and ESIC registration enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
+console.log('PASS: GST, TDS filing/revision and PF/ESI/LLP and EPF/ESIC registration enquiry links, native anchors, service name, no lead events, contact deduplication, preview isolation and return-specific readiness');
