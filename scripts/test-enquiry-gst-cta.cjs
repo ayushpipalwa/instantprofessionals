@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function']]) {
+for(const [file,service] of [['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
 const end=code.lastIndexOf('})();');
@@ -17,10 +17,10 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   window.testFunctions.bindAnalyticsLinks();
   assert.equal(handlers.length,1);
   const ctas=[...html.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
-  assert.equal(ctas.length,['company-annual-filing.html','income-tax-return-filing.html','gst-registration.html','accounting-bookkeeping.html','virtual-cfo.html'].includes(file)?3:2);
+  assert.equal(ctas.length,file==='cma-project-report.html'?4:['company-annual-filing.html','income-tax-return-filing.html','gst-registration.html','accounting-bookkeeping.html','virtual-cfo.html'].includes(file)?3:2);
   for(const [tag] of ctas) {
     const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
-    assert.equal(attrs.href,['accounting-bookkeeping.html','virtual-cfo.html'].includes(file)?'#enquiry':'#enquiry-title');
+    assert.equal(attrs.href,['accounting-bookkeeping.html','virtual-cfo.html','cma-project-report.html'].includes(file)?'#enquiry':'#enquiry-title');
     const link={getAttribute:n=>attrs[n]??null,hasAttribute:n=>n==='data-enquiry-cta'};
     const before=events.length;
     handlers[0]({target:{closest:()=>link},preventDefault(){throw Error('Same-page link must retain native navigation')}});
