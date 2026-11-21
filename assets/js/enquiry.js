@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "iec-registration.html") return [
+      "Entity PAN, legal name and constitution records",
+      "Business address proof and owner NOC where applicable",
+      "Firm bank account and cancelled cheque or bank certificate",
+      "Authorised-person details and signing arrangements",
+      "Existing IEC, application references and unresolved queries"
+    ];
     if (filename === "income-tax-return-filing.html") return [
       "PAN, residential status and applicable filing year",
       "Salary, interest, rental and other income records",
