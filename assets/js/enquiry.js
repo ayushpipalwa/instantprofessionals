@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "add-a-director.html") return [
+      "Company CIN, constitutional documents and current directors reviewed",
+      "Proposed director identity, address, DIN and DSC status checked",
+      "Designation, appointment date, consent and eligibility reviewed",
+      "Relevant company approvals and appointment records ready",
+      "Earlier MCA applications, queries and regularisation needs identified"
+    ];
     if (filename === "change-registered-office.html") return [
       "Company CIN and current MCA address checked",
       "Old and new addresses, State and intended move date identified",
