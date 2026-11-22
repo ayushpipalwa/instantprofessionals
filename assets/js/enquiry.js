@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "udyam-registration.html") return [
+      "Applicant constitution and appropriate Aadhaar holder identified",
+      "Enterprise PAN and applicable GSTIN details checked",
+      "Business address, bank and NIC activity information ready",
+      "Investment and turnover information reviewed",
+      "Existing Udyam or UAM record checked for update or migration"
+    ];
     if (filename === "iec-registration.html") return [
       "Entity PAN, legal name and constitution records",
       "Business address proof and owner NOC where applicable",
