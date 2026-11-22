@@ -197,9 +197,9 @@
   top: 50% !important;
   left: 50% !important;
   display: block !important;
-  width: 76% !important;
+  width: 70% !important;
   max-width: none !important;
-  height: 76% !important;
+  height: 70% !important;
   max-height: none !important;
   padding: 0 !important;
   border: 0 !important;
@@ -455,7 +455,7 @@
   .ip-os-track small { font-size: 0.45rem !important; }
   .ip-os-center { width: 6.15rem !important; height: 6.15rem !important; }
   .ip-os-logo-mark { width: 3.35rem; height: 3.35rem; flex-basis: 3.35rem; }
-  .ip-os-logo-mark img { width: 4.35rem !important; height: 4.35rem !important; }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
