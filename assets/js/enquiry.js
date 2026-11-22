@@ -818,6 +818,9 @@
       entry.caution = "Check the work category, authorship, ownership, publication history and work-specific application requirements.";
     } else if (/patent/i.test(filename)) {
       entry.framework = "Patents Act, 1970 and Patents Rules, 2003, as amended, together with current Patent Office procedures.";
+      entry.authority = "IP India — Patent filing process";
+      entry.url = "https://ipindia.gov.in/page-content/filing-process-1";
+      entry.caution = "Check technical subject matter, inventorship, ownership, disclosures, filing history and the deadlines applicable to the chosen route.";
     } else if (/trademark/i.test(filename)) {
       entry.framework = "Trade Marks Act, 1999 and Trade Marks Rules, 2017, as amended, together with current Trade Marks Registry practice and e-filing requirements.";
     } else if (/esic|esi-/.test(filename)) {
@@ -950,6 +953,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "patent-registration.html") return [
+      "Inventor, applicant and ownership records identified",
+      "Technical description and available drawings prepared",
+      "Known related technology and distinguishing features recorded",
+      "Past and planned disclosure dates checked",
+      "Earlier applications, deadlines and Patent Office correspondence reviewed"
+    ];
     if (filename === "copyright-application.html") return [
       "Work title, category and copy identified",
       "Applicant and author details ready",
