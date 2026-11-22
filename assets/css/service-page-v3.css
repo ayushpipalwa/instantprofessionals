@@ -145,6 +145,11 @@ button, input, select, textarea { font: inherit; }
 .ip-footer ul { margin: 0; padding: 0; list-style: none; }
 .ip-footer li { margin-bottom: 8px; font-size: 13px; }
 .ip-footer-bottom { margin-top: 38px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.16); font-size: 12px; }
+.ip-footer-social { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.ip-footer-social a { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.35); border-radius: 8px; color: #fff; }
+.ip-footer-social a:hover { background: rgba(255,255,255,.12); color: #fff; }
+.ip-footer-social svg { display: block; }
+.ip-page-banner { display: block; width: 100%; height: auto; }
 .ip-whatsapp { position: fixed; z-index: 900; right: 20px; bottom: 20px; display: inline-flex; min-width: 54px; min-height: 54px; align-items: center; justify-content: center; gap: 8px; padding: 12px 17px; border-radius: 999px; color: #fff; background: #12652f; box-shadow: 0 12px 30px rgba(7,29,61,.25); text-decoration: none; font-weight: 800; }
 .ip-whatsapp:hover { color: #fff; background: #0d4f25; }
 
