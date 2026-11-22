@@ -49,6 +49,8 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert(iec.some(x=>x.includes('bank certificate')));
   assert(!iec.some(x=>x.includes('logistics')||x.includes('ITC(HS)')));
   if(file==='iec-registration.html') {
+    assert(html.includes('src="assets/js/enquiry.js?v=20261122-iec-readiness"'));
+    assert(!html.includes('src="assets/js/enquiry.js"'));
     for(const target of ['pricing','service-preparation','enquiry-title']) assert(html.includes('id="'+target+'"'));
     assert(html.includes('https://content.dgft.gov.in/Website/IEC_Manual_V4.1.pdf'));
   }
