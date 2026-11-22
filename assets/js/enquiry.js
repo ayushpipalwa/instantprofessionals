@@ -947,6 +947,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "digital-signature-certificate.html") return [
+      "Intended portal, transaction and subscriber role identified",
+      "Individual or organisation applicant and contact details ready",
+      "Issuing-authority identity and authorisation requirements checked",
+      "Certificate type, validity and existing DSC expiry reviewed",
+      "Token, device compatibility and quoted inclusions confirmed"
+    ];
     if (filename === "udyam-registration.html") return [
       "Applicant constitution and appropriate Aadhaar holder identified",
       "Enterprise PAN and applicable GSTIN details checked",
