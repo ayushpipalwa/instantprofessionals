@@ -961,6 +961,13 @@
       "Mobile and email access; changes to recorded details",
       "DSC validity where relevant and pending applications"
     ];
+    if (filename === "commencement-of-business.html") return [
+      "Company CIN, incorporation date and subscriber details ready",
+      "Subscriber share amounts and payment evidence reconciled",
+      "Company bank records supporting receipts available",
+      "Registered-office status and relevant approvals checked",
+      "Director signing arrangements and existing INC-20A records reviewed"
+    ];
     if (filename === "appointment-of-auditor.html") return [
       "Company CIN and current company details ready",
       "Auditor details, consent and eligibility documents checked",
