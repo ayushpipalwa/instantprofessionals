@@ -193,7 +193,7 @@ def header_markup() -> str:
 <header class="ip-header">
   <div class="ip-container ip-header-inner">
     <a class="ip-brand" href="index.html" aria-label="Instant Professionals home">
-      <img src="assets/img/instant-professionals-logo-2026.png" width="58" height="58" alt="Instant Professionals registered logo">
+      <img src="assets/img/instant-professionals-ip-logo-20261122.png" width="58" height="58" alt="Instant Professionals logo">
       <span>Instant Professionals<small>COMPLIANCE • TAX • ADVISORY</small></span>
     </a>
     <button class="ip-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><i class="bi bi-list" aria-hidden="true"></i><span>Menu</span></button>
@@ -450,8 +450,8 @@ def service_page(old: str) -> str:
   <link rel="canonical" href="{canonical}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="Instant Professionals">
   <meta property="og:title" content="{html.escape(seo_name)} | Instant Professionals"><meta property="og:description" content="{html.escape(description)}"><meta property="og:url" content="{canonical}">
-  <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta property="og:locale" content="en_IN">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{html.escape(title)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="twitter:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png"><meta name="theme-color" content="#071d3d">
+  <meta property="og:image" content="{SITE}/assets/img/instant-professionals-ip-logo-20261122.png"><meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{html.escape(title)} | Instant Professionals"><meta name="twitter:description" content="{html.escape(description)}"><meta name="twitter:image" content="{SITE}/assets/img/instant-professionals-ip-logo-20261122.png"><meta name="theme-color" content="#071d3d">
   {FAVICON_LINKS}
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="assets/css/service-page-v3.css?v=20260820-mobile-1">
   <script type="application/ld+json" data-ip-seo-schema>{structured}</script>
@@ -496,7 +496,7 @@ def update_homepage() -> None:
     <meta property="og:title" content="Instant Professionals | GST, Trademark & Compliance Services" />
     <meta property="og:description" content="Tax, corporate compliance, intellectual property and business advisory services across India." />
     <meta property="og:url" content="{SITE}/" />
-    <meta property="og:image" content="{SITE}/assets/img/instant-professionals-logo-2026.png" />
+    <meta property="og:image" content="{SITE}/assets/img/instant-professionals-ip-logo-20261122.png" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <link data-ip-vision="2" href="assets/css/homepage.min.css?v=20260901-mobile-performance-2" rel="stylesheet" />"""
     if 'rel="canonical"' not in text:
@@ -508,7 +508,7 @@ def update_homepage() -> None:
       <div class="ip-os-grid-bg" aria-hidden="true"></div>
       <div class="container ip-os-shell">
         <div class="ip-os-copy">
-          <div class="ip-os-index"><img src="assets/img/instant-professionals-logo-2026.png" width="64" height="64" decoding="async" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+          <div class="ip-os-index"><img src="assets/img/instant-professionals-ip-logo-20261122.png" width="64" height="64" decoding="async" alt="Instant Professionals logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
           <h1 id="home-heading">Compliance,<br><em>engineered around</em><br>your business.</h1>
           <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory—structured around how your business operates.</p>
           <div class="ip-os-actions"><a class="ip-os-btn ip-os-btn-primary" href="#services">Explore services <i class="bi bi-arrow-right" aria-hidden="true"></i></a><a class="ip-os-btn ip-os-btn-ghost" href="#team">Meet our professionals</a></div>
@@ -516,7 +516,7 @@ def update_homepage() -> None:
         </div>
         <aside class="ip-os-system" aria-label="Business compliance lifecycle">
           <div class="ip-os-system-top"><div><span>IP / OPERATING SYSTEM</span><small>BUSINESS COMPLIANCE LIFECYCLE</small></div><b>01—05</b></div>
-          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/favicon/ip-lifecycle-192.webp?v=20260901-mobile-performance-2" alt="Instant Professionals registered logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
+          <div class="ip-os-core"><div class="ip-os-center"><span class="ip-os-logo-mark"><img src="assets/img/instant-professionals-ip-logo-20261122.png" alt="Instant Professionals logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div><div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration &amp; setup</small></div></div><div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax &amp; recurring compliance</small></div></div><div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts &amp; controls</small></div></div><div class="ip-os-track ip-os-track-4"><i>04</i><div><b>PROTECT</b><small>IPR &amp; documentation</small></div></div><div class="ip-os-track ip-os-track-5"><i>05</i><div><b>GROW</b><small>Advisory &amp; business support</small></div></div></div>
           <div class="ip-os-system-foot"><span>Clarity</span><span>Control</span><span>Continuity</span></div>
         </aside>
       </div>
@@ -598,7 +598,7 @@ def update_homepage() -> None:
     text = text.replace('<b>L:</b>', '<b>Landline:</b>').replace('<b>W:</b>', '<b>WhatsApp:</b>').replace('<b>E:</b>', '<b>Email:</b>')
     home_footer = f"""<footer id="footer" class="ip-home-footer">
       <div class="container ip-home-footer-grid">
-        <div><a class="ip-home-footer-brand" href="index.html"><img src="assets/img/instant-professionals-logo-2026.png" width="64" height="64" loading="lazy" decoding="async" alt="Instant Professionals registered logo"><span>Instant Professionals</span></a><p>Coordinated compliance, tax, corporate and intellectual-property support for businesses and professionals across India.</p><div class="ip-home-footer-social"><a href="https://www.linkedin.com/company/instantprofessionals" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/instantprofessional/" target="_blank" rel="noopener">Instagram</a></div></div>
+        <div><a class="ip-home-footer-brand" href="index.html"><img src="assets/img/instant-professionals-ip-logo-20261122.png" width="64" height="64" loading="lazy" decoding="async" alt="Instant Professionals logo"><span>Instant Professionals</span></a><p>Coordinated compliance, tax, corporate and intellectual-property support for businesses and professionals across India.</p><div class="ip-home-footer-social"><a href="https://www.linkedin.com/company/instantprofessionals" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.facebook.com/instantprofessionals" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/instantprofessional/" target="_blank" rel="noopener">Instagram</a></div></div>
         <div><h2>Popular services</h2><ul><li><a href="gst-registration.html">GST Registration</a></li><li><a href="income-tax-return-filing.html">Income Tax Returns</a></li><li><a href="company-annual-filing.html">Company Annual Filing</a></li><li><a href="trademark-registration.html">Trademark Registration</a></li></ul></div>
         <div><h2>Policies</h2><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="refund-policy.html">Refund and Cancellation</a></li><li><a href="sitemap.xml">Sitemap</a></li></ul></div>
         <div><h2>Contact</h2><p><a href="tel:{PHONE_LINK}">{PHONE_DISPLAY}</a></p><p><a href="mailto:{EMAIL}">{EMAIL}</a></p><p>Serving clients across India</p></div>

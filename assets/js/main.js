@@ -4,8 +4,8 @@ const $=(s,a=false)=>a?[...document.querySelectorAll(s)]:document.querySelector(
 const on=(t,s,f,a=false)=>{const e=$(s,a);if(!e)return;a?e.forEach(x=>x.addEventListener(t,f)):e.addEventListener(t,f)};
 const VERSION="20260901-mobile-performance-2";
 // Match static markup so the browser can reuse one logo request.
-const BRAND_LOGO="assets/img/instant-professionals-logo-2026.png";
-const LIFECYCLE_LOGO=`assets/img/favicon/ip-lifecycle-192.webp?v=${VERSION}`;
+const BRAND_LOGO="assets/img/instant-professionals-ip-logo-20261122.png";
+const LIFECYCLE_LOGO=BRAND_LOGO;
 
 function loadVisionStyles(){
   if(!document.querySelector('[data-ip-vision="2"]')){
@@ -75,7 +75,7 @@ function modernizeHeader(){
   const logo=$("#header .logo-brand img");
   if(logo){
     logo.src=BRAND_LOGO;
-    logo.alt="Instant Professionals registered logo";
+    logo.alt="Instant Professionals logo";
     logo.removeAttribute("style");
     logo.removeAttribute("srcset");
     logo.width=68;
@@ -99,7 +99,7 @@ function modernizeHome(){
     <div class="ip-os-grid-bg" aria-hidden="true"></div>
     <div class="container ip-os-shell">
       <div class="ip-os-copy">
-        <div class="ip-os-index"><img src="${BRAND_LOGO}" width="64" height="64" decoding="async" alt="Instant Professionals registered logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
+        <div class="ip-os-index"><img src="${BRAND_LOGO}" width="64" height="64" decoding="async" alt="Instant Professionals logo"><b>NEW-GENERATION COMPLIANCE PARTNER</b></div>
         <h1>Compliance,<br><em>engineered around</em><br>your business.</h1>
         <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory — structured around how your business actually operates.</p>
         <div class="ip-os-actions">
@@ -118,7 +118,7 @@ function modernizeHome(){
           <b>01—05</b>
         </div>
         <div class="ip-os-core">
-          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="${LIFECYCLE_LOGO}" alt="Instant Professionals registered logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
+          <div class="ip-os-center"><span class="ip-os-logo-mark"><img src="${LIFECYCLE_LOGO}" alt="Instant Professionals logo" width="192" height="192" loading="lazy" decoding="async" fetchpriority="low"></span><span class="ip-os-center-copy"><b>ONE TEAM</b><small>Coordinated oversight</small></span></div>
           <div class="ip-os-track ip-os-track-1"><i>01</i><div><b>START</b><small>Registration & setup</small></div></div>
           <div class="ip-os-track ip-os-track-2"><i>02</i><div><b>RUN</b><small>Tax & recurring compliance</small></div></div>
           <div class="ip-os-track ip-os-track-3"><i>03</i><div><b>VERIFY</b><small>Audit, accounts & controls</small></div></div>

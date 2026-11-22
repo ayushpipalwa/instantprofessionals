@@ -42,6 +42,6 @@ for(const headerHeight of [78,68]){
   }
 }
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
-assert(html.includes('assets/js/main.js?v=20261115-anchor-1'));
+assert(html.includes('assets/js/main.js?v=20261122-brand'));
 assert.match(html,/<a[^>]*class="[^"]*scrollto[^"]*"[^>]*href="#contact"[^>]*data-enquiry-cta[^>]*data-service="General enquiry"/);
 console.log('PASS: fresh/repeat scroll, desktop/mobile offsets, reduced motion, missing anchor and deferred sections');

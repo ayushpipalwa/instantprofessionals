@@ -3,7 +3,7 @@
   "use strict";
 
   const PHOTO_VERSION = "20260818-1208";
-  const LOGO_PATH = "assets/img/instant-professionals-logo-2026.png?v=20260811-0032";
+  const LOGO_PATH = "assets/img/instant-professionals-ip-logo-20261122.png?v=20260811-0032";
   const APPROVED_PHOTOS = {
     "Ayush Pipalwa": "assets/img/team/live/ayush-pipalwa.jpg",
     "Renu Sharma": "assets/img/team/live/renu-sharma.jpg",
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="ip-nextgen-panel">
-          <div class="ip-panel-mark"><img src="${LOGO_PATH}" alt="Instant Professionals registered logo"></div>
+          <div class="ip-panel-mark"><img src="${LOGO_PATH}" alt="Instant Professionals logo"></div>
           <h2>Modern compliance. Practical advice.</h2>
           <p>Built for startups, growing businesses, established enterprises and individuals who value dependable execution and clear professional guidance.</p>
           <div class="ip-panel-services">
