@@ -813,6 +813,9 @@
     const entry = Object.assign({}, LEGAL_CURRENCY[category]);
     if (/copyright/i.test(filename)) {
       entry.framework = "Copyright Act, 1957 and Copyright Rules, 2013, as amended, together with current Copyright Office procedures.";
+      entry.authority = "IP India — Copyright Rules, Rule 70";
+      entry.url = "https://ipindia.gov.in/acts/copyright-rules-2013/rule-70-4";
+      entry.caution = "Check the work category, authorship, ownership, publication history and work-specific application requirements.";
     } else if (/patent/i.test(filename)) {
       entry.framework = "Patents Act, 1970 and Patents Rules, 2003, as amended, together with current Patent Office procedures.";
     } else if (/trademark/i.test(filename)) {
@@ -947,6 +950,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "copyright-application.html") return [
+      "Work title, category and copy identified",
+      "Applicant and author details ready",
+      "Publication status and first-publication details checked",
+      "Ownership, assignment and applicable author consent reviewed",
+      "Existing application records and work-specific requirements checked"
+    ];
     if (filename === "digital-signature-certificate.html") return [
       "Intended portal, transaction and subscriber role identified",
       "Individual or organisation applicant and contact details ready",
