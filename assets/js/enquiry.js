@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "change-registered-office.html") return [
+      "Company CIN and current MCA address checked",
+      "Old and new addresses, State and intended move date identified",
+      "Premises ownership or occupancy evidence and owner consent reviewed",
+      "Current utility and address-verification records ready",
+      "Company approvals, signing arrangements and earlier orders reviewed"
+    ];
     if (filename === "dir-3-kyc.html") return [
       "DIN status and any deactivation reason",
       "Last completed KYC and acknowledgement",

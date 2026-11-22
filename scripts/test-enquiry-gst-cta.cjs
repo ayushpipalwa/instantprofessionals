@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['commencement-of-business.html','Commencement of Business Filing'],['dir-3-kyc.html','DIR-3 KYC'],['appointment-of-auditor.html','Appointment of Auditor'],['patent-registration.html','Patent Application Support'],['copyright-application.html','Copyright Application'],['digital-signature-certificate.html','Digital Signature Certificate'],['udyam-registration.html','Udyam MSME Registration'],['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report'],['tax-notice-response.html','Income-tax notice response'],['opc-annual-filing.html','OPC Annual Filing'],['iec-registration.html','IEC Registration']]) {
+for(const [file,service] of [['change-registered-office.html','Change of Registered Office'],['commencement-of-business.html','Commencement of Business Filing'],['dir-3-kyc.html','DIR-3 KYC'],['appointment-of-auditor.html','Appointment of Auditor'],['patent-registration.html','Patent Application Support'],['copyright-application.html','Copyright Application'],['digital-signature-certificate.html','Digital Signature Certificate'],['udyam-registration.html','Udyam MSME Registration'],['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report'],['tax-notice-response.html','Income-tax notice response'],['opc-annual-filing.html','OPC Annual Filing'],['iec-registration.html','IEC Registration']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 if(file==='opc-annual-filing.html'){assert(!html.includes('<li>MGT 7 Filing</li>'));assert.equal((html.match(/MGT-7A annual-return filing/g)||[]).length,3);assert(html.includes('id="service-preparation"'));}
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
@@ -51,6 +51,14 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   assert.equal(window.testFunctions.calculationType('CORPORATE & SECRETARIAL','company-annual-filing.html'),'corporate');
   if(file==='dir-3-kyc.html') {
     assert(html.includes('enquiry.js?v=20261123-dir3-kyc'));
+    for(const id of ['pricing','service-preparation','enquiry-title']) assert(html.includes('id="'+id+'"'));
+  }
+  const office=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','change-registered-office.html');
+  assert.equal(office.length,5);
+  assert(office.some(x=>x.includes('owner consent')));
+  assert(!office.some(x=>/LLPIN|partners/.test(x)));
+  if(file==='change-registered-office.html') {
+    assert(html.includes('enquiry.js?v=20261123-office-readiness'));
     for(const id of ['pricing','service-preparation','enquiry-title']) assert(html.includes('id="'+id+'"'));
   }
   const commencement=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL','commencement-of-business.html');
