@@ -183,9 +183,12 @@ def main():
     for url in sorted(set(expected) - locations):
         errors.append(f"Missing from sitemaps: {url}")
     robots = read("robots.txt")
-    for sitemap in ("sitemap.xml", "seo-sitemap.xml"):
-        if f"Sitemap: {SITE}{sitemap}" not in robots:
-            errors.append(f"robots.txt: missing {sitemap} declaration")
+    # sitemap.xml is the complete index. seo-sitemap.xml is a legacy partial
+    # duplicate and must not be advertised again from robots.txt.
+    if f"Sitemap: {SITE}sitemap.xml" not in robots:
+        errors.append("robots.txt: missing sitemap.xml declaration")
+    if "seo-sitemap.xml" in robots:
+        errors.append("robots.txt: seo-sitemap.xml duplicates sitemap.xml and must not be listed")
     inbound = Counter()
     errors.extend(reference_errors(indexable, paths, read))
     for name, page in indexable.items():

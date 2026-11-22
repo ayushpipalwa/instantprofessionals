@@ -104,7 +104,7 @@ function modernizeHome(){
         <p class="ip-os-lead">One professional relationship connecting corporate compliance, tax, audit, registrations, intellectual property and business advisory — structured around how your business actually operates.</p>
         <div class="ip-os-actions">
           <a class="ip-os-btn ip-os-btn-primary" href="#services">Explore services <i class="bi bi-arrow-right"></i></a>
-          <a class="ip-os-btn ip-os-btn-ghost" href="#about">Meet our professionals</a>
+          <a class="ip-os-btn ip-os-btn-ghost" href="#team">Meet our professionals</a>
         </div>
         <div class="ip-os-credibility">
           <div><strong>2018</strong><span>Built on professional practice</span></div>
