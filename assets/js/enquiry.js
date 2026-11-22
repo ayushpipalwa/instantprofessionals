@@ -953,6 +953,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "appointment-of-auditor.html") return [
+      "Company CIN and current company details ready",
+      "Auditor details, consent and eligibility documents checked",
+      "Meeting approvals, event date and appointment period identified",
+      "Previous appointment and MCA filing references reviewed",
+      "Resignation letter and vacancy details available where relevant"
+    ];
     if (filename === "patent-registration.html") return [
       "Inventor, applicant and ownership records identified",
       "Technical description and available drawings prepared",
