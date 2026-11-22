@@ -194,19 +194,19 @@
 
 .ip-os-logo-mark img {
   position: absolute !important;
-  top: 47% !important;
+  top: 50% !important;
   left: 50% !important;
   display: block !important;
-  width: 5.65rem !important;
+  width: 76% !important;
   max-width: none !important;
-  height: 5.65rem !important;
+  height: 76% !important;
   max-height: none !important;
   padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #ffffff !important;
   box-shadow: none !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
   transform: translate(-50%, -50%) !important;
 }
@@ -417,7 +417,7 @@
   .ip-os-core::after { width: min(42%, 9rem) !important; }
   .ip-os-center { width: 6.65rem !important; height: 6.65rem !important; padding: 0.48rem !important; }
   .ip-os-logo-mark { width: 3.7rem; height: 3.7rem; flex-basis: 3.7rem; }
-  .ip-os-logo-mark img { width: 4.82rem !important; height: 4.82rem !important; }
+
   .ip-os-center-copy b { font-size: 0.48rem !important; }
   .ip-os-center-copy small { font-size: 0.35rem !important; }
   .ip-os-track {
