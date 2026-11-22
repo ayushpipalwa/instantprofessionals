@@ -896,6 +896,7 @@
   }
 
   function calculationType(category, filename) {
+    if (filename === "dir-3-kyc.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -953,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "dir-3-kyc.html") return [
+      "DIN status and any deactivation reason",
+      "Last completed KYC and acknowledgement",
+      "Identity and residential-address records",
+      "Mobile and email access; changes to recorded details",
+      "DSC validity where relevant and pending applications"
+    ];
     if (filename === "commencement-of-business.html") return [
       "Company CIN, incorporation date and subscriber details ready",
       "Subscriber share amounts and payment evidence reconciled",
