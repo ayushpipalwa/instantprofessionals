@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['digital-signature-certificate.html','Digital Signature Certificate'],['udyam-registration.html','Udyam MSME Registration'],['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report'],['tax-notice-response.html','Income-tax notice response'],['opc-annual-filing.html','OPC Annual Filing'],['iec-registration.html','IEC Registration']]) {
+for(const [file,service] of [['copyright-application.html','Copyright Application'],['digital-signature-certificate.html','Digital Signature Certificate'],['udyam-registration.html','Udyam MSME Registration'],['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report'],['tax-notice-response.html','Income-tax notice response'],['opc-annual-filing.html','OPC Annual Filing'],['iec-registration.html','IEC Registration']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 if(file==='opc-annual-filing.html'){assert(!html.includes('<li>MGT 7 Filing</li>'));assert.equal((html.match(/MGT-7A annual-return filing/g)||[]).length,3);assert(html.includes('id="service-preparation"'));}
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
@@ -43,6 +43,15 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     if(hostname!=='localhost') assert.equal(events.at(-1)[1],eventName);
   }
   assert(!JSON.stringify(events).includes('PRIVATE'));
+  const copyright=window.testFunctions.readinessItems('INTELLECTUAL PROPERTY','copyright-application.html');
+  assert.equal(copyright.length,5);
+  assert(copyright.some(x=>x.includes('Publication status')));
+  assert(!copyright.some(x=>/priority|goods|classes|mark/i.test(x)));
+  if(file==='copyright-application.html') {
+    assert(html.includes('enquiry.js?v=20261122-copyright-readiness'));
+    for(const id of ['pricing','service-preparation','enquiry-title']) assert(html.includes('id="'+id+'"'));
+    assert(html.includes('https://ipindia.gov.in/acts/copyright-rules-2013/rule-70-4'));
+  }
   const dsc=window.testFunctions.readinessItems('BUSINESS REGISTRATION','digital-signature-certificate.html');
   assert.equal(dsc.length,5);
   assert(dsc.some(x=>x.includes('existing DSC expiry')));
