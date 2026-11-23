@@ -3,7 +3,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const root=path.join(__dirname,'..');
-for(const [file,service] of [['add-remove-llp-partner.html','Add or Remove an LLP Partner'],['add-a-director.html','Add a Director'],['change-registered-office.html','Change of Registered Office'],['commencement-of-business.html','Commencement of Business Filing'],['dir-3-kyc.html','DIR-3 KYC'],['appointment-of-auditor.html','Appointment of Auditor'],['patent-registration.html','Patent Application Support'],['copyright-application.html','Copyright Application'],['digital-signature-certificate.html','Digital Signature Certificate'],['udyam-registration.html','Udyam MSME Registration'],['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report'],['tax-notice-response.html','Income-tax notice response'],['opc-annual-filing.html','OPC Annual Filing'],['iec-registration.html','IEC Registration']]) {
+for(const [file,service] of [['add-remove-llp-partner.html','Add or Remove an LLP Partner'],['director-resignation-removal.html','Director Resignation or Removal'],['add-a-director.html','Add a Director'],['change-registered-office.html','Change of Registered Office'],['commencement-of-business.html','Commencement of Business Filing'],['dir-3-kyc.html','DIR-3 KYC'],['appointment-of-auditor.html','Appointment of Auditor'],['patent-registration.html','Patent Application Support'],['copyright-application.html','Copyright Application'],['digital-signature-certificate.html','Digital Signature Certificate'],['udyam-registration.html','Udyam MSME Registration'],['gst-returns.html','GST Return Filing'],['tds-returns.html','TDS Return Filing'],['tds-return-revision.html','TDS Return Revision'],['pf-returns.html','PF Returns and Compliance'],['esi-returns.html','ESI Returns and Compliance'],['llp-annual-filing.html','LLP Annual Filing'],['esic-registration.html','ESIC Registration'],['epf-registration.html','EPF Registration'],['company-annual-filing.html','Company Annual Filing'],['income-tax-return-filing.html','Income Tax Return Filing'],['gst-registration.html','GST Registration'],['accounting-bookkeeping.html','Accounting and bookkeeping'],['virtual-cfo.html','Virtual finance function'],['cma-project-report.html','CMA and project report'],['tax-notice-response.html','Income-tax notice response'],['opc-annual-filing.html','OPC Annual Filing'],['iec-registration.html','IEC Registration']]) {
 const html=readFileSync(path.join(root,file),'utf8');
 if(file==='opc-annual-filing.html'){assert(!html.includes('<li>MGT 7 Filing</li>'));assert.equal((html.match(/MGT-7A annual-return filing/g)||[]).length,3);assert(html.includes('id="service-preparation"'));}
 let code=readFileSync(path.join(root,'assets/js/enquiry.js'),'utf8');
@@ -43,6 +43,15 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     if(hostname!=='localhost') assert.equal(events.at(-1)[1],eventName);
   }
   assert(!JSON.stringify(events).includes('PRIVATE'));
+  if(file==='director-resignation-removal.html') {
+    const items=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL',file);
+    assert.equal(items.length,5);
+    assert(items.some(x=>x.includes('delivery evidence')));
+    assert(!items.some(x=>/LLPIN|partners/.test(x)));
+    assert(!html.includes('DIR 11 Filing for One director Resignation/Removal'));
+    assert(html.includes('enquiry.js?v=20261123-cessation-readiness'));
+    for(const id of ['pricing','service-preparation','enquiry-title']) assert(html.includes('id="'+id+'"'));
+  }
   if(file==='add-a-director.html') {
     const items=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL',file);
     assert.equal(items.length,5);

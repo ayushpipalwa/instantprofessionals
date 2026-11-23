@@ -961,6 +961,13 @@
       "Contribution and profit-sharing changes reconciled",
       "Earlier Form 3/Form 4 acknowledgements and pending queries reviewed"
     ];
+    if (filename === "director-resignation-removal.html") return [
+      "Company CIN and current director records checked",
+      "Director DIN, designation and signing arrangements reviewed",
+      "Resignation or removal route and relevant dates identified",
+      "Notices, delivery evidence and company approval records prepared",
+      "Earlier filings, pending queries and disputes identified for review"
+    ];
     if (filename === "add-a-director.html") return [
       "Company CIN, constitutional documents and current directors reviewed",
       "Proposed director identity, address, DIN and DSC status checked",
