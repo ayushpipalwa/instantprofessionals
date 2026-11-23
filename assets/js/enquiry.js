@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "increase-authorised-capital.html") return [
+      "Company CIN, MCA master data, memorandum and articles ready",
+      "Existing and proposed authorised capital, share classes and face value reconciled",
+      "Paid-up capital and intended share-issue plan identified",
+      "Board and member approvals, resolutions and relevant dates reviewed",
+      "Earlier capital filings, pending queries and signatory DSC status checked"
+    ];
     if (filename === "change-llp-agreement.html") return [
       "LLPIN, current agreement and supplementary agreements ready",
       "Proposed clause changes and reasons identified",
