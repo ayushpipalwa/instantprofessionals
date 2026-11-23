@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "company-name-change.html") return [
+      "Company CIN, certificate, memorandum and articles ready",
+      "Proposed names, reasons and business-object details identified",
+      "Existing name reservation and validity checked",
+      "Company approvals, resolution dates and MGT-14 records reviewed",
+      "Pending applications, DSC status and follow-up registrations identified"
+    ];
     if (filename === "moa-aoa-amendment.html") return [
       "Company CIN, latest memorandum and articles including amendments ready",
       "Existing and proposed clause wording and reasons identified",
