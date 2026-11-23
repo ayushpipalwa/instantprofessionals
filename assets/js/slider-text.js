@@ -3,7 +3,7 @@
   "use strict";
 
   const PHOTO_VERSION = "20260818-1208";
-  const LOGO_PATH = "assets/img/instant-professionals-ip-logo-20261122.png?v=20260811-0032";
+  const LOGO_PATH = "assets/img/logo-64.png";
   const APPROVED_PHOTOS = {
     "Ayush Pipalwa": "assets/img/team/live/ayush-pipalwa.jpg",
     "Renu Sharma": "assets/img/team/live/renu-sharma.jpg",
