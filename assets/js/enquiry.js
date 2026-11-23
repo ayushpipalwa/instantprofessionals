@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "add-remove-llp-partner.html") return [
+      "LLPIN, current agreement and supplementary agreements ready",
+      "Incoming and outgoing partners, roles, DIN/DPIN and DSC status checked",
+      "Consent or cessation evidence, approvals and effective dates reviewed",
+      "Contribution and profit-sharing changes reconciled",
+      "Earlier Form 3/Form 4 acknowledgements and pending queries reviewed"
+    ];
     if (filename === "director-resignation-removal.html") return [
       "Company CIN and current director records checked",
       "Director DIN, designation and signing arrangements reviewed",
