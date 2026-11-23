@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "change-llp-agreement.html") return [
+      "LLPIN, current agreement and supplementary agreements ready",
+      "Proposed clause changes and reasons identified",
+      "Partner approvals, signing arrangements and dates reviewed",
+      "Contribution, profit-sharing and business changes reconciled",
+      "Earlier Form 3 filings and linked partner changes reviewed"
+    ];
     if (filename === "add-remove-llp-partner.html") return [
       "LLPIN, current agreement and supplementary agreements ready",
       "Incoming and outgoing partners, roles, DIN/DPIN and DSC status checked",
