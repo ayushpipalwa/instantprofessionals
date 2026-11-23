@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "moa-aoa-amendment.html") return [
+      "Company CIN, latest memorandum and articles including amendments ready",
+      "Existing and proposed clause wording and reasons identified",
+      "Company type, authorised capital and relevant member details reviewed",
+      "Notices, explanatory statements, approvals and resolution dates ready",
+      "Earlier resolution filings, pending queries and signatory DSC status checked"
+    ];
     if (filename === "increase-authorised-capital.html") return [
       "Company CIN, MCA master data, memorandum and articles ready",
       "Existing and proposed authorised capital, share classes and face value reconciled",
