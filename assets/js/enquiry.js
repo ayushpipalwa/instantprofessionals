@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "share-transfer-transmission.html") return [
+      "Company CIN, articles and ownership registers ready",
+      "Share class, quantity and physical or demat holding details checked",
+      "Transfer or transmission route and relevant dates identified",
+      "Party authorisations or transmission entitlement evidence reviewed",
+      "Restrictions, disputes and additional reporting scope identified"
+    ];
     if (filename === "company-name-change.html") return [
       "Company CIN, certificate, memorandum and articles ready",
       "Proposed names, reasons and business-object details identified",
