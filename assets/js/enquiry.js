@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "pan-application.html") return [
+      "Applicant category and application purpose identified",
+      "Existing PAN or acknowledgement status checked",
+      "Identity, address and date-of-birth evidence identified where applicable",
+      "Entity and authorised-signatory records gathered where applicable",
+      "Correction fields and supporting evidence listed where applicable"
+    ];
     if (filename === "mca-name-reservation-search-approval.html") return [
       "Entity type and new-incorporation or name-change purpose identified",
       "Preferred names, meanings and alternatives listed",
