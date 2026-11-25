@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "llp-name-change.html") return [
+      "LLPIN, current name and incorporation certificate ready",
+      "Latest LLP agreement and name-change procedure reviewed",
+      "Proposed names and RUN-LLP reservation or query records ready",
+      "Partner approvals and designated-partner DSC status checked",
+      "PAN/TAN and selected GST/Udyam amendment records identified"
+    ];
     if (filename === "din-application.html") return [
       "Existing DIN and pending application status checked",
       "Applicant identity, address, photograph and contact details ready",
