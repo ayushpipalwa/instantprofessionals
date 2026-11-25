@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "tan-application.html") return [
+      "Applicant category and allotment or correction purpose identified",
+      "Existing TAN and branch or division records checked",
+      "Responsible-person details and authority identified",
+      "Applicant identity, address and constitution records gathered as applicable",
+      "Correction fields or relevant application acknowledgements listed"
+    ];
     if (filename === "pan-application.html") return [
       "Applicant category and application purpose identified",
       "Existing PAN or acknowledgement status checked",
