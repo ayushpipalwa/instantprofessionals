@@ -896,7 +896,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "dir-3-kyc.html") return "";
+    if (filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "trademark-objection-reply.html") return [
+      "Application number, class and original application ready",
+      "Examination report, receipt date and current status checked",
+      "Cited marks and goods or services specification reviewed",
+      "Adoption history and dated actual-use evidence gathered",
+      "Earlier replies, authorisation and filing-provider details ready"
+    ];
     if (filename === "gst-cancellation.html") return [
       "GSTIN, taxpayer type and authorised-signatory details ready",
       "Cancellation reason, effective date and supporting records reviewed",
