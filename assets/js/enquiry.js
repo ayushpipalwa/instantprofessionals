@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "llp-strike-off.html") return [
+      "LLPIN, MCA status, LLP agreement and amendments ready",
+      "Business history, cessation details and latest accounts reviewed",
+      "Assets, liabilities, bank accounts and charges reconciled",
+      "All-partner consent and designated-partner DSC/KYC status reviewed",
+      "Form 8/Form 11, tax records and pending disputes or applications checked"
+    ];
     if (filename === "share-transfer-transmission.html") return [
       "Company CIN, articles and ownership registers ready",
       "Share class, quantity and physical or demat holding details checked",
