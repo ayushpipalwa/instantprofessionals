@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "trademark-watch-service.html") return [
+      "Application number, mark, class and applicant details ready",
+      "Current status and application documents gathered",
+      "Earlier notices, replies and pending action identified",
+      "Checking frequency, reporting contact and end stage agreed",
+      "Existing adviser, authorisation and follow-up responsibilities confirmed"
+    ];
     if (filename === "llp-name-change.html") return [
       "LLPIN, current name and incorporation certificate ready",
       "Latest LLP agreement and name-change procedure reviewed",
