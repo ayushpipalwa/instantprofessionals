@@ -37,6 +37,19 @@
         return;
       }
 
+      // ROC guide clicks are sent once on arrival, avoiding unload-time batching loss.
+      // Store only a timestamp: no visitor, form, query-string or transaction data.
+      if (sameTabNavigation && link.hasAttribute("data-enquiry-arrival") &&
+          window.location.pathname === "/roc-search-report-fees-format.html" &&
+          destination.pathname === "/roc-search-report.html" && destination.hash === "#enquiry-title") {
+        try {
+          window.sessionStorage.setItem("ip.rocEnquiryArrival", String(Date.now()));
+          return; // Preserve native same-tab navigation; the service page owns this event.
+        } catch (_) {
+          // Storage restrictions retain the callback/timeout fallback below.
+        }
+      }
+
       // Let GA process the click before unloading this page. A separate timer
       // keeps the link usable even when the Google tag is blocked or never loads.
       event.preventDefault();

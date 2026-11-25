@@ -52,6 +52,25 @@
     window.gtag("event", name, parameters || {});
   }
 
+  function trackRocEnquiryArrival() {
+    if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) ||
+        window.location.pathname !== "/roc-search-report.html" || window.location.hash !== "#enquiry-title" ||
+        typeof window.gtag !== "function") return;
+    try {
+      const key = "ip.rocEnquiryArrival";
+      const stored = window.sessionStorage.getItem(key);
+      window.sessionStorage.removeItem(key); // Consume before sending, including expired values.
+      const age = Date.now() - Number(stored);
+      if (!stored || !Number.isFinite(age) || age < 0 || age > 30000) return;
+      trackAnalyticsEvent("enquiry_cta_click", {
+        service_name: "ROC Search Report",
+        page_location: window.location.origin + "/roc-search-report-fees-format.html"
+      });
+    } catch (_) {
+      // Restricted storage must never block the enquiry form.
+    }
+  }
+
   function analyticsService(values) {
     return [values.service || "General enquiry", values.package].filter(Boolean).join(" — ").slice(0, 120);
   }
@@ -123,6 +142,7 @@
   if (typeof document === "undefined") return;
 
   loadGoogleAnalytics();
+  trackRocEnquiryArrival();
 
   const SERVICE_FAQS = {
     "appointment-of-auditor.html": [
