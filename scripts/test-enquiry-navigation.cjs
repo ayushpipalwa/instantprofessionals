@@ -31,7 +31,7 @@ function setup(file, mode='callback', ctaIndex=0) {
   vm.runInNewContext(code,{window,document,URL});
   const tag=readFileSync(path.join(root,file),'utf8').match(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)[ctaIndex];
   const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
-  assert.match(readFileSync(path.join(root,file),'utf8'),/analytics\.js\?v=20261115-1/);
+  assert(readFileSync(path.join(root,file),'utf8').includes(file==='roc-search-report-fees-format.html'?'analytics.js?v=20261126-roc-arrival':'analytics.js?v=20261115-1'));
   const click=(overrides={},extraAttrs={})=>{
     const a={...attrs,...extraAttrs};
     const link={getAttribute:n=>a[n]??null,hasAttribute:n=>Object.hasOwn(a,n)||n==='data-enquiry-cta'};
