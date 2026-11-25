@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -59,6 +60,28 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+
+      - name: Wait for uploaded artifact metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..12}; do
+            count=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" --jq '[.artifacts[] | select(.name == "github-pages" and .expired == false)] | length')
+            if [ "$count" -eq 1 ]; then
+              echo "Pages artifact is visible."
+              exit 0
+            fi
+            if [ "$count" -gt 1 ]; then
+              echo "::error::Multiple Pages artifacts found; refusing ambiguous deployment."
+              exit 1
+            fi
+            echo "Waiting for Pages artifact metadata ($attempt/12)."
+            sleep 5
+          done
+          echo "::error::Pages artifact did not become visible within 60 seconds."
+          exit 1
 
       - name: Deploy to GitHub Pages
         id: deployment
