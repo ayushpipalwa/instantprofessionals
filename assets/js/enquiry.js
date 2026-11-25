@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "din-application.html") return [
+      "Existing DIN and pending application status checked",
+      "Applicant identity, address, photograph and contact details ready",
+      "CIN or LLPIN and proposed appointment records identified",
+      "Applicant and signatory DSC validity and MCA association checked",
+      "Earlier SRNs, queries and required turnaround reviewed"
+    ];
     if (filename === "trademark-renewal.html") return [
       "Registration number, class and certificate ready",
       "Official expiry and earlier renewal records checked",
