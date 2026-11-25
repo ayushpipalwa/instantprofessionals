@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "trademark-renewal.html") return [
+      "Registration number, class and certificate ready",
+      "Official expiry and earlier renewal records checked",
+      "Proprietor, address and ownership-change records reviewed",
+      "Registry notices, removal status and pending matters checked",
+      "Authorisation and applicable applicant-category records ready"
+    ];
     if (filename === "trademark-objection-reply.html") return [
       "Application number, class and original application ready",
       "Examination report, receipt date and current status checked",
