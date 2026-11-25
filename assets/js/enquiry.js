@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "gst-cancellation.html") return [
+      "GSTIN, taxpayer type and authorised-signatory details ready",
+      "Cancellation reason, effective date and supporting records reviewed",
+      "Pending returns, dues, notices and payment records checked",
+      "Stock, capital goods and input-tax-credit records reconciled",
+      "Application or order status and GSTR-10 requirements reviewed"
+    ];
     if (filename === "company-strike-off.html") return [
       "Company CIN, incorporation records and MCA status ready",
       "Business history, transaction records and latest accounts reviewed",
