@@ -954,6 +954,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "company-strike-off.html") return [
+      "Company CIN, incorporation records and MCA status ready",
+      "Business history, transaction records and latest accounts reviewed",
+      "Assets, liabilities, bank accounts and charges reconciled",
+      "Filings, tax matters, employee dues and pending proceedings identified",
+      "Director and member approvals, DSC/KYC and earlier applications reviewed"
+    ];
     if (filename === "share-transfer-transmission.html") return [
       "Company CIN, articles and ownership registers ready",
       "Share class, quantity and physical or demat holding details checked",
