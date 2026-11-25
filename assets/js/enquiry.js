@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "mca-name-reservation-search-approval.html") return [
+      "Entity type and new-incorporation or name-change purpose identified",
+      "Preferred names, meanings and alternatives listed",
+      "Business activities, products or services and markets described",
+      "Existing CIN/LLPIN and earlier reservation or query records gathered",
+      "Brand ownership, trademark and available consent records identified"
+    ];
     if (filename === "trademark-watch-service.html") return [
       "Application number, mark, class and applicant details ready",
       "Current status and application documents gathered",
