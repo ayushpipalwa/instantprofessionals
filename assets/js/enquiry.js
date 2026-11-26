@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "gst-registration-amendment.html") return [
+      "GSTIN and current registration particulars checked",
+      "Existing and proposed fields with change dates listed",
+      "Evidence supporting the specific changes gathered",
+      "Authorised-signatory and portal signing readiness confirmed",
+      "Pending amendment ARNs and clarification records identified"
+    ];
     if (filename === "gst-lut.html") return [
       "GSTIN and current registration status checked",
       "LUT financial year and relevant GST registration identified",
