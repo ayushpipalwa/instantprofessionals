@@ -1317,6 +1317,7 @@
     if (filename === "roc-search-report.html" || filename === "moa-aoa-printing.html") return;
     if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
     if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
+    if (!category && filename === "private-limited-company-registration.html") category = "CORPORATE & SECRETARIAL";
     if (!category) return;
     const type = calculationType(category, filename);
     const legalPanel = document.querySelector("[data-ip-legal-currency]");
