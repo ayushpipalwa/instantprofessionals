@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "llp-registration.html" || filename === "opc-registration.html" || filename === "private-limited-company-registration.html" || filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "digital-marketing.html" || filename === "llp-registration.html" || filename === "opc-registration.html" || filename === "private-limited-company-registration.html" || filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "digital-marketing.html") return [
+      "Business objectives, target audience and locations",
+      "Website, social profiles and preferred channels",
+      "Approved brand assets and permitted images",
+      "Content themes, offers and factual claims",
+      "Approval contact, schedule and promotion budget"
+    ];
     if (filename === "llp-registration.html") return [
       "Proposed LLP names and business activities",
       "Partners, designated partners and identity/address details",
