@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "gst-lut.html") return [
+      "GSTIN and current registration status checked",
+      "LUT financial year and relevant GST registration identified",
+      "Proposed zero-rated supply and eligibility facts described",
+      "Previous LUT acknowledgement and portal queries gathered where available",
+      "Authorised-signatory and portal signing readiness confirmed"
+    ];
     if (filename === "tan-application.html") return [
       "Applicant category and allotment or correction purpose identified",
       "Existing TAN and branch or division records checked",
