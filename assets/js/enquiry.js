@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "private-limited-company-registration.html" || filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "private-limited-company-registration.html") return [
+      "Proposed company names and main business activities",
+      "Subscribers, directors and their identity/address details",
+      "Authorised capital, paid-up capital and shareholding plan",
+      "Registered-office proof and owner consent",
+      "Existing DSC/DIN details and preferred package scope"
+    ];
     if (filename === "international-trademark-registration.html") return [
       "Applicant ownership and filing entitlement reviewed",
       "Mark representation, goods or services and classes listed",
