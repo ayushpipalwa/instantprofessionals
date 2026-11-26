@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "trademark-assignment.html") return [
+      "Trademark numbers, status and classes identified",
+      "Assignor, assignee and signing authority records gathered",
+      "Ownership chain and assignment instrument available",
+      "Goodwill, consideration and transfer terms listed",
+      "Pending proceedings, licences and security interests identified"
+    ];
     if (filename === "iec-modification.html") return [
       "Existing IEC, entity PAN and current status checked",
       "Existing and proposed profile particulars listed",
