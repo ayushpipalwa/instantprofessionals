@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "trademark-withdrawal.html") return [
+      "Application or proceeding number and status identified",
+      "Party details and signing authority confirmed",
+      "Exact withdrawal request and reasons listed",
+      "Notices, orders and relevant settlement terms gathered",
+      "Pending hearings, deadlines and earlier requests checked"
+    ];
     if (filename === "trademark-rectification.html") return [
       "Trademark number, classes and register entry identified",
       "Requested relief and supporting facts listed",
