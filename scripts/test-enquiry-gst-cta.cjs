@@ -411,7 +411,7 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
     const items=window.testFunctions.readinessItems('CORPORATE & SECRETARIAL',file);
     assert.equal(items.length,5);
     assert(items.some(x=>x.includes('shareholding')));
-    assert(html.includes('enquiry.js?v=20261126-company-readiness'));
+    assert(html.includes('enquiry.js?v=20261126-company-readiness-2'));
     for(const target of ['pricing','service-preparation','enquiry-title']) assert(html.includes('id="'+target+'"'));
     assert(!/<a[^>]*href="#pricing"[^>]*data-enquiry-cta/.test(html));
     for(const price of ['₹9,999','₹14,999','₹54,599']) assert(html.includes(price));
