@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "private-limited-company-registration.html" || filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "llp-registration.html" || filename === "opc-registration.html" || filename === "private-limited-company-registration.html" || filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,20 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "llp-registration.html") return [
+      "Proposed LLP names and business activities",
+      "Partners, designated partners and identity/address details",
+      "Contribution, profit-sharing ratio and agreement terms",
+      "Registered-office proof and owner consent",
+      "Existing DSC/DIN/DPIN details and preferred package scope"
+    ];
+    if (filename === "opc-registration.html") return [
+      "Proposed OPC name, business activities and capital",
+      "Member and first-director identity/address details",
+      "Nominee details and consent for review",
+      "Registered-office proof and owner consent",
+      "Existing DSC/DIN details and preferred package scope"
+    ];
     if (filename === "private-limited-company-registration.html") return [
       "Proposed company names and main business activities",
       "Subscribers, directors and their identity/address details",
@@ -1317,7 +1331,7 @@
     if (filename === "roc-search-report.html" || filename === "moa-aoa-printing.html") return;
     if (!category && /tax-notice-response/.test(filename)) category = "INCOME TAX & TDS";
     if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
-    if (!category && filename === "private-limited-company-registration.html") category = "CORPORATE & SECRETARIAL";
+    if (!category && ["private-limited-company-registration.html", "llp-registration.html", "opc-registration.html"].includes(filename)) category = "CORPORATE & SECRETARIAL";
     if (!category) return;
     const type = calculationType(category, filename);
     const legalPanel = document.querySelector("[data-ip-legal-currency]");
