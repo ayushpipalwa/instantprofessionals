@@ -916,7 +916,7 @@
   }
 
   function calculationType(category, filename) {
-    if (filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
+    if (filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
     if (category === "WORKFORCE COMPLIANCE" && /esic|esi-/.test(filename)) return "esi";
@@ -974,6 +974,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "iec-modification.html") return [
+      "Existing IEC, entity PAN and current status checked",
+      "Existing and proposed profile particulars listed",
+      "Evidence for address, branch or bank changes gathered",
+      "DGFT profile linking and signing readiness confirmed",
+      "Pending applications and validation notices identified"
+    ];
     if (filename === "gst-registration-amendment.html") return [
       "GSTIN and current registration particulars checked",
       "Existing and proposed fields with change dates listed",
