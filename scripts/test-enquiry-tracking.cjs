@@ -45,7 +45,8 @@ async function scenario(file, outcome='acknowledged') {
     ['din-application-documents-process.html', 'DIN Application', 1],
     ['llp-name-change-procedure.html', 'LLP Name Change', 1],
     ['trademark-watch-service-cost.html', 'Trademark Watch Service', 1],
-    ['online-ca-services.html', 'Online CA Services', 2]
+    ['online-ca-services.html', 'Online CA Services', 2],
+    ['compliance-handover-checklist.html', 'General enquiry', 2]
   ]) {
     const html=readFileSync(path.join(root,file),'utf8');
     const ctas=[...html.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
@@ -62,6 +63,39 @@ async function scenario(file, outcome='acknowledged') {
       assert.equal(events.at(-1)[2].page_location,'https://www.instantprofessionals.in/'+file);
       assert(!events.slice(before).some(e=>e[1]==='generate_lead'),'CTA is not a received lead');
     }
+  }
+  // A normal same-tab resource enquiry must wait for GA or its timeout,
+  // then navigate once without reporting a completed lead.
+  const handover=readFileSync(path.join(root,'compliance-handover-checklist.html'),'utf8');
+  const handoverCtas=[...handover.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
+  for(const [tag] of handoverCtas) for(const completion of ['callback','timeout']) {
+    const sent=[], navigations=[], clickHandlers=[], timers=[];
+    const w={
+      __ipGoogleAnalyticsId:'G-TG0272S260', addEventListener(){},
+      location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',
+        pathname:'/compliance-handover-checklist.html',
+        href:'https://www.instantprofessionals.in/compliance-handover-checklist.html?private=DO_NOT_SEND',
+        assign:url=>navigations.push(url)},
+      gtag:(...args)=>sent.push(args),setTimeout:fn=>{timers.push(fn);return 1},clearTimeout(){}
+    };
+    const d={title:'Compliance Handover',addEventListener:(name,fn)=>{if(name==='click')clickHandlers.push(fn)}};
+    vm.runInNewContext(code,{window:w,document:d,URL});
+    const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
+    let prevented=false;
+    clickHandlers[0]({button:0,target:{closest:()=>({
+      getAttribute:n=>attrs[n]||null,hasAttribute:n=>n==='data-enquiry-cta'
+    })},preventDefault(){prevented=true}});
+    assert(prevented);
+    assert.equal(navigations.length,0);
+    assert.equal(sent.length,1);
+    assert.equal(sent[0][1],'enquiry_cta_click');
+    assert.equal(sent[0][2].service_name,'General enquiry');
+    assert.equal(sent[0][2].event_timeout,1000);
+    assert(!JSON.stringify(sent).includes('DO_NOT_SEND'));
+    (completion==='callback'?sent[0][2].event_callback:timers[0])();
+    sent[0][2].event_callback(); timers[0]();
+    assert.deepEqual(navigations,['https://www.instantprofessionals.in/index.html#contact']);
+    assert(!sent.some(e=>e[1]==='generate_lead'));
   }
   for (const hostname of ['localhost', '127.0.0.1', 'preview.example.com', '']) {
     const previewWindow={location:{hostname},gtag:()=>{throw Error('Preview must not track')}};
