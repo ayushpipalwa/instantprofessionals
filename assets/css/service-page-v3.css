@@ -269,3 +269,9 @@ table { max-width: 100%; }
 @media (hover: none) {
   .ip-card:hover, .ip-price-card:hover, .ip-lane:hover { transform: none; }
 }
+
+/* Readable, keyboard-visible quote links on dark incorporation panels. */
+.ip-end-cta .ip-quote-link { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; max-width: 100%; box-sizing: border-box; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; border: 1px solid currentColor; border-radius: 6px; }
+.ip-end-cta .ip-quote-link:visited { color: #fff; }
+.ip-end-cta .ip-quote-link:hover { color: #fff; background: rgba(255, 255, 255, .12); }
+.ip-end-cta .ip-quote-link:focus-visible { color: #fff; outline: 3px solid #fff; outline-offset: 4px; }

@@ -18,6 +18,8 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   window.testFunctions.bindAnalyticsLinks();
   assert.equal(handlers.length,1);
   if(['private-limited-company-registration.html','llp-registration.html','opc-registration.html'].includes(file)) {
+    assert(html.includes('class="ip-quote-link"'));
+    assert(html.includes('service-page-v3.css?v=20261127-quote-contrast'));
     const enquiryLinks=[...html.matchAll(/<a\b[^>]*href="#enquiry-title"[^>]*>/g)];
     assert.equal(enquiryLinks.length,3);
     for(const [tag] of enquiryLinks) assert(tag.includes('data-enquiry-cta'), 'Every incorporation enquiry link must be tracked');
