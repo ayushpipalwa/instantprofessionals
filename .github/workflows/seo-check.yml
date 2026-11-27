@@ -21,7 +21,9 @@ jobs:
         with:
           node-version: '22'
       - name: Validate enquiry event meaning and privacy
-        run: node scripts/test-enquiry-tracking.cjs
+        run: |
+          node scripts/test-enquiry-tracking.cjs
+          node scripts/test-service-directory.cjs
       - name: Validate metadata, structured data, sitemap and links
         run: |
           python -m unittest discover -s scripts -p 'test_qa_seo.py'
