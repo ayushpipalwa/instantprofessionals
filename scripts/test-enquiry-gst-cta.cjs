@@ -17,8 +17,13 @@ for(const hostname of ['www.instantprofessionals.in','localhost']) {
   vm.runInNewContext(code,{window,document});
   window.testFunctions.bindAnalyticsLinks();
   assert.equal(handlers.length,1);
+  if(['private-limited-company-registration.html','llp-registration.html','opc-registration.html'].includes(file)) {
+    const enquiryLinks=[...html.matchAll(/<a\b[^>]*href="#enquiry-title"[^>]*>/g)];
+    assert.equal(enquiryLinks.length,3);
+    for(const [tag] of enquiryLinks) assert(tag.includes('data-enquiry-cta'), 'Every incorporation enquiry link must be tracked');
+  }
   const ctas=[...html.matchAll(/<a\b[^>]*\bdata-enquiry-cta\b[^>]*>/g)];
-  assert.equal(ctas.length,file==='cma-project-report.html'?4:['company-annual-filing.html','income-tax-return-filing.html','gst-registration.html','accounting-bookkeeping.html','virtual-cfo.html','tax-notice-response.html'].includes(file)?3:2);
+  assert.equal(ctas.length,file==='cma-project-report.html'?4:['private-limited-company-registration.html','llp-registration.html','opc-registration.html','company-annual-filing.html','income-tax-return-filing.html','gst-registration.html','accounting-bookkeeping.html','virtual-cfo.html','tax-notice-response.html'].includes(file)?3:2);
   for(const [tag] of ctas) {
     const attrs=Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(m=>[m[1],m[2]]));
     assert.equal(attrs.href,['accounting-bookkeeping.html','virtual-cfo.html','cma-project-report.html','tax-notice-response.html'].includes(file)?'#enquiry':'#enquiry-title');
