@@ -191,7 +191,26 @@
     });
   }
 
+  function trackHandoverArrival() {
+    if (!["instantprofessionals.in", "www.instantprofessionals.in"].includes(window.location.hostname) ||
+        !["/", "/index.html"].includes(window.location.pathname) || typeof window.gtag !== "function") return;
+    try {
+      const key = "ip.handoverEnquiryArrival";
+      const stored = window.sessionStorage.getItem(key);
+      window.sessionStorage.removeItem(key);
+      const age = Date.now() - Number(stored);
+      if (window.location.hash !== "#contact" || !stored || !Number.isFinite(age) || age < 0 || age > 30000) return;
+      track("enquiry_cta_click", {
+        service_name: "General enquiry",
+        page_location: window.location.origin + "/compliance-handover-checklist.html"
+      });
+    } catch (_) {
+      // Storage restrictions must not block contact-form initialisation.
+    }
+  }
+
   function initialise() {
+    trackHandoverArrival();
     bindAnalyticsLinks();
     document.querySelectorAll(".ip-enquiry-form").forEach(function (form) {
       form.addEventListener("submit", function (event) {

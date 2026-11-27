@@ -97,6 +97,32 @@ async function scenario(file, outcome='acknowledged') {
     assert.deepEqual(navigations,['https://www.instantprofessionals.in/index.html#contact']);
     assert(!sent.some(e=>e[1]==='generate_lead'));
   }
+  // Arrival attribution survives source unload and is consumed once.
+  for (const stored of [String(Date.now()), String(Date.now()-60000), String(Date.now()+60000), 'invalid', null]) {
+    let value=stored; const received=[];
+    const w={location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/index.html',hash:'#contact'},
+      gtag:(...args)=>received.push(args),sessionStorage:{getItem:()=>value,removeItem:()=>{value=null}},
+      addEventListener(){}};
+    const d={readyState:'complete',addEventListener(){},querySelectorAll:()=>[]};
+    const home=readFileSync(path.join(root,'assets/js/enquiry-home.js'),'utf8');
+    vm.runInNewContext(home,{window:w,document:d,URL});
+    vm.runInNewContext(home,{window:w,document:d,URL});
+    assert.equal(value,null);
+    assert.equal(received.length,stored && Number.isFinite(Number(stored)) && Math.abs(Date.now()-Number(stored))<5000 ? 1 : 0);
+    if(received.length){assert.equal(received[0][1],'enquiry_cta_click');assert.equal(received[0][2].service_name,'General enquiry');assert.equal(received[0][2].page_location,'https://www.instantprofessionals.in/compliance-handover-checklist.html');}
+  }
+  for(const [tag] of handoverCtas) {
+    let handler, saved; const events=[];
+    const w={__ipGoogleAnalyticsId:'G-TG0272S260',addEventListener(){},
+      location:{hostname:'www.instantprofessionals.in',origin:'https://www.instantprofessionals.in',pathname:'/compliance-handover-checklist.html',href:'https://www.instantprofessionals.in/compliance-handover-checklist.html'},
+      sessionStorage:{setItem:(key,value)=>{assert.equal(key,'ip.handoverEnquiryArrival');saved=value}},
+      gtag:(...args)=>events.push(args)};
+    vm.runInNewContext(code,{window:w,document:{addEventListener:(name,fn)=>{handler=fn}},URL});
+    assert(tag.includes('data-handover-arrival'));
+    handler({button:0,target:{closest:()=>({getAttribute:n=>n==='href'?'index.html#contact':null,hasAttribute:n=>['data-enquiry-cta','data-handover-arrival'].includes(n)})},preventDefault(){throw Error('Arrival tracking preserves native navigation')}});
+    assert(Number.isFinite(Number(saved)));
+    assert.equal(events.length,0,'Source must not duplicate the arrival event');
+  }
   for (const hostname of ['localhost', '127.0.0.1', 'preview.example.com', '']) {
     const previewWindow={location:{hostname},gtag:()=>{throw Error('Preview must not track')}};
     const previewDocument={readyState:'loading',addEventListener(){},querySelector(){throw Error('Preview must not load GA')}};

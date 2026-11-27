@@ -37,6 +37,18 @@
         return;
       }
 
+      // Carry this guide's enquiry across unload; the homepage consumes it once.
+      if (sameTabNavigation && link.hasAttribute("data-handover-arrival") &&
+          window.location.pathname === "/compliance-handover-checklist.html" &&
+          destination.pathname === "/index.html" && destination.hash === "#contact") {
+        try {
+          window.sessionStorage.setItem("ip.handoverEnquiryArrival", String(Date.now()));
+          return;
+        } catch (_) {
+          // Storage restrictions use the callback/timeout fallback below.
+        }
+      }
+
       // ROC guide clicks are sent once on arrival, avoiding unload-time batching loss.
       // Store only a timestamp: no visitor, form, query-string or transaction data.
       if (sameTabNavigation && link.hasAttribute("data-enquiry-arrival") &&
