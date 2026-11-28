@@ -831,7 +831,13 @@
     if (!category && /cma-project-report|accounting-bookkeeping|virtual-cfo/.test(filename)) category = "BUSINESS GROWTH";
     if (!category) return;
     const entry = Object.assign({}, LEGAL_CURRENCY[category]);
-    if (/copyright/i.test(filename)) {
+    if (filename === "dissolution-of-firm.html") {
+      entry.reviewed = "28 November 2026";
+      entry.framework = "Indian Partnership Act, 1932, the partnership deed and applicable State registration requirements.";
+      entry.authority = "Delhi Department of Industries — Partnership Act reference";
+      entry.url = "https://industries.delhi.gov.in/industries/partnership-act";
+      entry.caution = "Review partner instructions, settlement of outstanding matters, notice requirements and separate tax or licence closure obligations.";
+    } else if (/copyright/i.test(filename)) {
       entry.framework = "Copyright Act, 1957 and Copyright Rules, 2013, as amended, together with current Copyright Office procedures.";
       entry.authority = "IP India — Copyright Rules, Rule 70";
       entry.url = "https://ipindia.gov.in/acts/copyright-rules-2013/rule-70-4";
@@ -864,7 +870,7 @@
     panel.dataset.ipLegalCurrency = "true";
     panel.setAttribute("aria-label", "Legal currency and official source");
     panel.innerHTML =
-      '<div class="ip-legal-currency-head"><span>LEGAL CURRENCY</span><strong>Reviewed ' + LEGAL_CURRENCY_REVIEWED + '</strong></div>' +
+      '<div class="ip-legal-currency-head"><span>LEGAL CURRENCY</span><strong>Reviewed ' + (entry.reviewed || LEGAL_CURRENCY_REVIEWED) + '</strong></div>' +
       '<p><b>Framework:</b> ' + entry.framework + '</p>' +
       '<p><b>Verification note:</b> ' + entry.caution + '</p>' +
       '<p class="ip-legal-currency-source"><a target="_blank" rel="noopener" href="' + entry.url + '">Verify through ' + entry.authority + ' <span aria-hidden="true">↗</span></a></p>' +
@@ -916,6 +922,7 @@
   }
 
   function calculationType(category, filename) {
+    if (filename === "dissolution-of-firm.html") return "";
     if (filename === "logo-design.html" || filename === "digital-marketing.html" || filename === "llp-registration.html" || filename === "opc-registration.html" || filename === "private-limited-company-registration.html" || filename === "international-trademark-registration.html" || filename === "trademark-withdrawal.html" || filename === "trademark-rectification.html" || filename === "trademark-opposition.html" || filename === "trademark-assignment.html" || filename === "iec-modification.html" || filename === "gst-registration-amendment.html" || filename === "gst-lut.html" || filename === "tan-application.html" || filename === "pan-application.html" || filename === "mca-name-reservation-search-approval.html" || filename === "trademark-watch-service.html" || filename === "din-application.html" || filename === "dir-3-kyc.html" || filename === "trademark-objection-reply.html") return "";
     if (category === "GST & INDIRECT TAX") return "gst";
     if (category === "INCOME TAX & TDS") return "tds";
@@ -974,6 +981,13 @@
   }
 
   function readinessItems(category, filename) {
+    if (filename === "dissolution-of-firm.html") return [
+      "Partnership deed, firm PAN and State registration details",
+      "Partner instructions and proposed dissolution date",
+      "Capital accounts, assets, liabilities and settlement records",
+      "GST/TAN registrations, returns and pending notices",
+      "Contracts, employee matters and record-custody arrangements"
+    ];
     if (filename === "logo-design.html") return [
       "Brand name, tagline and business activity",
       "Target audience and intended logo uses",
